@@ -19,7 +19,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-sky-300"
+          className="border-base-content/10 bg-base-300/85 text-base-content/80 mb-8 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium"
         >
           <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
           Available for new projects
@@ -29,7 +29,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-6 text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl"
+          className="text-accent mb-6 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
         >
           Full-Stack
           <br />
@@ -42,7 +42,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-slate-400 sm:text-xl"
+          className="text-base-content mx-auto mb-10 max-w-2xl text-lg leading-relaxed sm:text-xl"
         >
           I design and build modern web applications with robust backends,
           scalable databases, and secure cloud storage. From idea to deployment,
@@ -57,7 +57,7 @@ export default function Hero() {
         >
           <button
             onClick={() => scrollTo("#projects")}
-            className="rounded-full bg-sky-400 px-8 py-4 text-base font-semibold text-[#060912] transition-all hover:scale-105 hover:bg-sky-300"
+            className="bg-info text-info-content hover:bg-info/90 active:bg-info/80 rounded-full px-8 py-4 text-base font-semibold transition-all hover:scale-105 active:scale-95"
           >
             View My Work
           </button>
@@ -104,7 +104,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
         onClick={() => scrollTo("#about")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 transition-colors hover:text-sky-400"
+        className="text-base-content/50 hover:text-info absolute bottom-10 left-1/2 -translate-x-1/2 transition-colors"
         aria-label="Scroll down"
       >
         <ArrowDown className="h-6 w-6 animate-bounce" />

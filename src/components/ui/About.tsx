@@ -40,20 +40,20 @@ export default function About() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <p className="mb-3 text-sm font-semibold tracking-wide text-sky-400 uppercase">
+            <p className="text-base-content mb-3 text-sm font-semibold tracking-wide uppercase">
               About Me
             </p>
-            <h2 className="mb-6 text-4xl font-bold tracking-tight text-white md:text-5xl">
+            <h2 className="text-accent mb-6 text-4xl font-bold tracking-tight md:text-5xl">
               Building digital products that scale
             </h2>
-            <p className="mb-6 text-lg leading-relaxed text-slate-400">
+            <p className="text-base-content mb-6 text-lg leading-relaxed">
               I'm a full-stack developer with a passion for turning complex
               problems into elegant, user-friendly web applications. My work
               spans the entire development lifecycle — from designing intuitive
               interfaces to architecting robust backends and deploying to the
               cloud.
             </p>
-            <p className="mb-8 text-lg leading-relaxed text-slate-400">
+            <p className="text-base-content mb-8 text-lg leading-relaxed">
               Whether it's a dynamic portfolio, a content-heavy blog platform, a
               secure admin dashboard, or a full e-commerce experience, I bring
               deep technical expertise and attention to detail to every project.
@@ -70,7 +70,7 @@ export default function About() {
               ].map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-300"
+                  className="border-base-content/10 bg-accent text-accent-content rounded-lg border px-4 py-2 text-sm font-medium"
                 >
                   {tech}
                 </span>
@@ -85,15 +85,15 @@ export default function About() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group rounded-2xl border border-white/10 bg-white/3 p-6 transition-all hover:border-sky-400/30 hover:bg-white/5"
+                className="group border-base-content/30 bg-base-200/3 hover:border-base-content/50 hover:bg-base-200/5 rounded-2xl border p-6 transition-all"
               >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/10 transition-colors group-hover:bg-sky-500/20">
-                  <item.icon className="h-6 w-6 text-sky-400" />
+                <div className="bg-base-300/70 group-hover:bg-base-300 mb-4 flex h-12 w-12 items-center justify-center rounded-xl transition-colors">
+                  <item.icon className="text-accent h-6 w-6" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-white">
+                <h3 className="text-accent mb-2 text-lg font-semibold">
                   {item.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-slate-400">
+                <p className="text-base-content text-sm leading-relaxed">
                   {item.desc}
                 </p>
               </motion.div>

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Code2 } from "lucide-react";
-import { APusLightBanner } from "@/icons/web-assets";
+import { APusDarkBanner, APusLightBanner } from "@/icons/web-assets";
+import { useRouter } from "next/navigation";
+import ThemeSwitcher from "../ui/ThemeSwitcher";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -14,6 +17,8 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -31,44 +36,48 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-white/10 bg-[#060912]/80 backdrop-blur-xl"
+          ? "bg-base-100/80 border-base-content/10 border-b backdrop-blur-xl"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between">
-          <a
-            href="#"
-            className="flex items-center gap-2 text-lg font-bold tracking-tight text-white"
+          <button
+            className="flex items-center gap-2 text-lg font-bold tracking-tight"
             onClick={(e) => {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              router.push("/");
             }}
           >
-            <APusLightBanner className="h-fit w-48 text-white" />
-          </a>
+            {theme === "dark" ? (
+              <APusLightBanner className="h-fit w-48" />
+            ) : (
+              <APusDarkBanner className="h-fit w-48" />
+            )}
+          </button>
 
           <div className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => handleLinkClick(link.href)}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+                className="text-base-content hover:bg-base-300 rounded-lg px-4 py-2 text-sm font-medium transition-colors"
               >
                 {link.label}
               </button>
             ))}
             <button
               onClick={() => handleLinkClick("#contact")}
-              className="ml-4 rounded-full bg-sky-400 px-5 py-2.5 text-sm font-semibold text-[#060912] transition-colors hover:bg-sky-300"
+              className="bg-neutral text-neutral-content hover:bg-neutral/70 mx-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors"
             >
               Hire Me
             </button>
+            <ThemeSwitcher />
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 text-slate-300 hover:text-white md:hidden"
+            className="text-base-content hover:text-base-content/80 p-2 md:hidden"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -77,20 +86,20 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className="border-b border-white/10 bg-[#060912]/95 backdrop-blur-xl md:hidden">
+        <div className="bg-base-100/95 border-base-content/10 border-b backdrop-blur-xl md:hidden">
           <div className="space-y-1 px-6 py-4">
             {navLinks.map((link) => (
               <button
                 key={link.href}
                 onClick={() => handleLinkClick(link.href)}
-                className="block w-full rounded-lg px-4 py-3 text-left text-base font-medium text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+                className="text-base-content hover:bg-base-300 block w-full rounded-lg px-4 py-3 text-left text-base font-medium transition-colors"
               >
                 {link.label}
               </button>
             ))}
             <button
               onClick={() => handleLinkClick("#contact")}
-              className="mt-3 w-full rounded-full bg-sky-400 px-5 py-3 text-sm font-semibold text-[#060912] transition-colors hover:bg-sky-300"
+              className="bg-neutral text-neutral-content hover:bg-neutral/70 mt-3 w-full cursor-pointer rounded-full px-5 py-3 text-sm font-semibold transition-colors"
             >
               Hire Me
             </button>

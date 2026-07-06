@@ -72,7 +72,7 @@ export default function Projects() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="bg-[#080c16] py-24 lg:py-32">
+    <section id="projects" className="bg-base-100 py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -81,13 +81,13 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-sm font-semibold tracking-wide text-sky-400 uppercase">
+          <p className="text-base-content mb-3 text-sm font-semibold tracking-wide uppercase">
             Portfolio
           </p>
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
+          <h2 className="text-primary mb-4 text-4xl font-bold tracking-tight md:text-5xl">
             Featured work
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-slate-400">
+          <p className="text-secondary mx-auto max-w-2xl text-lg">
             A collection of templates and applications I've built, covering
             portfolios, admin panels, blogs, e-commerce, and community
             platforms.
@@ -107,23 +107,23 @@ export default function Projects() {
                 <div
                   className={`h-12 w-12 rounded-xl bg-linear-to-br ${project.color} flex items-center justify-center`}
                 >
-                  <project.icon className="h-6 w-6 text-white" />
+                  <project.icon className="text-base-content h-6 w-6" />
                 </div>
-                <span className="text-3xl font-extrabold text-white">
+                <span className="text-base-content text-3xl font-extrabold">
                   {project.count}
                 </span>
               </div>
-              <h3 className="mb-2 text-xl font-bold text-white">
+              <h3 className="text-accent mb-2 text-xl font-bold">
                 {project.category}
               </h3>
-              <p className="mb-5 text-sm leading-relaxed text-slate-400">
+              <p className="text-base-content/80 mb-5 text-sm leading-relaxed">
                 {project.description}
               </p>
               <div className="mb-5 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-md border border-white/5 bg-white/5 px-2.5 py-1 text-xs font-medium text-slate-300"
+                    className="border-base-content/25 bg-base-300/5 text-base-content rounded-md border px-2.5 py-1 text-xs font-medium"
                   >
                     {tag}
                   </span>

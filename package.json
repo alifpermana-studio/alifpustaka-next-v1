@@ -43,5 +43,6 @@
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
     "typescript": "^5"
-  }
+  },
+  "browserslist": "> 1%"
 }

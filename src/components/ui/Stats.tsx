@@ -28,13 +28,13 @@ export default function Stats() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-sm font-semibold tracking-wide text-sky-400 uppercase">
+          <p className="text-base-content mb-3 text-sm font-semibold tracking-wide uppercase">
             Experience
           </p>
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
+          <h2 className="text-accent mb-4 text-4xl font-bold tracking-tight md:text-5xl">
             Projects I've delivered
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-slate-400">
+          <p className="text-accent/70 mx-auto max-w-2xl text-lg">
             A proven track record of building diverse, production-ready web
             solutions across multiple industries and use cases.
           </p>
@@ -49,10 +49,10 @@ export default function Stats() {
               transition={{ duration: 0.4, delay: index * 0.08 }}
               className="rounded-2xl border border-white/10 bg-white/3 p-6 text-center transition-all hover:border-sky-400/30 hover:bg-white/5 lg:p-8"
             >
-              <div className="mb-2 bg-linear-to-r from-sky-400 to-indigo-400 bg-clip-text text-4xl font-extrabold text-transparent lg:text-5xl">
+              <div className="from-accent to-warning mb-2 bg-linear-to-r bg-clip-text text-4xl font-extrabold text-transparent lg:text-5xl">
                 {stat.value}
               </div>
-              <div className="font-medium text-slate-400">{stat.label}</div>
+              <div className="text-base-content font-medium">{stat.label}</div>
             </motion.div>
           ))}
         </div>

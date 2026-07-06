@@ -1,15 +1,21 @@
-import { APusLightBanner } from "@/icons/web-assets";
+import { useTheme } from "@/contexts/ThemeContext";
+import { APusDarkBanner, APusLightBanner } from "@/icons/web-assets";
 import { Code2, Heart } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { theme } = useTheme();
 
   return (
     <footer className="border-t border-white/10 py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <a href="#" className="flex items-center gap-2 font-bold text-white">
-            <APusLightBanner className="h-fit w-32 text-white" />
+            {theme === "dark" ? (
+              <APusLightBanner className="h-fit w-32 text-white" />
+            ) : (
+              <APusDarkBanner className="h-fit w-32 text-white" />
+            )}
           </a>
           <p className="flex items-center gap-1 text-sm text-slate-500">
             © {currentYear} Built with{" "}

@@ -44,7 +44,7 @@ export default function Skills() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" className="bg-[#080c16] py-24 lg:py-32">
+    <section id="skills" className="bg-base-100 py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -53,13 +53,13 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-sm font-semibold tracking-wide text-sky-400 uppercase">
+          <p className="text-base-content mb-3 text-sm font-semibold tracking-wide uppercase">
             Skills & Tools
           </p>
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
+          <h2 className="text-error mb-4 text-4xl font-bold tracking-tight md:text-5xl">
             Technologies I work with
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-slate-400">
+          <p className="text-error/70 mx-auto max-w-2xl text-lg">
             A versatile stack built for modern web development, scalable
             databases, and secure cloud storage.
           </p>
@@ -72,20 +72,20 @@ export default function Skills() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: catIndex * 0.1 }}
-              className="rounded-2xl border border-white/10 bg-white/3 p-6 lg:p-8"
+              className="bg-base-200 border-base-content/30 rounded-2xl border p-6 lg:p-8"
             >
-              <h3 className="mb-6 flex items-center gap-2 text-xl font-bold text-white">
-                <span className="h-2 w-2 rounded-full bg-sky-400" />
+              <h3 className="text-base-content mb-6 flex items-center gap-2 text-xl font-bold">
+                <span className="bg-base-content h-2 w-2 rounded-full" />
                 {category.title}
               </h3>
               <div className="space-y-5">
                 {category.skills.map((skill) => (
                   <div key={skill.name}>
                     <div className="mb-2 flex justify-between">
-                      <span className="font-medium text-slate-200">
+                      <span className="text-base-content/80 font-medium">
                         {skill.name}
                       </span>
-                      <span className="font-mono text-sm text-slate-500">
+                      <span className="text-base-content/60 font-mono text-sm">
                         {skill.level}%
                       </span>
                     </div>

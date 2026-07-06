@@ -62,13 +62,13 @@ export default function Services() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-sm font-semibold tracking-wide text-sky-400 uppercase">
+          <p className="text-base-content mb-3 text-sm font-semibold tracking-wide uppercase">
             Services
           </p>
-          <h2 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
+          <h2 className="text-error mb-4 text-4xl font-bold tracking-tight md:text-5xl">
             What I can do for you
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-slate-400">
+          <p className="text-error/70 mx-auto max-w-2xl text-lg">
             From concept to deployment, I provide full-cycle development
             services tailored to your business needs.
           </p>
@@ -81,15 +81,15 @@ export default function Services() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group rounded-2xl border border-white/10 bg-white/3 p-6 transition-all hover:border-sky-400/30 hover:bg-white/5"
+              className="group border-base-content/20 bg-base-300/10 hover:border-base-content/40 hover:bg-base-300/20 rounded-2xl border p-6 transition-all"
             >
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 transition-colors group-hover:bg-indigo-500/20">
                 <service.icon className="h-6 w-6 text-indigo-400" />
               </div>
-              <h3 className="mb-3 text-lg font-bold text-white">
+              <h3 className="text-error mb-3 text-lg font-bold">
                 {service.title}
               </h3>
-              <p className="text-sm leading-relaxed text-slate-400">
+              <p className="text-base-content/80 text-sm leading-relaxed">
                 {service.description}
               </p>
             </motion.div>
