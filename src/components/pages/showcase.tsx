@@ -2,11 +2,11 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SlidersHorizontal, X } from "lucide-react";
 
-import Header, { SearchBar } from "@/components/layout/Header";
+import Header, { SearchBar } from "@/components/showcase/FilterHeader";
 import Sidebar, {
   emptyFilters,
   type FilterState,
-} from "@/components/layout/Sidebar";
+} from "@/components/showcase/FilterSidebar";
 import ContentCard from "@/components/ui/ContentCard";
 import SortDropdown, { type SortKey } from "@/components/ui/ContentGrid";
 import { ITEMS, type Category } from "@/data/content";

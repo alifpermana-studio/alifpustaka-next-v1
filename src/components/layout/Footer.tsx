@@ -1,5 +1,11 @@
-import { useTheme } from "@/contexts/ThemeContext";
-import { APusDarkBanner, APusLightBanner } from "@/icons/web-assets";
+"use client";
+
+import { useTheme } from "@/context/ThemeContext";
+import {
+  APusColorSquare,
+  APusDarkBanner,
+  APusLightBanner,
+} from "@/icons/web-assets";
 import { Code2, Heart } from "lucide-react";
 
 export default function Footer() {
@@ -7,14 +13,23 @@ export default function Footer() {
   const { theme } = useTheme();
 
   return (
-    <footer className="border-t border-white/10 py-8">
+    <footer className="border-base-content/20 border-t py-4">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <a href="#" className="flex items-center gap-2 font-bold text-white">
+          <a
+            href="#"
+            className="text-base-content flex items-center gap-2 font-bold"
+          >
             {theme === "dark" ? (
-              <APusLightBanner className="h-fit w-32 text-white" />
+              <div className="flex items-center gap-3">
+                <APusColorSquare className="w-8" />
+                <APusLightBanner className="text-base-content h-fit w-32" />
+              </div>
             ) : (
-              <APusDarkBanner className="h-fit w-32 text-white" />
+              <div className="flex items-center gap-3">
+                <APusColorSquare className="w-8" />
+                <APusDarkBanner className="text-base-content h-fit w-32" />
+              </div>
             )}
           </a>
           <p className="flex items-center gap-1 text-sm text-slate-500">

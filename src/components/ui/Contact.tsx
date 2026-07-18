@@ -2,7 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
 import { GithubIcon, LinkedInIcon, XIcon } from "@/icons/brands/index";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Contact() {
   const ref = useRef(null);

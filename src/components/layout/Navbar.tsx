@@ -1,9 +1,15 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Menu, X, Code2 } from "lucide-react";
-import { APusDarkBanner, APusLightBanner } from "@/icons/web-assets";
+import {
+  APusColorSquare,
+  APusDarkBanner,
+  APusLightBanner,
+} from "@/icons/web-assets";
 import { useRouter } from "next/navigation";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -36,12 +42,12 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-base-100/80 border-base-content/10 border-b backdrop-blur-xl"
+          ? "bg-base-200/80 border-base-content/10 border-b backdrop-blur-xl"
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="flex h-18 items-center justify-between">
+        <div className="flex h-16 items-center justify-between">
           <button
             className="flex items-center gap-2 text-lg font-bold tracking-tight"
             onClick={(e) => {
@@ -50,9 +56,15 @@ export default function Navbar() {
             }}
           >
             {theme === "dark" ? (
-              <APusLightBanner className="h-fit w-48" />
+              <div className="flex items-center gap-3">
+                <APusColorSquare className="w-8" />
+                <APusLightBanner className="h-fit w-40" />
+              </div>
             ) : (
-              <APusDarkBanner className="h-fit w-48" />
+              <div className="flex items-center gap-3">
+                <APusColorSquare className="w-8" />
+                <APusDarkBanner className="h-fit w-40" />
+              </div>
             )}
           </button>
 
@@ -86,7 +98,7 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className="bg-base-100/95 border-base-content/10 border-b backdrop-blur-xl md:hidden">
+        <div className="bg-base-200/95 border-base-content/10 border-b backdrop-blur-xl md:hidden">
           <div className="space-y-1 px-6 py-4">
             {navLinks.map((link) => (
               <button

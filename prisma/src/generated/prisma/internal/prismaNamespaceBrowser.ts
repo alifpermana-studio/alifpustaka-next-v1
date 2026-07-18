@@ -54,7 +54,11 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Post: 'Post',
+  Tag: 'Tag',
+  PostTag: 'PostTag',
+  Gallery: 'Gallery'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -80,6 +84,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -94,6 +99,7 @@ export const SessionScalarFieldEnum = {
   expiresAt: 'expiresAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -130,6 +136,62 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  desc: 'desc',
+  slug: 'slug',
+  image: 'image',
+  footnote: 'footnote',
+  status: 'status',
+  content: 'content',
+  userId: 'userId',
+  uploadTime: 'uploadTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const PostTagScalarFieldEnum = {
+  postId: 'postId',
+  tagId: 'tagId'
+} as const
+
+export type PostTagScalarFieldEnum = (typeof PostTagScalarFieldEnum)[keyof typeof PostTagScalarFieldEnum]
+
+
+export const GalleryScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  size: 'size',
+  format: 'format',
+  path: 'path',
+  type: 'type',
+  tags: 'tags',
+  uploadTime: 'uploadTime',
+  isPrivate: 'isPrivate',
+  isFeatured: 'isFeatured',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GalleryScalarFieldEnum = (typeof GalleryScalarFieldEnum)[keyof typeof GalleryScalarFieldEnum]
 
 
 export const SortOrder = {

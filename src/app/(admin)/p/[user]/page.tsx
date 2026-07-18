@@ -1,19 +1,17 @@
 // app/blog/[slug]/page.tsx
 
 import { Profile } from "@/components/pages/profile";
+import { Metadata } from "next";
 
-interface PageProps {
-  params: Promise<{ user: string }>;
-}
+export const metadata: Metadata = {
+  title: "Alif Pustaka | Profile",
+  description: "User Profile",
+};
 
-export default async function BlogPostPage({ params }: PageProps) {
-  // Await the params object to access the dynamic segment safely
-  const resolvedParams = await params;
-  const user = resolvedParams.user;
-
+export default function ProfilePage() {
   return (
     <div>
-      <Profile user={user} />
+      <Profile />
     </div>
   );
 }

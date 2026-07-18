@@ -1,5 +1,5 @@
 // src/components/atoms/ThemeSwitcher.jsx
-import { useTheme } from "@/contexts/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { MoonIcon, SunIcon } from "lucide-react";
 
 const ThemeSwitcher = () => {

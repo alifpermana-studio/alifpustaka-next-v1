@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
 
   reactStrictMode: true,
   reactCompiler: true,
+  images: {
+    localPatterns: [
+      {
+        pathname: "/api/**",
+      },
+    ],
+    qualities: [25, 50, 75],
+  },
 };
 
 export default nextConfig;

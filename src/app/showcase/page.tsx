@@ -5,6 +5,13 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import Showcase from "@/components/pages/showcase";
 
+export async function generateMetadata() {
+  return {
+    title: "Showcase",
+    description: "Ecommerce search template.",
+  };
+}
+
 function Page() {
   return (
     <div className="flex min-h-svh w-full items-center justify-center">

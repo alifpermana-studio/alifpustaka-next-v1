@@ -1,19 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { APusLightBanner } from "@/icons/web-assets";
 import { authClient } from "@/lib/auth.client";
+import { CircleUser, KeyRound, Mail, Shield, BadgeCheck } from "lucide-react";
+import { Button } from "../ui/Button";
+import { Card, CardHeader } from "../ui/Card";
+import { Badge } from "../ui/Badge";
+import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
-type ProfileProps = {
-  user: string;
-};
+type userProps = {};
 
 export function Profile({
   className,
-  user,
   ...props
-}: ProfileProps & React.HTMLAttributes<HTMLDivElement>) {
+}: userProps & React.HTMLAttributes<HTMLDivElement>) {
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleSignOut = async () => {
     try {
@@ -37,50 +40,123 @@ export function Profile({
   };
 
   return (
-    <div className="relative flex min-h-screen w-full items-stretch overflow-hidden bg-[#060912]">
-      {/* ambient blue glows */}
-      <div
-        className="pointer-events-none absolute -top-40 -left-40 h-136 w-xl rounded-full bg-blue-600/25 blur-[120px]"
-        style={{ animation: "drift 16s ease-in-out infinite" }}
-      />
-      <div
-        className="pointer-events-none absolute right-0 -bottom-52 h-144 w-xl rounded-full bg-indigo-500/20 blur-[130px]"
-        style={{ animation: "drift 20s ease-in-out infinite reverse" }}
-      />
-      {/* grid texture */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(59,130,246,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.18) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-          maskImage:
-            "radial-gradient(circle at 30% 40%, black, transparent 75%)",
-          animation: "grid-pan 30s linear infinite",
-        }}
-      />
-
-      <main className="relative z-10 flex w-full items-center justify-center px-12 py-6 lg:w-[50%]">
-        <div
-          className="animate-in w-full max-w-xl rounded-3xl border border-white/10 bg-white/3 p-8 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-10"
-          style={{ animationDelay: "0.15s" }}
-        >
-          {/* mobile logo */}
-          <div className="mb-8 flex items-center justify-center gap-3 lg:hidden">
-            <APusLightBanner className="w-48" />
+    <div className="space-y-6">
+      <Card className="bg-base-200">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center">
+          {user?.image ? (
+            <Image
+              className="ring-accent/30 h-24 w-24 rounded-2xl object-cover ring-2"
+              src="/avatar-admin.jpg"
+              alt="Alif Pustaka"
+              width={96}
+              height={96}
+            />
+          ) : (
+            <CircleUser className="ring-accent/30 h-24 w-24 rounded-2xl object-cover p-2 ring-2" />
+          )}
+          <div className="flex-1">
+            <div className="flex flex-wrap items-center gap-3">
+              <h2 className="text-accent text-2xl font-semibold">
+                {user?.name}
+              </h2>
+              {user?.emailVerified && (
+                <BadgeCheck className="fill-info h-5 w-5 text-white" />
+              )}
+              <Badge variant="accent">{user?.role}</Badge>
+            </div>
+            <p className="text-surface-400 mt-2 text-sm">
+              Product-minded operator focused on growth systems, analytics, and
+              platform reliability.
+            </p>
+            <div className="text-surface-300 mt-4 flex flex-wrap gap-4 text-sm">
+              <span className="inline-flex items-center gap-2">
+                <Mail className="text-surface-500 h-4 w-4" />
+                {user?.email}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Shield className="text-surface-500 h-4 w-4" />
+                2FA enabled
+              </span>
+            </div>
           </div>
-
-          <h2 className="font-700 text-3xl font-(--font-display) tracking-tight text-white">
-            Welcome back
-          </h2>
-          <button
-            onClick={handleSignOut}
-            className="mt-4 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-          >
-            Sign out
-          </button>
+          <Button variant="secondary">Edit user</Button>
         </div>
-      </main>
+      </Card>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card className="bg-base-200">
+          <CardHeader
+            title="Account details"
+            description="Primary identity information"
+          />
+          <div className="space-y-4 text-sm">
+            {[
+              ["Full name", `${user?.name}`],
+              ["Role", "User"],
+              ["Department", "Operations"],
+              ["Location", "Remote · EST"],
+              ["Member since", "January 2025"],
+            ].map(([label, value]) => (
+              <div
+                key={label}
+                className="border-base-content/20 flex items-center justify-between border-b pb-3 last:border-0 last:pb-0"
+              >
+                <span className="text-surface-400">{label}</span>
+                <span className="text-secondary font-semibold">{value}</span>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        <Card className="bg-base-200 text-base-content">
+          <CardHeader
+            title="Security"
+            description="Credentials and access controls"
+          />
+          <div className="space-y-4">
+            <div className="bg-base-300 rounded-2xl p-4">
+              <div className="flex items-center gap-3">
+                <div className="bg-base-content/15 text-base-content rounded-xl p-2">
+                  <KeyRound className="h-4 w-4" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-base-content text-sm font-semibold">
+                    Password
+                  </p>
+                  <p className="text-base-content mt-1 text-xs">
+                    Last changed 36 days ago
+                  </p>
+                </div>
+                <Button
+                  size="md"
+                  variant="secondary"
+                  className="text-base-content"
+                >
+                  Update
+                </Button>
+              </div>
+            </div>
+            <div className="bg-base-300 rounded-2xl p-4">
+              <div className="flex items-center gap-3">
+                <div className="bg-base-content/15 text-base-content rounded-xl p-2">
+                  <Shield className="h-4 w-4" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-base-content text-base font-semibold">
+                    Two-factor authentication
+                  </p>
+                  <p className="text-base-content mt-1 text-xs">
+                    Authenticator app connected
+                  </p>
+                </div>
+                <Badge size="md" className="text-base-content">
+                  Active
+                </Badge>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }

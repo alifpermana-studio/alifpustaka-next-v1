@@ -18,7 +18,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import { GoogleIcon, GithubIcon } from "@/icons/brands";
-import { APusLightBanner } from "@/icons/web-assets";
+import { APusColorSquare, APusLightBanner } from "@/icons/web-assets";
 import { authClient } from "@/lib/auth.client";
 
 export function SignInForm({
@@ -91,8 +91,9 @@ export function SignInForm({
 
       {/* LEFT brand panel */}
       <aside className="relative z-10 hidden w-[50%] flex-col justify-between p-12 lg:flex">
-        <div className="animate-in flex items-center gap-3">
-          <APusLightBanner className="w-60" />
+        <div className="animate-in flex items-center gap-4">
+          <APusColorSquare className="w-12" />
+          <APusLightBanner className="w-52" />
         </div>
 
         <div className="animate-in max-w-md" style={{ animationDelay: "0.1s" }}>

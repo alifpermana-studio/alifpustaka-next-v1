@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
-const PROTECTED_ROUTES = ["/dashboard", "/profile", "/settings"];
+const PROTECTED_ROUTES = ["/dashboard", "/p", "/settings", "/blog", "/gallery"];
 // 1. Define routes that only unauthenticated guests should see
 const AUTH_ROUTES = ["/signin", "/signup", "/forgot-password", "/verify-email"];
 // 2. Define routes that are accessible to everyone, regardless of authentication status

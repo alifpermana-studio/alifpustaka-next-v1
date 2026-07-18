@@ -19,11 +19,14 @@ model User {
 	email           String    @unique
 	emailVerified   Boolean
 	image           String?
+	role            String    @default("user")
 	createdAt       DateTime  @db.Timestamptz(3)
 	updatedAt       DateTime  @db.Timestamptz(3)
 
-  	accounts        Account[] // One-to-many: a user can have multiple accounts
+  	accounts        Account[]
   	session         Session[]
+	posts           Post[]
+	gallery         Gallery[]
 
 	@@map("user")
 }
@@ -36,6 +39,7 @@ model Session {
 	expiresAt DateTime @db.Timestamptz(3)
 	ipAddress String?
 	userAgent String?
+	role String?
 	createdAt DateTime @db.Timestamptz(3)
 	updatedAt DateTime @db.Timestamptz(3)
 	@@map("session")
@@ -67,4 +71,59 @@ model Verification {
 	createdAt DateTime @db.Timestamptz(3)
 	updatedAt DateTime @db.Timestamptz(3)
 	@@map("verification")
+}
+
+model Post {
+	id String @id
+	title String
+	desc String?
+	slug String @unique
+	image String
+	footnote String
+	status String @default("drafted")
+	content String
+	userId String
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+	uploadTime DateTime @default(now()) @db.Timestamptz(3)
+	createdAt DateTime @default(now()) @db.Timestamptz(3)
+	updatedAt DateTime @updatedAt @db.Timestamptz(3)
+	tags PostTag[]
+	@@map("post")
+}
+
+model Tag {
+	id String @id @default(uuid())
+	name String @unique
+	posts PostTag[]
+	createdAt DateTime @default(now()) @db.Timestamptz(3)
+	updatedAt DateTime @updatedAt @db.Timestamptz(3)
+	@@map("tag")
+}
+
+model PostTag {
+	postId String
+	tagId String
+	post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+	tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+	@@id([postId, tagId])
+	@@map("post_tag")
+}
+
+model Gallery {
+	id String @id @default(uuid())
+	title String
+	slug String @unique
+	size Int
+	format String
+	path String
+	type String
+	tags String[]
+	uploadTime DateTime @default(now()) @db.Timestamptz(3)
+	isPrivate Boolean @default(false)
+	isFeatured Boolean @default(false)
+	userId String
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+	createdAt DateTime @default(now()) @db.Timestamptz(3)
+	updatedAt DateTime @updatedAt @db.Timestamptz(3)
+	@@map("gallery")
 }
