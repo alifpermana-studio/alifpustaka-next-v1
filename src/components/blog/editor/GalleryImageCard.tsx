@@ -1,4 +1,4 @@
-import { useGallery } from "@/context/GalleryContext";
+import { useGallery } from "@/hooks/useGallery";
 import { ImageGallery } from "apus-gallery";
 import { Lock } from "lucide-react";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";

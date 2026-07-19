@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Search, User } from "lucide-react";
 import { NAV_LINKS } from "@/data/content";

@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "../../../../../prisma/src/generated/prisma";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export async function PUT(req: NextRequest) {
   try {
@@ -11,7 +9,7 @@ export async function PUT(req: NextRequest) {
     if (!data.title || !data.slug) {
       return NextResponse.json(
         { success: false, error: "missing-required-metadata" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -101,13 +99,13 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json(
       { success: false, error: "Invalid action" },
-      { status: 400 }
+      { status: 400 },
     );
   } catch (error) {
     console.error("Error processing blog post:", error);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, LayoutGrid } from "lucide-react";
 

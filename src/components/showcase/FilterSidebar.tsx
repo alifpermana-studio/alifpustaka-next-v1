@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Plus, X, SlidersHorizontal, ChevronDown } from "lucide-react";
 import {
