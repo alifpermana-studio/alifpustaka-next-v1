@@ -57,3 +57,8 @@ export type PostTag = Prisma.PostTagModel
  * 
  */
 export type Gallery = Prisma.GalleryModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel

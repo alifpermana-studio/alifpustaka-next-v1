@@ -1,4 +1,4 @@
-import Homepage from "@/components/pages/homepage";
+import Homepage from "@/components/home/homepage";
 
 export async function generateMetadata() {
   return {

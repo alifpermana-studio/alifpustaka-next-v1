@@ -26,7 +26,7 @@ export default async function Page({
   const token = { sub: "dummyuser123" };
   const key = (await searchParams).key || "";
 
-  let findPost: Post | null = null;
+  let findPost: any = null;
 
   if (key) {
     findPost = await prisma.post.findUnique({

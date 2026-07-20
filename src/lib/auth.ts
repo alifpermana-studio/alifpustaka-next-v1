@@ -22,6 +22,11 @@ export const auth = betterAuth({
         defaultValue: "user",
         required: false,
       },
+      status: {
+        type: "string",
+        defaultValue: "active",
+        required: false,
+      },
     },
   },
 
@@ -75,10 +80,16 @@ export const auth = betterAuth({
   },
   plugins: [
     username({
+      usernameValidator: (username) => {
+        if (username === "admin") {
+          return false;
+        }
+        return true;
+      },
       schema: {
         user: {
           fields: {
-            displayUsername: "username",
+            username: "username",
           },
         },
       },

@@ -14,7 +14,7 @@ import {
   Trash2,
 } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { AlertTriangleIcon } from "lucide-react";
 import { UpdateMetadata } from "./UpdateMetadata";
 import { ActionUpdate } from "./ActionUpdate";
@@ -38,7 +38,6 @@ export const GridLayout = () => {
   }, [loading]); */
 
   useEffect(() => {
-    console.log("checkload: ", data);
     if (!loading) {
       setImgList(data);
     }
@@ -67,6 +66,7 @@ const BoxImage = ({ image }: PropsBoxImage) => {
     openModal: openImage,
     closeModal: closeImage,
   } = useModal();
+  const dropdownTriggerRef = useRef<HTMLDivElement>(null);
 
   const openItem = (e: string) => {
     openModal();
@@ -89,9 +89,9 @@ const BoxImage = ({ image }: PropsBoxImage) => {
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="relative cursor-pointer rounded-md"
+      className="relative rounded-md"
     >
-      <div className="relative aspect-3/2 overflow-hidden rounded-md">
+      <div className="relative aspect-3/2 cursor-pointer overflow-hidden rounded-md">
         <Image
           className={`h-full w-full object-cover transition-all duration-500 ease-in-out ${hover && "scale-110"}`}
           src={`/api/image?src=${image.slug}&p=${image.isPrivate}`}
@@ -104,7 +104,7 @@ const BoxImage = ({ image }: PropsBoxImage) => {
         />
         <div
           onClick={() => openImage()}
-          className="absolute bottom-0 flex w-full items-center justify-between bg-gray-200/40 p-2 font-semibold text-gray-800 backdrop-blur-md dark:bg-gray-900/40 dark:text-white"
+          className="bg-accent/40 text-accent-content absolute bottom-0 flex w-full items-center justify-between p-2 font-semibold backdrop-blur-md"
         >
           <p
             title={image.title}
@@ -113,65 +113,66 @@ const BoxImage = ({ image }: PropsBoxImage) => {
             {image.title}
           </p>
 
-          <EllipsisVertical
-            onClick={(e) => handleImageDropdown(e)}
-            className="h-7 w-7 rounded-full p-1 hover:bg-gray-400/50"
-          />
+          <div ref={dropdownTriggerRef}>
+            <EllipsisVertical
+              onClick={(e) => handleImageDropdown(e)}
+              className="h-7 w-7 rounded-full p-1 hover:bg-gray-400/50"
+            />
+          </div>
         </div>
         <div
-          className={`absolute top-1 right-1 ${image.isPrivate ? "flex" : "hidden"}`}
+          className={`bg-accent absolute top-1 right-1 rounded-lg px-1 py-1 opacity-80 ${image.isPrivate ? "flex" : "hidden"}`}
         >
-          <Lock />
+          <Lock className="text-accent-content" />
         </div>
       </div>
-      <div className="relative">
-        <Dropdown
-          isOpen={dropdownOpen}
-          onClose={() => setDropdownOpen(false)}
-          className="shadow-theme-lg dark:bg-gray-dark absolute right-0 mt-1.5 flex w-65 flex-col rounded-2xl border border-gray-200 bg-white p-2 dark:border-gray-800"
-        >
-          <ul className="flex flex-col gap-1 border-b border-gray-200 py-1 dark:border-gray-800">
-            <li>
-              <DropdownItem
-                onItemClick={() =>
-                  handleCopy(`p=${image.isPrivate}&src=${image.slug}`)
-                }
-                className="group text-theme-sm flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
-              >
-                <Copy />
-                Copy Link
-              </DropdownItem>
-            </li>
-            <li>
-              <DropdownItem
-                onItemClick={() => openItem("edit")}
-                className="group text-theme-sm flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
-              >
-                <Pencil />
-                Edit
-              </DropdownItem>
-            </li>
-            <li>
-              <DropdownItem
-                onItemClick={() => openItem("delete")}
-                className="group text-theme-sm flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
-              >
-                <Trash2 />
-                Delete
-              </DropdownItem>
-            </li>
-            <li>
-              <DropdownItem
-                onItemClick={() => openItem("report")}
-                className="group text-theme-sm flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
-              >
-                <Bug />
-                Report
-              </DropdownItem>
-            </li>
-          </ul>
-        </Dropdown>
-      </div>
+      <Dropdown
+        isOpen={dropdownOpen}
+        onClose={() => setDropdownOpen(false)}
+        triggerRef={dropdownTriggerRef}
+        className="shadow-theme-lg bg-accent flex w-65 flex-col rounded-xl p-2"
+      >
+        <ul className="text-accent-content flex flex-col gap-1">
+          <li>
+            <DropdownItem
+              onItemClick={() =>
+                handleCopy(`p=${image.isPrivate}&src=${image.slug}`)
+              }
+              className="group text-theme-sm hover:bg-accent hover:text-accent-content/80 flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 font-medium"
+            >
+              <Copy />
+              Copy Link
+            </DropdownItem>
+          </li>
+          <li>
+            <DropdownItem
+              onItemClick={() => openItem("edit")}
+              className="group text-theme-sm hover:bg-accent hover:text-accent-content/80 flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 font-medium"
+            >
+              <Pencil />
+              Edit
+            </DropdownItem>
+          </li>
+          <li>
+            <DropdownItem
+              onItemClick={() => openItem("delete")}
+              className="group text-theme-sm hover:bg-accent hover:text-accent-content/80 flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 font-medium"
+            >
+              <Trash2 />
+              Delete
+            </DropdownItem>
+          </li>
+          <li>
+            <DropdownItem
+              onItemClick={() => openItem("report")}
+              className="group text-theme-sm hover:bg-accent hover:text-accent-content/80 flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 font-medium"
+            >
+              <Bug />
+              Report
+            </DropdownItem>
+          </li>
+        </ul>
+      </Dropdown>
       <Modal isOpen={isOpen} onClose={closeModal} className={`block max-w-5xl`}>
         {modalType === "edit" && (
           <EditModal image={image} closeModal={closeModal} />

@@ -1,4 +1,8 @@
 declare module "apus-post" {
+  // Post status types
+  // Valid values: "drafted", "submitted", "published", "deleted"
+  export type PostStatus = "drafted" | "submitted" | "published" | "deleted";
+
   interface UploadPost {
     title: string;
     desc: string | null;
@@ -6,7 +10,7 @@ declare module "apus-post" {
     id: string;
     image: string;
     footnote: string;
-    status: string;
+    status: PostStatus;
     tags: string[];
     content: string;
   }
@@ -24,10 +28,10 @@ declare module "apus-post" {
     id: string;
     slug: string;
     uploadTime: Date;
-    tags: Tag[];
+    tags: String[];
     desc: string | null;
     footnote: string;
-    status: string;
+    status: PostStatus;
     userId: string;
     content: string;
     image: string;

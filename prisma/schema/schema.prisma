@@ -20,6 +20,7 @@ model User {
 	emailVerified   Boolean
 	image           String?
 	role            String    @default("user")
+	status          String    @default("active")
 	createdAt       DateTime  @db.Timestamptz(3)
 	updatedAt       DateTime  @db.Timestamptz(3)
 
@@ -126,4 +127,25 @@ model Gallery {
 	createdAt DateTime @default(now()) @db.Timestamptz(3)
 	updatedAt DateTime @updatedAt @db.Timestamptz(3)
 	@@map("gallery")
+}
+
+model AuditLog {
+	id              String    @id @default(uuid())
+	action          String
+	entityType      String
+	entityId        String
+	performedBy     String
+	performedByRole String
+	oldValue        String?
+	newValue        String?
+	metadata        Json?
+	ipAddress       String?
+	userAgent       String?
+	createdAt       DateTime  @default(now()) @db.Timestamptz(3)
+
+	@@map("audit_log")
+	@@index([entityType, entityId])
+	@@index([performedBy])
+	@@index([action])
+	@@index([createdAt])
 }

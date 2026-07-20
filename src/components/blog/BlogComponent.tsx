@@ -40,7 +40,7 @@ export const BlogComponent = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="border-base-300 bg-base-200 rounded-lg border p-5">
       <PostFilter />
       <PostLists postList={postList} loading={loading} />
     </div>
@@ -53,7 +53,6 @@ type PostListsProps = {
 };
 
 const PostLists = ({ postList, loading }: PostListsProps) => {
-  const [onHover, setOnHover] = useState("");
   const router = useRouter();
   return (
     <table className="text-base-content w-full border-separate border-spacing-y-2">
@@ -73,52 +72,44 @@ const PostLists = ({ postList, loading }: PostListsProps) => {
       <tbody className="">
         {loading ? (
           <tr>
-            <td
-              colSpan={5}
-              className="rounded-lg bg-gray-200 p-4 text-center dark:bg-gray-800"
-            >
+            <td colSpan={9} className="bg-base-300 rounded-lg p-4 text-center">
               <div className="flex w-full flex-row items-center justify-center gap-4">
                 <RefreshCw className="animate-spin" />
                 <span>Loading...</span>
               </div>
             </td>
           </tr>
+        ) : postList.length === 0 ? (
+          <></>
         ) : (
           postList.map((post) => (
             <tr
-              onMouseEnter={() => setOnHover(post.id)}
-              onMouseLeave={() => setOnHover("")}
-              key={post.id}
+              key={Math.random()}
               onClick={() => router.push(`/blog/editor?key=${post.id}`)}
-              className="cursor-pointer transition-transform duration-200 ease-in-out hover:scale-[1.01] hover:bg-gray-300 active:scale-[1.02] hover:dark:bg-gray-700"
+              className="hover:bg-base-300 cursor-pointer transition-transform duration-200 ease-in-out hover:scale-[1.01] active:scale-[1.02]"
             >
-              <td
-                className={`${onHover === post.id ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800"} rounded-l-lg p-4 text-left`}
-              >
+              <td className={`rounded-l-lg p-4 text-left`}>
                 <TitleMarkdown post={post} />
               </td>
-              <td
-                className={`${onHover === post.id ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800"} p-4 text-center`}
-              >
-                {post.uploadTime.toString()}
+              <td className="opacity-30">|</td>
+              <td className={`p-4 text-center`}>
+                {formatDate(post.uploadTime.toString())}
               </td>
-              <td
-                className={`${onHover === post.id ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800"} p-4 text-center`}
-              >
+              <td className="opacity-30">|</td>
+              <td className={`p-4 text-center`}>
                 <div className="flex flex-wrap justify-center gap-1">
                   {post.tags.map((tag, i) => (
                     <span
                       key={i}
                       className="rounded bg-gray-300 px-2 py-1 text-xs font-semibold text-gray-800 dark:bg-gray-600 dark:text-gray-200"
                     >
-                      {tag.tag.name}
+                      {tag}
                     </span>
                   ))}
                 </div>
               </td>
-              <td
-                className={`${onHover === post.id ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800"} p-4 text-center`}
-              >
+              <td className="opacity-30">|</td>
+              <td className={`p-4 text-center`}>
                 <span
                   className={`rounded px-2 py-1 text-sm font-semibold ${
                     post.status === "published"
@@ -133,9 +124,10 @@ const PostLists = ({ postList, loading }: PostListsProps) => {
                   {post.status}
                 </span>
               </td>
+              <td className="opacity-30">|</td>
               <td
                 onClick={(e) => e.stopPropagation()}
-                className={`${onHover === post.id ? "bg-gray-300 dark:bg-gray-700" : "bg-gray-200 dark:bg-gray-800"} rounded-r-lg p-4 text-center`}
+                className={`rounded-r-lg p-4 text-center`}
               >
                 <OptionList post={post} />
               </td>

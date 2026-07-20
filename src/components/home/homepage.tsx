@@ -1,13 +1,13 @@
 "use client";
 
 import Navbar from "@/components/layout/Navbar";
-import Hero from "@/components/ui/Hero";
-import About from "@/components/ui/About";
-import Skills from "@/components/ui/Skills";
-import Stats from "@/components/ui/Stats";
-import Projects from "@/components/ui/Projects";
-import Services from "@/components/ui/Services";
-import Contact from "@/components/ui/Contact";
+import Hero from "@/components/home/Hero";
+import About from "@/components/home/About";
+import Skills from "@/components/home/Skills";
+import Stats from "@/components/home/Stats";
+import Projects from "@/components/home/Projects";
+import Services from "@/components/home/Services";
+import Contact from "@/components/home/Contact";
 import Footer from "@/components/layout/Footer";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";

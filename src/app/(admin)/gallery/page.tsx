@@ -1,5 +1,11 @@
 import { UploadCard } from "@/components/gallery/upload-card/UploadCard";
 import { UserGallery } from "@/components/gallery/user-gallery/UserGallery";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Alif Pustaka | Gallery",
+  description: "User Gallery",
+};
 
 export default async function Gallery() {
   return (

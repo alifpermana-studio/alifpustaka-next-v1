@@ -23,9 +23,7 @@ export const GalleryImageCard = ({ onClose, setImg }: Props) => {
   return (
     <div className="grid w-full grid-cols-1 justify-center gap-3 rounded-md md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {loading ? (
-        <div className="mx-auto text-gray-800 dark:text-gray-200">
-          loading...
-        </div>
+        <div className="text-base-content mx-auto">loading...</div>
       ) : (
         imgList.map((image, i) => (
           <BoxImage key={i} image={image} setImg={setImg} onClose={onClose} />
@@ -64,11 +62,12 @@ const BoxImage = ({ image, setImg, onClose }: BoxImageProps) => {
           width={120}
           height={54}
           quality={20}
+          unoptimized
           onClick={handleSelectImage}
         />
         <div
           onClick={handleSelectImage}
-          className="absolute bottom-0 flex w-full items-center justify-between bg-gray-200/40 p-1 font-semibold text-gray-800 backdrop-blur-md dark:bg-gray-900/40 dark:text-white"
+          className="bg-accent text-accent-content absolute bottom-0 flex w-full items-center justify-between rounded-b-md p-1 font-semibold backdrop-blur-md"
         >
           <p
             title={image.title}

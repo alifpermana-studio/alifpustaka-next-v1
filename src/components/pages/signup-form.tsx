@@ -65,7 +65,7 @@ export const SignUpForm = () => {
         email: signupForm.email, // user email address
         password: signupForm.password, // user password -> min 8 characters by default
         name: signupForm.displayName, // user display name
-        displayUsername: signupForm.username, // user username
+        username: signupForm.username,
         image: undefined, // User image URL (optional)
       });
 

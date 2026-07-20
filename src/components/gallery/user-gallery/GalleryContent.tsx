@@ -6,7 +6,7 @@ import { RotateCw } from 'lucide-react';
 import { useGallery } from '@/hooks/useGallery';
 
 export const GalleryContent = () => {
-  const { isGrid, loading } = useGallery();
+  const { isGrid, loading } = useGallery(); 
 
   if (isGrid) {
     return (

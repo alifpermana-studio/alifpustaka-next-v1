@@ -51,7 +51,7 @@ const FilterAndRefresh = () => {
 
   const handleRefresh = () => {
     refresh();
-  };
+  }; 
 
   const handleSort = (sort: string) => {
     setFilter({ sort: sort });

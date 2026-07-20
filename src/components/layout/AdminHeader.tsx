@@ -1,10 +1,14 @@
 "use client";
 
+import { useState, useRef } from "react";
 import { useUser } from "@/hooks/useUser";
-import { Bell, Search, Command, MenuIcon, CircleUser } from "lucide-react";
+import { Bell, Search, Command, MenuIcon, CircleUser, ChevronDown, User, Settings, Bookmark, Clock, LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
+import { useAuth } from "@/context/AuthContext";
+import { Dropdown } from "@/components/ui/dropdown/Dropdown";
+import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
 
 interface HeaderProps {
   /* title: string;
@@ -77,8 +81,16 @@ const pageMeta: Record<string, { title: string; subtitle: string }> = {
 export function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
   const { user } = useUser();
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const userButtonRef = useRef<HTMLButtonElement>(null);
+  const { signOut } = useAuth();
 
   const meta = findPageMeta(pathname, pageMetaConfigs);
+
+  const handleSignOut = async () => {
+    setIsUserDropdownOpen(false);
+    await signOut();
+  };
 
   return (
     <header className="border-base-300 bg-base-200 sticky top-0 z-30 border-b backdrop-blur-xl">
@@ -119,7 +131,11 @@ export function Header({ onMenuClick }: HeaderProps) {
             <span className="bg-accent absolute top-2 right-2 h-2 w-2 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.9)]" />
           </button>
 
-          <div className="border-surface-700/80 bg-surface-900 flex items-center gap-3 rounded-2xl border px-2 py-1.5 pr-3">
+          <button
+            ref={userButtonRef}
+            onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+            className="border-surface-700/80 bg-surface-900 flex items-center gap-3 rounded-2xl border px-2 py-1.5 pr-3 transition-all duration-200 hover:border-accent/50 hover:bg-surface-800 cursor-pointer"
+          >
             {user?.image ? (
               <Image
                 src={user.image}
@@ -135,7 +151,76 @@ export function Header({ onMenuClick }: HeaderProps) {
               <p className="text-accent text-sm font-medium">{user?.name}</p>
               <p className="text-surface-400 text-xs">{user?.role}</p>
             </div>
-          </div>
+            <ChevronDown 
+              className={`h-4 w-4 text-surface-400 transition-transform duration-300 ${
+                isUserDropdownOpen ? 'rotate-180' : 'rotate-0'
+              }`}
+            />
+          </button>
+
+          <Dropdown
+            isOpen={isUserDropdownOpen}
+            onClose={() => setIsUserDropdownOpen(false)}
+            triggerRef={userButtonRef}
+            className="bg-base-200 border-base-300 shadow-lg flex w-56 flex-col rounded-2xl border p-2 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200"
+          >
+            <ul className="flex flex-col gap-1 py-1">
+              <li>
+                <DropdownItem
+                  tag="a"
+                  href={`/p/${user?.username}`}
+                  onItemClick={() => setIsUserDropdownOpen(false)}
+                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                >
+                  <User className="h-4 w-4" />
+                  Profile
+                </DropdownItem>
+              </li>
+              <li>
+                <DropdownItem
+                  tag="a"
+                  href="/settings"
+                  onItemClick={() => setIsUserDropdownOpen(false)}
+                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                >
+                  <Settings className="h-4 w-4" />
+                  Settings
+                </DropdownItem>
+              </li>
+              <li>
+                <DropdownItem
+                  tag="a"
+                  href="/saved"
+                  onItemClick={() => setIsUserDropdownOpen(false)}
+                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                >
+                  <Bookmark className="h-4 w-4" />
+                  Saved
+                </DropdownItem>
+              </li>
+              <li>
+                <DropdownItem
+                  tag="a"
+                  href="/history"
+                  onItemClick={() => setIsUserDropdownOpen(false)}
+                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                >
+                  <Clock className="h-4 w-4" />
+                  History
+                </DropdownItem>
+              </li>
+              <li className="border-t border-base-300 pt-1 mt-1">
+                <DropdownItem
+                  tag="button"
+                  onClick={handleSignOut}
+                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-error transition-colors hover:bg-error/10 hover:text-error w-full"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign Out
+                </DropdownItem>
+              </li>
+            </ul>
+          </Dropdown>
 
           <ThemeSwitcher />
         </div>

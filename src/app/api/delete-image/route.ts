@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { requireActiveStatus } from "@/lib/auth-middleware";
+import { successResponse, errorResponse } from "@/lib/api-response";
+import { createAuditLogAsync } from "@/lib/audit-log";
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 const accessKeyId = process.env.R2_ACCESS_KEY_ID;
@@ -21,43 +22,48 @@ const s3Client = new S3Client({
 });
 
 export async function DELETE(req: NextRequest) {
+  const authResult = await requireActiveStatus(req);
+
+  if (!authResult.authorized || !authResult.user) {
+    return authResult.response;
+  }
+
+  const currentUser = authResult.user;
+
   try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    if (!session?.user.id) {
-      return NextResponse.json({
-        success: false,
-        message: "This action only available for authenticated user.",
-        data: null,
-        error: "no-user-token",
-      });
-    }
-
     const body = await req.json();
     const { id, slug, isPrivate } = body;
 
     if (!id || !slug) {
-      return NextResponse.json({
-        success: false,
-        message: "Image ID and slug are required.",
-        data: null,
-        error: "missing-fields",
-      });
+      return NextResponse.json(
+        errorResponse("validation_error", "Image ID and slug are required"),
+        { status: 400 }
+      );
     }
 
     const image = await prisma.gallery.findUnique({
       where: { id },
     });
 
-    if (!image || image.userId !== session.user.id) {
-      return NextResponse.json({
-        success: false,
-        message: "Image not found or unauthorized.",
-        data: null,
-        error: "not-found-or-unauthorized",
-      });
+    if (!image) {
+      return NextResponse.json(
+        errorResponse("not_found", "Image not found"),
+        { status: 404 }
+      );
+    }
+
+    // Check if user owns the image or has permission to delete
+    if (image.userId !== currentUser.userId) {
+      // Only Super Admin and Content Admin can delete other users' images
+      if (currentUser.role !== "super_admin" && currentUser.role !== "content_admin") {
+        return NextResponse.json(
+          errorResponse(
+            "insufficient_permissions",
+            "You can only delete your own images"
+          ),
+          { status: 403 }
+        );
+      }
     }
 
     const bucket = isPrivate ? "apus-user-private" : "apus-user-public";
@@ -73,19 +79,32 @@ export async function DELETE(req: NextRequest) {
       where: { id },
     });
 
-    return NextResponse.json({
-      success: true,
-      message: "Image deleted successfully.",
-      data: null,
-      error: null,
+    // Create audit log
+    createAuditLogAsync({
+      action: "gallery_deleted",
+      entityType: "gallery",
+      entityId: id,
+      performedBy: currentUser.userId,
+      performedByRole: currentUser.role,
+      oldValue: {
+        title: image.title,
+        slug: image.slug,
+        isPrivate: image.isPrivate,
+      },
+      metadata: {
+        ownerId: image.userId,
+      },
+      req,
     });
+
+    return NextResponse.json(
+      successResponse("Image deleted successfully", null)
+    );
   } catch (error) {
     console.error("Error deleting image:", error);
-    return NextResponse.json({
-      success: false,
-      message: "Error deleting image.",
-      data: null,
-      error: error,
-    });
+    return NextResponse.json(
+      errorResponse("internal_error", "Failed to delete image"),
+      { status: 500 }
+    );
   }
 }

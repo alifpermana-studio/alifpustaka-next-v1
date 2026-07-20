@@ -41,11 +41,12 @@ export const ImageInputField = ({
               alt="Upload Image"
               width={600}
               height={270}
+
               className="max-h-[65svh] w-full object-contain"
             />
           ) : (
             <div className="flex w-full flex-col items-center justify-center gap-3 px-4 py-2">
-              <ImageIcon className="w-48 h-48 opacity-60" />
+              <ImageIcon className="h-48 w-48 opacity-60" />
               <div className="text-center dark:text-white">
                 Drop your image or click here to browse.
               </div>

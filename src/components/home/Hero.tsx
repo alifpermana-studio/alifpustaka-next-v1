@@ -63,7 +63,7 @@ export default function Hero() {
           </button>
           <button
             onClick={() => scrollTo("#contact")}
-            className="rounded-full border border-white/20 px-8 py-4 text-base font-semibold text-white transition-all hover:bg-white/5"
+            className="rounded-full border-2 border-primary/75 px-8 py-4 text-base font-semibold text-primary hover:text-primary-content transition-all hover:bg-primary/75"
           >
             Get In Touch
           </button>

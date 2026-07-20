@@ -1,6 +1,7 @@
 // app/[username]/page.tsx
 
 import { BlogComponent } from "@/components/blog/BlogComponent";
+import { BlogOptions } from "@/components/blog/BlogOptions";
 
 // ⚡ This runs on the server before rendering
 export async function generateMetadata() {
@@ -12,12 +13,9 @@ export async function generateMetadata() {
 
 export default function Page() {
   return (
-    <div>
-      <div className="border-base-300 bg-base-200 rounded-lg border p-5">
-        <div className="space-y-6">
-          <BlogComponent />
-        </div>
-      </div>
+    <div className="space-y-6">
+      <BlogOptions />
+      <BlogComponent />
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { requireActiveStatus } from "@/lib/auth-middleware";
+import { successResponse, errorResponse } from "@/lib/api-response";
+import { createAuditLogAsync } from "@/lib/audit-log";
+import * as permissions from "@/lib/permissions";
 import { S3Client, CopyObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 const accessKeyId = process.env.R2_ACCESS_KEY_ID;
@@ -21,45 +23,70 @@ const s3Client = new S3Client({
 });
 
 export async function PUT(req: NextRequest) {
+  const authResult = await requireActiveStatus(req);
+
+  if (!authResult.authorized || !authResult.user) {
+    return authResult.response;
+  }
+
+  const currentUser = authResult.user;
+
   try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    if (!session?.user.id) {
-      return NextResponse.json({
-        success: false,
-        message: "This action only available for authenticated user.",
-        data: null,
-        error: "no-user-token",
-      });
-    }
-
     const body = await req.json();
     const { id, title, slug, oldSlug, tags, isPrivate, oldIsPrivate, isFeatured } = body;
 
     if (!id) {
-      return NextResponse.json({
-        success: false,
-        message: "Image ID is required.",
-        data: null,
-        error: "missing-id",
-      });
+      return NextResponse.json(
+        errorResponse("validation_error", "Image ID is required"),
+        { status: 400 }
+      );
     }
 
     const image = await prisma.gallery.findUnique({
       where: { id },
     });
 
-    if (!image || image.userId !== session.user.id) {
-      return NextResponse.json({
-        success: false,
-        message: "Image not found or unauthorized.",
-        data: null,
-        error: "not-found-or-unauthorized",
-      });
+    if (!image) {
+      return NextResponse.json(
+        errorResponse("not_found", "Image not found"),
+        { status: 404 }
+      );
     }
 
+    // Check permissions for visibility toggle
+    const canToggle = permissions.canToggleGalleryVisibility(
+      currentUser.userId,
+      image.userId,
+      currentUser.role,
+      image.isPrivate,
+      isPrivate
+    );
+
+    if (!canToggle) {
+      return NextResponse.json(
+        errorResponse(
+          "insufficient_permissions",
+          "You do not have permission to change this image's visibility"
+        ),
+        { status: 403 }
+      );
+    }
+
+    // Check if user owns the image (for non-visibility changes)
+    if (image.userId !== currentUser.userId) {
+      // Only Content Admin and Super Admin can edit other users' images
+      if (!permissions.canManagePublicGallery(currentUser.role) && currentUser.role !== "super_admin") {
+        return NextResponse.json(
+          errorResponse(
+            "insufficient_permissions",
+            "You can only edit your own images"
+          ),
+          { status: 403 }
+        );
+      }
+    }
+
+    // Handle S3/R2 file operations if visibility or slug changed
     if (oldIsPrivate !== isPrivate) {
       const sourceBucket = oldIsPrivate ? "apus-user-private" : "apus-user-public";
       const destBucket = isPrivate ? "apus-user-private" : "apus-user-public";
@@ -109,19 +136,33 @@ export async function PUT(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({
-      success: true,
-      message: "Image updated successfully.",
-      data: updatedImage,
-      error: null,
-    });
+    // Create audit log for visibility changes
+    if (oldIsPrivate !== isPrivate) {
+      createAuditLogAsync({
+        action: "gallery_visibility_changed",
+        entityType: "gallery",
+        entityId: image.id,
+        performedBy: currentUser.userId,
+        performedByRole: currentUser.role,
+        oldValue: { isPrivate: oldIsPrivate },
+        newValue: { isPrivate },
+        metadata: {
+          title: updatedImage.title,
+          slug: updatedImage.slug,
+          ownerId: image.userId,
+        },
+        req,
+      });
+    }
+
+    return NextResponse.json(
+      successResponse("Image updated successfully", updatedImage)
+    );
   } catch (error) {
     console.error("Error updating image:", error);
-    return NextResponse.json({
-      success: false,
-      message: "Error updating image.",
-      data: null,
-      error: error,
-    });
+    return NextResponse.json(
+      errorResponse("internal_error", "Failed to update image"),
+      { status: 500 }
+    );
   }
 }

@@ -2,6 +2,8 @@
 
 import { GalleryContent } from './GalleryContent';
 import { GalleryFilter } from './GalleryFilter';
+import { useGallery } from "@/hooks/useGallery";
+import { useEffect } from "react"
 
 export const UserGallery = () => {
   /* const reloadGallery = async () => {
@@ -35,6 +37,13 @@ export const UserGallery = () => {
   useEffect(() => {
     reloadGallery();
   }, [filter.sort, filter.order, filter.skip, filter.max]); */
+
+  const { refresh } = useGallery();
+
+  useEffect(() => {
+    refresh()
+  },[])
+  
 
   return (
     <div className="rounded-2xl border border-gray-200 p-5 text-gray-800 lg:p-6 dark:border-gray-800 dark:text-gray-200">
