@@ -26,6 +26,9 @@ import {
   FolderOpen,
   Archive,
   Shield,
+  Newspaper,
+  DollarSign,
+  Headphones,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -44,22 +47,17 @@ interface NavItem {
   subMenu?: SubMenuItem[];
 }
 
-const getNavItems = (isAdmin: boolean, canViewUsers: boolean): NavItem[] => {
+const getNavItems = (
+  isAdmin: boolean,
+  canViewUsers: boolean,
+  canManageContent: boolean,
+  canManageSales: boolean,
+  canManageSupport: boolean
+): NavItem[] => {
   const items: NavItem[] = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { to: "/profile", label: "Profile", icon: UserCircle2 },
   ];
-
-  if (isAdmin) {
-    items.push({
-      label: "Admin",
-      icon: Shield,
-      subMenu: [
-        { to: "/admin", label: "Overview", icon: LayoutDashboard },
-        ...(canViewUsers ? [{ to: "/admin/user-management", label: "User Management", icon: Users }] : []),
-      ],
-    });
-  }
 
   items.push(
     {
@@ -79,9 +77,38 @@ const getNavItems = (isAdmin: boolean, canViewUsers: boolean): NavItem[] => {
         { to: "/gallery/browse", label: "Browse", icon: FolderOpen },
         { to: "/gallery/archived", label: "Archived", icon: Archive },
       ],
-    },
-    { to: "/settings", label: "Settings", icon: Settings }
+    }
   );
+
+  if (isAdmin) {
+    const adminSubMenu: SubMenuItem[] = [
+      { to: "/admin", label: "Overview", icon: LayoutDashboard },
+    ];
+
+    if (canViewUsers) {
+      adminSubMenu.push({ to: "/admin/user-management", label: "User Management", icon: Users });
+    }
+
+    if (canManageContent) {
+      adminSubMenu.push({ to: "/admin/content-management", label: "Content Management", icon: Newspaper });
+    }
+
+    if (canManageSales) {
+      adminSubMenu.push({ to: "/admin/sales-management", label: "Sales Management", icon: DollarSign });
+    }
+
+    if (canManageSupport) {
+      adminSubMenu.push({ to: "/admin/support-management", label: "Support Management", icon: Headphones });
+    }
+
+    items.push({
+      label: "Admin",
+      icon: Shield,
+      subMenu: adminSubMenu,
+    });
+  }
+
+  items.push({ to: "/settings", label: "Settings", icon: Settings });
 
   return items;
 };
@@ -108,7 +135,22 @@ export function Sidebar({ open, onClose }: SidebarProps) {
     return hasPermission("view_all_users");
   }, [hasPermission]);
 
-  const navItems = useMemo(() => getNavItems(isAdmin, canViewUsers), [isAdmin, canViewUsers]);
+  const canManageContent = useMemo(() => {
+    return hasPermission("manage_all_posts") || hasPermission("manage_public_gallery");
+  }, [hasPermission]);
+
+  const canManageSales = useMemo(() => {
+    return hasPermission("manage_sales");
+  }, [hasPermission]);
+
+  const canManageSupport = useMemo(() => {
+    return hasPermission("manage_support");
+  }, [hasPermission]);
+
+  const navItems = useMemo(
+    () => getNavItems(isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport),
+    [isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport]
+  );
 
   const toggleDropdown = (label: string) => {
     setOpenDropdown((prev) => (prev === label ? null : label));

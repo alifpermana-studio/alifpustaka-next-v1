@@ -34,7 +34,9 @@ export type Permission =
   | 'view_all_audit_logs'
   | 'view_user_audit_logs'
   | 'view_post_audit_logs'
-  | 'view_own_audit_logs';
+  | 'view_own_audit_logs'
+  | 'manage_sales'
+  | 'manage_support';
 
 // Role Hierarchy - Higher number = more privileges
 export const ROLE_HIERARCHY: Record<UserRole, number> = {
@@ -68,6 +70,8 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'view_user_audit_logs',
     'view_post_audit_logs',
     'view_own_audit_logs',
+    'manage_sales',
+    'manage_support',
   ],
   content_admin: [
     'manage_all_posts',
@@ -82,7 +86,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'view_own_audit_logs',
   ],
   user_admin: [
-    'manage_user_roles', // Limited to non-admin roles
+    'manage_user_roles',
     'manage_user_status',
     'view_all_users',
     'view_deleted_users',
@@ -92,11 +96,13 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'edit_own_posts',
   ],
   sales_admin: [
+    'manage_sales',
     'manage_own_gallery',
     'edit_own_posts',
     'view_own_audit_logs',
   ],
   support_admin: [
+    'manage_support',
     'manage_own_gallery',
     'edit_own_posts',
     'view_own_audit_logs',
