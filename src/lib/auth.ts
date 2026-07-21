@@ -17,6 +17,11 @@ export const auth = betterAuth({
 
   user: {
     additionalFields: {
+      username: {
+        type: "string",
+        required: true, // Forces username on registration
+        input: true, // Allows the client to send it
+      },
       role: {
         type: "string",
         defaultValue: "user",
@@ -58,42 +63,29 @@ export const auth = betterAuth({
     autoSignIn: false,
     requireEmailVerification: true,
     resetPasswordTokenExpiresIn: 1800,
-    sendResetPassword: async ({ user, url }) => {
+    sendResetPassword: async ({ user, url, token }) => {
       after(async () => {
         try {
+          const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+          const resetUrl = `${baseUrl}/reset-password?token=${token}`;
+          
           await sendEmail({
             to: user.email,
             subject: "Reset your password",
             htmlContent: resetPasswordHtml({
-              url,
-              host: process.env.BASE_URL || "http://alifpustaka.web.id",
+              url: resetUrl,
+              host: baseUrl,
               appName: "Alif Pustaka",
               name: user.name,
             }),
           });
         } catch (err) {
-          // Always catch errors since this runs disconnected from the client
           console.error("Background reset password failed:", err);
         }
       });
     },
   },
-  plugins: [
-    username({
-      usernameValidator: (username) => {
-        if (username === "admin") {
-          return false;
-        }
-        return true;
-      },
-      schema: {
-        user: {
-          fields: {
-            username: "username",
-          },
-        },
-      },
-    }),
-  ],
+  plugins: [],
+
   // Explicitly define the schema mapping
 });

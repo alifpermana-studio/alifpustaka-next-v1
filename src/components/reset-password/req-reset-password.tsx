@@ -42,21 +42,32 @@ export const RequestResetPassword = () => {
     try {
       console.log("Check email: ", e);
 
+      const checkResponse = await fetch("/api/check-credential-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: e }),
+      });
+
+      const checkData = await checkResponse.json();
+
+      if (!checkData.hasCredentialAccount) {
+        throw new Error(
+          "This account uses social login (Google, GitHub, etc.). Password reset is not available. Please sign in using your social account.",
+        );
+      }
+
       const { data, error } = await authClient.requestPasswordReset({
         email: e,
       });
 
       if (error) {
-        throw error; // Throw the error to be caught in the catch block
+        throw error;
       }
 
-      // Sign up successful
       console.log("Send email result:", data);
       setIsSubmitted(true);
 
       router.push("/req-reset-password?status=sent");
-
-      // Redirect to the admin page
     } catch (error: unknown) {
       console.log("Error send email: ", error);
       setError(errorHandling(error));
@@ -121,7 +132,7 @@ export const RequestResetPassword = () => {
         </div>
 
         <div
-          className={`animate-in max-w-full ${backroute === "autofill" ? "flex" : "hidden"} flex-col items-center justify-center gap-6`}
+          className={`animate-in max-w-full ${status === "sent" ? "flex" : "hidden"} flex-col items-center justify-center gap-6`}
           style={{ animationDelay: "0.1s" }}
         >
           <MailCheck

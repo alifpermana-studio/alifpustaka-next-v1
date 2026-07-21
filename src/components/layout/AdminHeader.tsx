@@ -2,7 +2,19 @@
 
 import { useState, useRef } from "react";
 import { useUser } from "@/hooks/useUser";
-import { Bell, Search, Command, MenuIcon, CircleUser, ChevronDown, User, Settings, Bookmark, Clock, LogOut } from "lucide-react";
+import {
+  Bell,
+  Search,
+  Command,
+  MenuIcon,
+  CircleUser,
+  ChevronDown,
+  User,
+  Settings,
+  Bookmark,
+  Clock,
+  LogOut,
+} from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
@@ -134,7 +146,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           <button
             ref={userButtonRef}
             onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-            className="border-surface-700/80 bg-surface-900 flex items-center gap-3 rounded-2xl border px-2 py-1.5 pr-3 transition-all duration-200 hover:border-accent/50 hover:bg-surface-800 cursor-pointer"
+            className="border-surface-700/80 bg-base-300 hover:border-accent/50 hover:bg-surface-800 flex cursor-pointer items-center gap-3 rounded-2xl border px-2 py-1.5 pr-3 transition-all duration-200"
           >
             {user?.image ? (
               <Image
@@ -151,9 +163,9 @@ export function Header({ onMenuClick }: HeaderProps) {
               <p className="text-accent text-sm font-medium">{user?.name}</p>
               <p className="text-surface-400 text-xs">{user?.role}</p>
             </div>
-            <ChevronDown 
-              className={`h-4 w-4 text-surface-400 transition-transform duration-300 ${
-                isUserDropdownOpen ? 'rotate-180' : 'rotate-0'
+            <ChevronDown
+              className={`text-surface-400 h-4 w-4 transition-transform duration-300 ${
+                isUserDropdownOpen ? "rotate-180" : "rotate-0"
               }`}
             />
           </button>
@@ -162,7 +174,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             isOpen={isUserDropdownOpen}
             onClose={() => setIsUserDropdownOpen(false)}
             triggerRef={userButtonRef}
-            className="bg-base-200 border-base-300 shadow-lg flex w-56 flex-col rounded-2xl border p-2 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200"
+            className="border-base-300 animate-in fade-in slide-in-from-top-2 text-base-content bg-base-300/40 flex w-56 flex-col rounded-2xl border p-2 shadow-lg backdrop-blur-lg duration-200"
           >
             <ul className="flex flex-col gap-1 py-1">
               <li>
@@ -170,7 +182,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                   tag="a"
                   href={`/p/${user?.username}`}
                   onItemClick={() => setIsUserDropdownOpen(false)}
-                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                  className="group hover:text-accent hover:bg-base-100/30 flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
                 >
                   <User className="h-4 w-4" />
                   Profile
@@ -181,7 +193,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                   tag="a"
                   href="/settings"
                   onItemClick={() => setIsUserDropdownOpen(false)}
-                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                  className="group hover:bg-base-100/30 hover:text-accent flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
                 >
                   <Settings className="h-4 w-4" />
                   Settings
@@ -192,7 +204,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                   tag="a"
                   href="/saved"
                   onItemClick={() => setIsUserDropdownOpen(false)}
-                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                  className="group hover:bg-base-100/30 hover:text-accent flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
                 >
                   <Bookmark className="h-4 w-4" />
                   Saved
@@ -203,17 +215,17 @@ export function Header({ onMenuClick }: HeaderProps) {
                   tag="a"
                   href="/history"
                   onItemClick={() => setIsUserDropdownOpen(false)}
-                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-base-content transition-colors hover:bg-base-300 hover:text-accent"
+                  className="group hover:bg-base-100/30 hover:text-accent flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
                 >
                   <Clock className="h-4 w-4" />
                   History
                 </DropdownItem>
               </li>
-              <li className="border-t border-base-300 pt-1 mt-1">
+              <li className="border-base-300 mt-1 border-t pt-1">
                 <DropdownItem
                   tag="button"
                   onClick={handleSignOut}
-                  className="group flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-error transition-colors hover:bg-error/10 hover:text-error w-full"
+                  className="group hover:bg-base-100/30 hover:text-accent flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors"
                 >
                   <LogOut className="h-4 w-4" />
                   Sign Out

@@ -108,8 +108,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return createPortal(
     <div
       ref={dropdownRef}
-      className={`shadow-theme-lg fixed z-9999 transition-opacity duration-200 ${
-        isOpen ? 'opacity-100' : 'opacity-0'
+      className={`shadow-theme-lg dark fixed z-9999 transition-opacity duration-200 ${
+        isOpen ? "opacity-100" : "opacity-0"
       } ${className}`}
       style={{
         top: `${position.top}px`,

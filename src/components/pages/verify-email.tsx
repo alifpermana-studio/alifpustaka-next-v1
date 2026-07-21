@@ -110,11 +110,7 @@ export const VerifyEmail = () => {
           animation: "grid-pan 30s linear infinite",
         }}
       />
-      <div className="relative z-10 flex w-full flex-col justify-between gap-8 p-12">
-        <div className="animate-in hidden items-center justify-center gap-3 lg:flex">
-          <APusLightBanner className="w-72" />
-        </div>
-
+      <div className="relative z-10 mt-20 flex w-full flex-col justify-between gap-8 p-12">
         <div
           className={`animate-in max-w-full ${backroute === "signup" ? "flex" : "hidden"} flex-col items-center justify-center gap-6`}
           style={{ animationDelay: "0.1s" }}

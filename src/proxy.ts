@@ -33,8 +33,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  if (pathname === "/p" && session) {
-    if (session.user.username) {
+  if (pathname === "/p" || (pathname === "/profile" && session)) {
+    if (session?.user.username) {
       return NextResponse.redirect(
         new URL(`/p/${session.user.username || session.user.id}`, request.url),
       );

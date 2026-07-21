@@ -130,7 +130,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                   <div>
                     <button
                       onClick={() => toggleDropdown(item.label)}
-                      className={`text-base-content hover:bg-base-300/80 hover:text-accent flex w-full items-center justify-between transition-all ${expand ? "gap-3" : "gap-0"} rounded-xl border border-transparent px-2.5 py-2.5 font-medium`}
+                      className={`text-base-content hover:bg-base-300/80 hover:text-accent flex w-full items-center justify-between transition-all ${expand ? "gap-3" : "gap-0"} rounded-xl border border-transparent px-3 py-2.5 font-medium`}
                     >
                       <div
                         className={`flex items-center ${expand ? "gap-3" : "gap-0"}`}
