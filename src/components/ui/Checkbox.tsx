@@ -1,6 +1,6 @@
 import type { InputHTMLAttributes } from 'react';
 
-interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'> {
   checked: boolean;
   onChange: (checked: boolean) => void;
   indeterminate?: boolean;
