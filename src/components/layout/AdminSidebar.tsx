@@ -1,4 +1,5 @@
 import { useTheme } from "@/context/ThemeContext";
+import { useAuth } from "@/context/AuthContext";
 import {
   APusColorSquare,
   APusDarkBanner,
@@ -24,10 +25,11 @@ import {
   ImagePlus,
   FolderOpen,
   Archive,
+  Shield,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 interface SubMenuItem {
   to: string;
@@ -42,29 +44,47 @@ interface NavItem {
   subMenu?: SubMenuItem[];
 }
 
-const navItems: NavItem[] = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/profile", label: "Profile", icon: UserCircle2 },
-  {
-    label: "Blog",
-    icon: NotebookTextIcon,
-    subMenu: [
-      { to: "/blog/editor", label: "Editor", icon: PenSquare },
-      { to: "/blog", label: "Overview", icon: FileText },
-      { to: "/blog/trash", label: "Trash", icon: Trash2 },
-    ],
-  },
-  {
-    label: "Gallery",
-    icon: ImagesIcon,
-    subMenu: [
-      { to: "/gallery/upload", label: "Upload", icon: ImagePlus },
-      { to: "/gallery/browse", label: "Browse", icon: FolderOpen },
-      { to: "/gallery/archived", label: "Archived", icon: Archive },
-    ],
-  },
-  { to: "/settings", label: "Settings", icon: Settings },
-];
+const getNavItems = (isAdmin: boolean, canViewUsers: boolean): NavItem[] => {
+  const items: NavItem[] = [
+    { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { to: "/profile", label: "Profile", icon: UserCircle2 },
+  ];
+
+  if (isAdmin) {
+    items.push({
+      label: "Admin",
+      icon: Shield,
+      subMenu: [
+        { to: "/admin", label: "Overview", icon: LayoutDashboard },
+        ...(canViewUsers ? [{ to: "/admin/user-management", label: "User Management", icon: Users }] : []),
+      ],
+    });
+  }
+
+  items.push(
+    {
+      label: "Blog",
+      icon: NotebookTextIcon,
+      subMenu: [
+        { to: "/blog/editor", label: "Editor", icon: PenSquare },
+        { to: "/blog", label: "Overview", icon: FileText },
+        { to: "/blog/trash", label: "Trash", icon: Trash2 },
+      ],
+    },
+    {
+      label: "Gallery",
+      icon: ImagesIcon,
+      subMenu: [
+        { to: "/gallery/upload", label: "Upload", icon: ImagePlus },
+        { to: "/gallery/browse", label: "Browse", icon: FolderOpen },
+        { to: "/gallery/archived", label: "Archived", icon: Archive },
+      ],
+    },
+    { to: "/settings", label: "Settings", icon: Settings }
+  );
+
+  return items;
+};
 
 interface SidebarProps {
   open: boolean;
@@ -76,6 +96,19 @@ export function Sidebar({ open, onClose }: SidebarProps) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const { theme } = useTheme();
+  const { user, hasPermission } = useAuth();
+
+  const isAdmin = useMemo(() => {
+    if (!user) return false;
+    const adminRoles = ['super_admin', 'content_admin', 'user_admin', 'sales_admin', 'support_admin'];
+    return adminRoles.includes(user.role);
+  }, [user]);
+
+  const canViewUsers = useMemo(() => {
+    return hasPermission("view_all_users");
+  }, [hasPermission]);
+
+  const navItems = useMemo(() => getNavItems(isAdmin, canViewUsers), [isAdmin, canViewUsers]);
 
   const toggleDropdown = (label: string) => {
     setOpenDropdown((prev) => (prev === label ? null : label));

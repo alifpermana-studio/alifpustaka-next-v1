@@ -1,12 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+import { UserRole, ADMIN_ROLES } from "@/types/roles";
 
-const PROTECTED_ROUTES = ["/dashboard", "/p", "/settings", "/blog", "/gallery"];
-// 1. Define routes that only unauthenticated guests should see
+const PROTECTED_ROUTES = ["/dashboard", "/p", "/settings", "/blog", "/gallery", "/admin"];
 const AUTH_ROUTES = ["/signin", "/signup", "/forgot-password", "/verify-email"];
-// 2. Define routes that are accessible to everyone, regardless of authentication status
 const PUBLIC_ROUTES = ["/about", "/contact", "/terms", "/privacy"];
+
+const hasUserPermission = (role: UserRole, permission: string): boolean => {
+  if (permission === "view_all_users") {
+    return role === "super_admin" || role === "user_admin";
+  }
+  return false;
+};
+
+const isAdminRole = (role: UserRole): boolean => {
+  return ADMIN_ROLES.includes(role) || role === "super_admin";
+};
 
 export async function proxy(request: NextRequest) {
   const session = await auth.api.getSession({
@@ -41,7 +51,28 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Allow the request to proceed normally if conditions are met
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  
+  if (isAdminRoute && session) {
+    const userRole = (session.user as any).role as UserRole;
+    
+    if (!isAdminRole(userRole)) {
+      return NextResponse.redirect(
+        new URL(`/p/${session.user.username || session.user.id}`, request.url)
+      );
+    }
+    
+    if (pathname === "/admin/user-management" || pathname.startsWith("/admin/user-management/")) {
+      const canViewUsers = hasUserPermission(userRole, "view_all_users");
+      
+      if (!canViewUsers) {
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
+    }
+    
+    return NextResponse.next();
+  }
+
   return NextResponse.next();
 }
 
