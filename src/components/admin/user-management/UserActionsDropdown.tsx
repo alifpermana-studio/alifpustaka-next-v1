@@ -21,7 +21,10 @@ interface UserActionsDropdownProps {
   onEdit: (user: UserListItem) => void;
 }
 
-export function UserActionsDropdown({ user, onEdit }: UserActionsDropdownProps) {
+export function UserActionsDropdown({
+  user,
+  onEdit,
+}: UserActionsDropdownProps) {
   const { hasPermission } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -34,20 +37,25 @@ export function UserActionsDropdown({ user, onEdit }: UserActionsDropdownProps) 
       <button
         ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="rounded-lg p-2 text-base-content/70 transition-colors hover:bg-base-300 hover:text-base-content"
+        className="text-base-content/70 hover:bg-base-300 hover:text-base-content cursor-pointer rounded-lg p-2 transition-colors"
         aria-label="User actions"
       >
         <MoreVertical className="h-4 w-4" />
       </button>
 
-      <Dropdown isOpen={isOpen} onClose={() => setIsOpen(false)} triggerRef={triggerRef}>
-        <div className="w-48 rounded-xl border border-base-300 bg-base-200 py-1 shadow-lg">
+      <Dropdown
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        triggerRef={triggerRef}
+      >
+        <div className="border-base-content/40 bg-base-300 w-48 rounded-xl border p-1 shadow-lg">
           <DropdownItem
             onClick={() => {
               onEdit(user);
               setIsOpen(false);
             }}
             disabled={!canChangeRole && !canChangeStatus}
+            className="hover:bg-base-200 text-base-content flex cursor-pointer items-center gap-3 rounded-lg"
           >
             <Edit className="h-4 w-4" />
             <span>Edit User</span>
@@ -59,6 +67,7 @@ export function UserActionsDropdown({ user, onEdit }: UserActionsDropdownProps) 
                 onEdit(user);
                 setIsOpen(false);
               }}
+              className="hover:bg-base-200 text-base-content flex cursor-pointer items-center gap-3 rounded-lg"
             >
               <Shield className="h-4 w-4" />
               <span>Change Role</span>
@@ -71,6 +80,7 @@ export function UserActionsDropdown({ user, onEdit }: UserActionsDropdownProps) 
                 onEdit(user);
                 setIsOpen(false);
               }}
+              className="hover:bg-base-200 text-base-content flex cursor-pointer items-center gap-3 rounded-lg"
             >
               <Activity className="h-4 w-4" />
               <span>Change Status</span>
