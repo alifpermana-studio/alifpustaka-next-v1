@@ -4,7 +4,11 @@ import { requireActiveStatus } from "@/lib/auth-middleware";
 import { successResponse, errorResponse } from "@/lib/api-response";
 import { createAuditLogAsync } from "@/lib/audit-log";
 import * as permissions from "@/lib/permissions";
-import { S3Client, CopyObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import {
+  S3Client,
+  CopyObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
 
 const accessKeyId = process.env.R2_ACCESS_KEY_ID;
 const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
@@ -33,12 +37,22 @@ export async function PUT(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { id, title, slug, oldSlug, tags, isPrivate, oldIsPrivate, isFeatured } = body;
+    const {
+      id,
+      title,
+      slug,
+      oldSlug,
+      tags,
+      format,
+      isPrivate,
+      oldIsPrivate,
+      isFeatured,
+    } = body;
 
     if (!id) {
       return NextResponse.json(
         errorResponse("validation_error", "Image ID is required"),
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -47,10 +61,9 @@ export async function PUT(req: NextRequest) {
     });
 
     if (!image) {
-      return NextResponse.json(
-        errorResponse("not_found", "Image not found"),
-        { status: 404 }
-      );
+      return NextResponse.json(errorResponse("not_found", "Image not found"), {
+        status: 404,
+      });
     }
 
     // Check permissions for visibility toggle
@@ -59,49 +72,56 @@ export async function PUT(req: NextRequest) {
       image.userId,
       currentUser.role,
       image.isPrivate,
-      isPrivate
+      isPrivate,
     );
 
     if (!canToggle) {
       return NextResponse.json(
         errorResponse(
           "insufficient_permissions",
-          "You do not have permission to change this image's visibility"
+          "You do not have permission to change this image's visibility",
         ),
-        { status: 403 }
+        { status: 403 },
       );
     }
 
     // Check if user owns the image (for non-visibility changes)
     if (image.userId !== currentUser.userId) {
       // Only Content Admin and Super Admin can edit other users' images
-      if (!permissions.canManagePublicGallery(currentUser.role) && currentUser.role !== "super_admin") {
+      if (
+        !permissions.canManagePublicGallery(currentUser.role) &&
+        currentUser.role !== "super_admin"
+      ) {
         return NextResponse.json(
           errorResponse(
             "insufficient_permissions",
-            "You can only edit your own images"
+            "You can only edit your own images",
           ),
-          { status: 403 }
+          { status: 403 },
         );
       }
     }
 
     // Handle S3/R2 file operations if visibility or slug changed
     if (oldIsPrivate !== isPrivate) {
-      const sourceBucket = oldIsPrivate ? "apus-user-private" : "apus-user-public";
+      const sourceBucket = oldIsPrivate
+        ? "apus-user-private"
+        : "apus-user-public";
       const destBucket = isPrivate ? "apus-user-private" : "apus-user-public";
+
+      console.log("Check slug: ", sourceBucket, slug, oldSlug, format);
 
       const copyCommand = new CopyObjectCommand({
         Bucket: destBucket,
-        CopySource: `${sourceBucket}/${oldSlug}`,
-        Key: slug,
+        CopySource: `/${sourceBucket}/${oldSlug}${format}`,
+        Key: `${slug}${format}`,
       });
 
       await s3Client.send(copyCommand);
 
       const deleteCommand = new DeleteObjectCommand({
         Bucket: sourceBucket,
-        Key: oldSlug,
+        Key: `${oldSlug}${format}`,
       });
 
       await s3Client.send(deleteCommand);
@@ -110,15 +130,15 @@ export async function PUT(req: NextRequest) {
 
       const copyCommand = new CopyObjectCommand({
         Bucket: bucket,
-        CopySource: `${bucket}/${oldSlug}`,
-        Key: slug,
+        CopySource: `/${bucket}/${oldSlug}${format}`,
+        Key: `${slug}${format}`,
       });
 
       await s3Client.send(copyCommand);
 
       const deleteCommand = new DeleteObjectCommand({
         Bucket: bucket,
-        Key: oldSlug,
+        Key: `${oldSlug}${format}`,
       });
 
       await s3Client.send(deleteCommand);
@@ -129,10 +149,13 @@ export async function PUT(req: NextRequest) {
       data: {
         title,
         slug,
+        format,
         tags: tags || [],
         isPrivate,
         isFeatured,
-        path: isPrivate ? `apus-user-private/${slug}` : `apus-user-public/${slug}`,
+        path: isPrivate
+          ? `apus-user-private/${slug}`
+          : `apus-user-public/${slug}`,
       },
     });
 
@@ -156,13 +179,13 @@ export async function PUT(req: NextRequest) {
     }
 
     return NextResponse.json(
-      successResponse("Image updated successfully", updatedImage)
+      successResponse("Image updated successfully", updatedImage),
     );
   } catch (error) {
     console.error("Error updating image:", error);
     return NextResponse.json(
       errorResponse("internal_error", "Failed to update image"),
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -7,19 +7,12 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useModal } from "@/hooks/useModal";
 import { Modal } from "@/components/ui/modal";
 import ImageCard from "./ImageCard";
+import { PostMetadata as PostMetadataType } from "apus-editor";
+import { SPECIAL_CHAR_REGEX } from "@/constants/editor";
 
 type Props = {
-  formData: MetadataType;
-  setFormData: Dispatch<SetStateAction<MetadataType>>;
-};
-
-type MetadataType = {
-  id: string;
-  title: string;
-  slug: string;
-  image: string;
-  tags: string[];
-  desc: string;
+  formData: PostMetadataType;
+  setFormData: Dispatch<SetStateAction<PostMetadataType>>;
 };
 
 export const PostMetadata = ({ formData, setFormData }: Props) => {
@@ -32,18 +25,11 @@ export const PostMetadata = ({ formData, setFormData }: Props) => {
       slug: formData.title
         .trim()
         .replaceAll(" ", "-")
-        .replaceAll(
-          /[/+\=\@\$\|\^\~\[\]\{\}\`\#\%\*\_\<\>\,\.\"\'\(\)\?\!\:\;\/]/g,
-          "",
-        )
+        .replaceAll(SPECIAL_CHAR_REGEX, "")
         .replace(/(-)\1+/g, "$1")
         .toLowerCase(),
     }));
-  }, [formData.title]);
-
-  const submitMetadata = () => {
-    console.log("submit here");
-  };
+  }, [formData.title, setFormData]);
 
   const onChangeTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -59,11 +45,9 @@ export const PostMetadata = ({ formData, setFormData }: Props) => {
   };
 
   const onChangeSlug = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const regexSpecialChar =
-      /[/+\=\@\$\|\^\~\[\]\{\}\`\#\%\*\_\<\>\,\.\"\'\(\)\?\!\:\;\/]/;
     const value = e.target.value;
 
-    if (!regexSpecialChar.test(value)) {
+    if (!SPECIAL_CHAR_REGEX.test(value)) {
       setFormData((prev) => ({
         ...prev,
         slug: value.replaceAll(" ", "-"),
@@ -88,9 +72,14 @@ export const PostMetadata = ({ formData, setFormData }: Props) => {
       tags: prev.tags.filter((tag) => tag !== tagToRemove),
     })); // Using filter
   };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="grid w-full grid-cols-1 gap-4 rounded-xl bg-gray-50 p-4 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-      <form onSubmit={submitMetadata}>
+      <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           <div>
             <Label>

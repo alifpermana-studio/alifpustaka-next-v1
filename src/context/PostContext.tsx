@@ -40,7 +40,7 @@ export const PostProvider = ({ children }: { children: React.ReactNode }) => {
   const [tick, setTick] = useState(0);
   const refresh = useCallback(() => setTick((t) => t + 1), []);
 
-  const setFilter = useCallback((patch: Partial<ImageFilter>) => {
+  const setFilter = useCallback((patch: Partial<PostFilter>) => {
     _setFilter((prev) => ({ ...prev, ...patch }));
   }, []);
 
@@ -62,7 +62,6 @@ export const PostProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (success) {
         setData(data ?? []);
-        console.log("hooks post check: ", data);
       } else {
         setError(error ?? message ?? "Failed to load posts");
         setData([]);
@@ -76,7 +75,7 @@ export const PostProvider = ({ children }: { children: React.ReactNode }) => {
   }, [filter]);
 
   useEffect(() => {
-    if (tick) fetchPost();
+    fetchPost();
   }, [filtersKey, tick, fetchPost]);
 
   return (

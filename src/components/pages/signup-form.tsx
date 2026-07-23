@@ -16,6 +16,7 @@ import {
   UserRound,
   IdCard,
   TriangleAlert,
+  LoaderCircle,
 } from "lucide-react";
 import { GoogleIcon, GithubIcon } from "@/icons/brands";
 import {
@@ -42,6 +43,9 @@ export const SignUpForm = () => {
   });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<"google" | "github" | null>(
+    null,
+  );
   const [showPw, setShowPw] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
@@ -92,6 +96,48 @@ export const SignUpForm = () => {
 
   const handleGoogleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setOauthLoading("google");
+    setError(null);
+
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/p",
+      });
+    } catch (err: any) {
+      console.error("Google sign-up error:", err);
+      if (err.message?.includes("already registered")) {
+        setError(
+          "This email is already registered with a different sign-in method. Please try signing in with email/password instead.",
+        );
+      } else {
+        setError(err.message || "Failed to sign up with Google");
+      }
+      setOauthLoading(null);
+    }
+  };
+
+  const handleGithubSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setOauthLoading("github");
+    setError(null);
+
+    try {
+      await authClient.signIn.social({
+        provider: "github",
+        callbackURL: "/p",
+      });
+    } catch (err: any) {
+      console.error("GitHub sign-up error:", err);
+      if (err.message?.includes("already registered")) {
+        setError(
+          "This email is already registered with a different sign-in method. Please try signing in with email/password instead.",
+        );
+      } else {
+        setError(err.message || "Failed to sign up with GitHub");
+      }
+      setOauthLoading(null);
+    }
   };
 
   useEffect(() => {
@@ -222,19 +268,39 @@ export const SignUpForm = () => {
           <div className="mt-8 grid grid-cols-2 gap-3">
             <button
               type="button"
-              className="group font-500 flex cursor-pointer items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 transition-all hover:border-blue-400/40 hover:bg-white/[0.07] active:scale-[0.98]"
+              onClick={handleGoogleSignUp}
+              disabled={oauthLoading !== null}
+              className="group font-500 flex cursor-pointer items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 transition-all hover:border-blue-400/40 hover:bg-white/[0.07] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <GoogleIcon />
+              {oauthLoading === "google" ? (
+                <LoaderCircle className="h-5 w-5 animate-spin" />
+              ) : (
+                <GoogleIcon />
+              )}
               Google
             </button>
             <button
               type="button"
-              className="group font-500 flex cursor-pointer items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 transition-all hover:border-blue-400/40 hover:bg-white/[0.07] active:scale-[0.98]"
+              onClick={handleGithubSignUp}
+              disabled={oauthLoading !== null}
+              className="group font-500 flex cursor-pointer items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/4 px-4 py-3 text-sm text-slate-200 transition-all hover:border-blue-400/40 hover:bg-white/[0.07] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              <GithubIcon className="brightness-0 invert" />
+              {oauthLoading === "github" ? (
+                <LoaderCircle className="h-5 w-5 animate-spin" />
+              ) : (
+                <GithubIcon className="brightness-0 invert" />
+              )}
               GitHub
             </button>
           </div>
+
+          {/* OAuth error message */}
+          {error && (
+            <div className="mt-4 flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
+              <TriangleAlert className="h-4 w-4 shrink-0" />
+              <p>{error}</p>
+            </div>
+          )}
 
           {/* divider */}
           <div className="my-7 flex items-center gap-4">

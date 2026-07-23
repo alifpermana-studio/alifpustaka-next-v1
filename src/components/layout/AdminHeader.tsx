@@ -21,6 +21,7 @@ import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import { useAuth } from "@/context/AuthContext";
 import { Dropdown } from "@/components/ui/dropdown/Dropdown";
 import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
+import { formatRole } from "@/lib/utils/format-role";
 
 interface HeaderProps {
   /* title: string;
@@ -56,6 +57,16 @@ const pageMetaConfigs: PageMetaConfig[] = [
     title: "Profile",
     subtitle: "Your admin identity and account security",
   }, // NEW: handles /p/username
+  {
+    pattern: "/admin",
+    title: "Admin Overview",
+    subtitle: "Administrator Panel.",
+  },
+  {
+    pattern: "/admin/user-management",
+    title: "User Management",
+    subtitle: "Manage user roles and status.",
+  },
   {
     pattern: "/settings",
     title: "Settings",
@@ -161,7 +172,9 @@ export function Header({ onMenuClick }: HeaderProps) {
             )}
             <div className="hidden sm:block">
               <p className="text-accent text-sm font-medium">{user?.name}</p>
-              <p className="text-surface-400 text-xs">{user?.role}</p>
+              <p className="text-surface-400 text-xs">
+                {formatRole(user?.role || "")}
+              </p>
             </div>
             <ChevronDown
               className={`text-surface-400 h-4 w-4 transition-transform duration-300 ${

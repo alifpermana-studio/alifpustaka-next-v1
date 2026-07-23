@@ -52,7 +52,7 @@ const getNavItems = (
   canViewUsers: boolean,
   canManageContent: boolean,
   canManageSales: boolean,
-  canManageSupport: boolean
+  canManageSupport: boolean,
 ): NavItem[] => {
   const items: NavItem[] = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -77,7 +77,7 @@ const getNavItems = (
         { to: "/gallery/browse", label: "Browse", icon: FolderOpen },
         { to: "/gallery/archived", label: "Archived", icon: Archive },
       ],
-    }
+    },
   );
 
   if (isAdmin) {
@@ -86,19 +86,35 @@ const getNavItems = (
     ];
 
     if (canViewUsers) {
-      adminSubMenu.push({ to: "/admin/user-management", label: "User Management", icon: Users });
+      adminSubMenu.push({
+        to: "/admin/user-management",
+        label: "User Management",
+        icon: Users,
+      });
     }
 
     if (canManageContent) {
-      adminSubMenu.push({ to: "/admin/content-management", label: "Content Management", icon: Newspaper });
+      adminSubMenu.push({
+        to: "/admin/content-management",
+        label: "Content Management",
+        icon: Newspaper,
+      });
     }
 
     if (canManageSales) {
-      adminSubMenu.push({ to: "/admin/sales-management", label: "Sales Management", icon: DollarSign });
+      adminSubMenu.push({
+        to: "/admin/sales-management",
+        label: "Sales Management",
+        icon: DollarSign,
+      });
     }
 
     if (canManageSupport) {
-      adminSubMenu.push({ to: "/admin/support-management", label: "Support Management", icon: Headphones });
+      adminSubMenu.push({
+        to: "/admin/support-management",
+        label: "Support Management",
+        icon: Headphones,
+      });
     }
 
     items.push({
@@ -127,7 +143,13 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
   const isAdmin = useMemo(() => {
     if (!user) return false;
-    const adminRoles = ['super_admin', 'content_admin', 'user_admin', 'sales_admin', 'support_admin'];
+    const adminRoles = [
+      "super_admin",
+      "content_admin",
+      "user_admin",
+      "sales_admin",
+      "support_admin",
+    ];
     return adminRoles.includes(user.role);
   }, [user]);
 
@@ -136,7 +158,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
   }, [hasPermission]);
 
   const canManageContent = useMemo(() => {
-    return hasPermission("manage_all_posts") || hasPermission("manage_public_gallery");
+    return (
+      hasPermission("manage_all_posts") ||
+      hasPermission("manage_public_gallery")
+    );
   }, [hasPermission]);
 
   const canManageSales = useMemo(() => {
@@ -148,8 +173,15 @@ export function Sidebar({ open, onClose }: SidebarProps) {
   }, [hasPermission]);
 
   const navItems = useMemo(
-    () => getNavItems(isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport),
-    [isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport]
+    () =>
+      getNavItems(
+        isAdmin,
+        canViewUsers,
+        canManageContent,
+        canManageSales,
+        canManageSupport,
+      ),
+    [isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport],
   );
 
   const toggleDropdown = (label: string) => {
@@ -204,8 +236,12 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                 {hasSubMenu ? (
                   <div>
                     <button
-                      onClick={() => toggleDropdown(item.label)}
-                      className={`text-base-content hover:bg-base-300/80 hover:text-accent flex w-full items-center justify-between transition-all ${expand ? "gap-3" : "gap-0"} rounded-xl border border-transparent px-3 py-2.5 font-medium`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setExpand(true);
+                        toggleDropdown(item.label);
+                      }}
+                      className={`text-base-content hover:bg-base-300/80 hover:text-accent flex w-full cursor-pointer items-center justify-between transition-all ${expand ? "gap-3" : "gap-0"} rounded-xl border border-transparent px-3 py-2.5 font-medium`}
                     >
                       <div
                         className={`flex items-center ${expand ? "gap-3" : "gap-0"}`}

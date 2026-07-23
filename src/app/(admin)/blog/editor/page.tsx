@@ -1,6 +1,6 @@
 import Editor from "@/components/blog/editor/Editor";
 import { redirect } from "next/navigation";
-import { Post, Tag } from "apus-post";
+import { PostTag } from "apus-post";
 import { v4 } from "uuid";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
@@ -23,7 +23,6 @@ export default async function Page({
     headers: await headers(),
   });
 
-  const token = { sub: "dummyuser123" };
   const key = (await searchParams).key || "";
 
   let findPost: any = null;
@@ -42,14 +41,17 @@ export default async function Page({
   }
 
   if (findPost !== null) {
-    if (session?.user.id === findPost?.userId) {
+    if (!session?.user) {
+      redirect(`/blog?error=unauthorized`);
+    }
+    if (session.user.id === findPost?.userId) {
       const metadata = {
         id: findPost?.id || "",
         title: findPost?.title || "",
         slug: findPost?.slug || "",
         image: findPost?.image || "",
         desc: findPost?.desc || "",
-        tags: findPost?.tags.map((postTag: Tag) => postTag.tag.name) || [],
+        tags: findPost?.tags.map((postTag: PostTag) => postTag.tag.name) || [],
       };
       return (
         <div>

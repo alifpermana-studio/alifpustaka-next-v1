@@ -49,8 +49,6 @@ export const uploadImage = async (
   onProgress: (event: progressFallbackType) => void,
 ) => {
   try {
-    console.log("Upload props: ", imageData, presignedURL);
-
     const res = await axios.put(presignedURL, imageData.imageFile, {
       onUploadProgress: (progress) => {
         if (progress?.total && progress?.loaded) {

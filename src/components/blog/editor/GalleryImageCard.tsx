@@ -14,7 +14,6 @@ export const GalleryImageCard = ({ onClose, setImg }: Props) => {
   const [imgList, setImgList] = useState<ImageGallery[]>([]);
 
   useEffect(() => {
-    console.log("checkload: ", loading);
     if (!loading) {
       setImgList(data);
     }

@@ -21,6 +21,7 @@ declare module "apus-post" {
     search: string;
     max: number;
     skip: number;
+    status?: PostStatus | "";
   }
 
   interface Post {
@@ -28,7 +29,8 @@ declare module "apus-post" {
     id: string;
     slug: string;
     uploadTime: Date;
-    tags: String[];
+    updatedAt?: Date;
+    tags: string[];
     desc: string | null;
     footnote: string;
     status: PostStatus;
@@ -37,7 +39,7 @@ declare module "apus-post" {
     image: string;
   }
 
-  type Tag = {
+  export type PostTag = {
     tag: {
       name: string;
     };

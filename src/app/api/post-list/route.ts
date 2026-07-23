@@ -29,6 +29,7 @@ interface TagType {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const search = searchParams.get("search") || "";
+  const status = searchParams.get("status") || "";
   const sort = searchParams.get("sort");
   const order = searchParams.get("order");
   const skip = searchParams.get("skip");
@@ -41,14 +42,16 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const sortFilter = ["title", "slug", "uploadTime"];
+  const sortFilter = ["title", "slug", "uploadTime", "updatedAt"];
   const orderFilter = ["asc", "desc"];
   const maxContentFilter = ["10", "20", "50"];
+  const statusFilter = ["", "published", "submitted", "drafted", "deleted"];
 
   if (
     !sortFilter.includes(sort) ||
     !orderFilter.includes(order) ||
-    !maxContentFilter.includes(maxContent)
+    !maxContentFilter.includes(maxContent) ||
+    !statusFilter.includes(status)
   ) {
     return NextResponse.json(
       errorResponse("invalid_parameter", "Invalid parameter value"),
@@ -70,7 +73,11 @@ export async function GET(req: NextRequest) {
 
   try {
     const where: any = {
-      OR: [
+      userId: currentUser.userId,
+    };
+
+    if (search) {
+      where.OR = [
         {
           title: {
             contains: search,
@@ -83,48 +90,31 @@ export async function GET(req: NextRequest) {
             mode: "insensitive",
           },
         },
-      ],
-    };
-
-    // Role-based filtering
-    const canViewAll = permissions.hasPermission(
-      currentUser.role,
-      "manage_all_posts"
-    );
-    const canReview = permissions.hasPermission(
-      currentUser.role,
-      "review_posts"
-    );
-
-    if (canViewAll) {
-      // Super Admin and Content Admin see all posts
-      // No additional filtering
-    } else if (canReview) {
-      // Editors see their own posts + submitted posts for review
-      where.OR = [
-        { userId: currentUser.userId }, // Own posts
-        { status: "submitted" }, // Submitted posts for review
       ];
-    } else {
-      // Authors and Users see only their own posts
-      where.userId = currentUser.userId;
     }
 
-    const list = await prisma.post.findMany({
-      where,
-      orderBy: {
-        [sort]: order,
-      },
-      skip: skipAsNum,
-      take: maxContentAsNum,
-      include: {
-        tags: {
-          include: {
-            tag: true,
+    if (status) {
+      where.status = status;
+    }
+
+    const [list, total] = await Promise.all([
+      prisma.post.findMany({
+        where,
+        orderBy: {
+          [sort]: order,
+        },
+        skip: skipAsNum,
+        take: maxContentAsNum,
+        include: {
+          tags: {
+            include: {
+              tag: true,
+            },
           },
         },
-      },
-    });
+      }),
+      prisma.post.count({ where }),
+    ]);
 
     const listWithTagNames = list.map((post) => ({
       ...post,
@@ -136,7 +126,15 @@ export async function GET(req: NextRequest) {
         list.length === 0
           ? "No posts found"
           : `Found ${list.length} post(s)`,
-        listWithTagNames
+        listWithTagNames,
+        {
+          pagination: {
+            total,
+            skip: skipAsNum,
+            limit: maxContentAsNum,
+            hasMore: skipAsNum + maxContentAsNum < total,
+          },
+        }
       )
     );
   } catch (error) {

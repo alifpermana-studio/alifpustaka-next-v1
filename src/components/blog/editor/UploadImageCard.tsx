@@ -103,7 +103,6 @@ export const UploadImageCard = ({ onClose, setImg }: Props) => {
           const onProgress: (event: progressFallbackType) => void = (
             response,
           ) => {
-            console.log("Upload progress: ", response);
             setUploadProgress(response.progress);
           };
           const { success, error, data, message } = await uploadImage(
@@ -135,23 +134,20 @@ export const UploadImageCard = ({ onClose, setImg }: Props) => {
               setOnCancel(true);
               setUploadProgress(0);
               setImg(
-                `/api/image?p=${updatedImage.isPrivate}&src=${updatedImage.slug}`,
+                `/api/image?p=${updatedImage.isPrivate}&src=${updatedImage.slug}${updatedImage.format}`,
               );
               onClose();
             } else {
               setIsUploading(false);
-              console.log("Error upload: ", error);
               setAlert(message);
               setTimeout(() => setAlert(""), 5000);
             }
           } else {
             setIsUploading(false);
-            console.log("Error upload: ", error);
             setAlert(message);
             setTimeout(() => setAlert(""), 5000);
           }
         } else {
-          console.log("Error generate URL: ", error);
           setIsUploading(false);
           setAlert(message);
           setTimeout(() => setAlert(""), 5000);
@@ -159,7 +155,6 @@ export const UploadImageCard = ({ onClose, setImg }: Props) => {
       }
     } catch (error) {
       setIsUploading(false);
-      console.error("Error upload: ", error);
       setAlert("Error unknwon");
       setTimeout(() => setAlert(""), 5000);
     }
@@ -168,7 +163,6 @@ export const UploadImageCard = ({ onClose, setImg }: Props) => {
   const handleInputOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       e.stopPropagation();
-      console.dir(e.target.files);
       const file = e.target.files[0];
 
       if (file) {

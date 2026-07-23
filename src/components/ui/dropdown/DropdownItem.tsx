@@ -22,7 +22,8 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
   children,
   disabled = false,
 }) => {
-  const combinedClasses = `${baseClassName} ${className} ${disabled ? "opacity-50 cursor-not-allowed" : "hover:bg-base-300 text-base-content"}`.trim();
+  const combinedClasses =
+    `${baseClassName} ${className} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`.trim();
 
   const handleClick = (event: React.MouseEvent) => {
     if (disabled) {
@@ -45,7 +46,11 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
   }
 
   return (
-    <button onClick={handleClick} className={combinedClasses} disabled={disabled}>
+    <button
+      onClick={handleClick}
+      className={combinedClasses}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

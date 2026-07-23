@@ -8,6 +8,7 @@ import { Card, CardHeader } from "../ui/Card";
 import { Badge } from "../ui/Badge";
 import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
+import { formatRole } from "@/lib/utils/format-role";
 
 type userProps = {};
 
@@ -46,7 +47,7 @@ export function Profile({
           {user?.image ? (
             <Image
               className="ring-accent/30 h-24 w-24 rounded-2xl object-cover ring-2"
-              src="/avatar-admin.jpg"
+              src={user?.image}
               alt="Alif Pustaka"
               width={96}
               height={96}
@@ -62,7 +63,7 @@ export function Profile({
               {user?.emailVerified && (
                 <BadgeCheck className="fill-info h-5 w-5 text-white" />
               )}
-              <Badge variant="accent">{user?.role}</Badge>
+              <Badge variant="accent">{formatRole(user?.role || "")}</Badge>
             </div>
             <p className="text-surface-400 mt-2 text-sm">
               Product-minded operator focused on growth systems, analytics, and

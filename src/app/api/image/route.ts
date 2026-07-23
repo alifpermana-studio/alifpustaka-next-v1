@@ -75,13 +75,24 @@ export async function GET(req: NextRequest) {
 
 const fetchPublicImage = async (src: string, url: string) => {
   try {
-    const imageUrl = `${url}/${src}`;
+    const command = new GetObjectCommand({
+      Bucket: "apus-user-public",
+      Key: src,
+    });
 
-    const response = await fetch(imageUrl);
-    return new Response(response.body, {
+    const data = await s3.send(command);
+
+    if (!data.Body)
+      return NextResponse.json({
+        success: false,
+        message: "No body returned from R2.",
+        data: null,
+        error: "s3-send-failed",
+      });
+
+    return new Response(data.Body as ReadableStream, {
       headers: {
-        "Content-Type": response.headers.get("content-type") || "image/jpeg",
-        "Content-Length": response.headers.get("content-length") || "",
+        "Content-Type": data.ContentType ?? "application/octet-stream",
       },
     });
   } catch (error: any) {
