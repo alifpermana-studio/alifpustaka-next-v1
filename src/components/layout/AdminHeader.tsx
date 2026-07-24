@@ -14,14 +14,21 @@ import {
   Bookmark,
   Clock,
   LogOut,
+  AlertTriangle,
+  CheckCircle,
+  XCircle,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import { useAuth } from "@/context/AuthContext";
+import { useNotification } from "@/context/NotificationContext";
 import { Dropdown } from "@/components/ui/dropdown/Dropdown";
 import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
 import { formatRole } from "@/lib/utils/format-role";
+import { formatDistanceToNow } from "date-fns";
+import type { Notification } from "@/types/notification";
 
 interface HeaderProps {
   /* title: string;
@@ -105,8 +112,13 @@ export function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
   const { user } = useUser();
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+  const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] =
+    useState(false);
   const userButtonRef = useRef<HTMLButtonElement>(null);
+  const notificationButtonRef = useRef<HTMLButtonElement>(null);
   const { signOut } = useAuth();
+  const { notifications, unreadCount, markAsRead, markAllAsRead } =
+    useNotification();
 
   const meta = findPageMeta(pathname, pageMetaConfigs);
 
@@ -149,9 +161,19 @@ export function Header({ onMenuClick }: HeaderProps) {
             </span>
           </div>
 
-          <button className="border-surface-700 bg-surface-900 text-surface-300 relative rounded-xl border p-2.5 hover:text-white">
+          <button
+            ref={notificationButtonRef}
+            onClick={() =>
+              setIsNotificationDropdownOpen(!isNotificationDropdownOpen)
+            }
+            className="border-surface-700 bg-surface-900 text-surface-300 relative rounded-xl border p-2.5 hover:text-white"
+          >
             <Bell className="h-5 w-5" />
-            <span className="bg-accent absolute top-2 right-2 h-2 w-2 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.9)]" />
+            {unreadCount > 0 && (
+              <span className="bg-accent absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold text-white">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -247,9 +269,54 @@ export function Header({ onMenuClick }: HeaderProps) {
             </ul>
           </Dropdown>
 
+          <Dropdown
+            isOpen={isNotificationDropdownOpen}
+            onClose={() => setIsNotificationDropdownOpen(false)}
+            triggerRef={notificationButtonRef}
+            className="border-base-300 animate-in fade-in slide-in-from-top-2 text-base-content bg-base-300/40 w-96 rounded-2xl border shadow-lg backdrop-blur-lg duration-200"
+          >
+            <div className="flex max-h-125 flex-col">
+              <div className="border-base-300 flex items-center justify-between border-b p-4">
+                <h3 className="text-base font-semibold">Notifications</h3>
+                {unreadCount > 0 && (
+                  <button
+                    onClick={markAllAsRead}
+                    className="text-accent hover:text-accent/80 text-xs font-medium"
+                  >
+                    Mark all as read
+                  </button>
+                )}
+              </div>
+
+              <div className="flex-1 overflow-y-auto">
+                {notifications.length === 0 ? (
+                  <div className="text-base-content/60 py-12 text-center text-sm">
+                    <Bell className="mx-auto mb-3 h-12 w-12 opacity-30" />
+                    <p>No notifications yet</p>
+                  </div>
+                ) : (
+                  <ul className="divide-base-300 divide-y">
+                    {notifications.map((notification) => (
+                      <NotificationItem
+                        key={notification.id}
+                        notification={notification}
+                        onMarkAsRead={markAsRead}
+                        onClose={() => setIsNotificationDropdownOpen(false)}
+                      />
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </Dropdown>
+
           <ThemeSwitcher />
         </div>
       </div>
+      <div
+        id="notification-portal-anchor"
+        className="pointer-events-none absolute top-full right-4"
+      />
     </header>
   );
 }
@@ -285,4 +352,78 @@ function findPageMeta(
     title: "Admin",
     subtitle: "Alif Pustaka Dashboard",
   };
+}
+
+interface NotificationItemProps {
+  notification: Notification;
+  onMarkAsRead: (id: string) => void;
+  onClose: () => void;
+}
+
+function NotificationItem({
+  notification,
+  onMarkAsRead,
+  onClose,
+}: NotificationItemProps) {
+  const getIcon = () => {
+    switch (notification.type) {
+      case "role_change":
+        return <User className="h-5 w-5 text-blue-500" />;
+      case "status_change":
+        return <AlertTriangle className="h-5 w-5 text-orange-500" />;
+      case "post_approved":
+        return <CheckCircle className="h-5 w-5 text-green-500" />;
+      case "post_rejected":
+        return <XCircle className="h-5 w-5 text-red-500" />;
+      default:
+        return <Bell className="h-5 w-5 text-gray-500" />;
+    }
+  };
+
+  const handleClick = () => {
+    if (!notification.isRead) {
+      onMarkAsRead(notification.id);
+    }
+    onClose();
+  };
+
+  const content = (
+    <div
+      className={`hover:bg-base-100/30 flex cursor-pointer gap-3 p-4 transition-colors ${!notification.isRead ? "bg-accent/5" : ""}`}
+    >
+      <div className="mt-0.5 shrink-0">{getIcon()}</div>
+      <div className="min-w-0 flex-1">
+        <p
+          className={`text-sm font-medium ${!notification.isRead ? "text-base-content" : "text-base-content/70"}`}
+        >
+          {notification.title}
+        </p>
+        <p className="text-base-content/60 mt-1 text-xs">
+          {notification.message}
+        </p>
+        <p className="text-base-content/40 mt-1 text-xs">
+          {formatDistanceToNow(new Date(notification.createdAt), {
+            addSuffix: true,
+          })}
+        </p>
+      </div>
+      {!notification.isRead && (
+        <div className="shrink-0">
+          <span className="bg-accent block h-2 w-2 rounded-full"></span>
+        </div>
+      )}
+    </div>
+  );
+
+  if (notification.linkTo) {
+    return (
+      <li>
+        <Link href={notification.linkTo} onClick={handleClick}>
+          {content}
+        </Link>
+      </li>
+    );
+  }
+
+  return <li onClick={handleClick}>{content}</li>;
 }

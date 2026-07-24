@@ -62,3 +62,8 @@ export type Gallery = Prisma.GalleryModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

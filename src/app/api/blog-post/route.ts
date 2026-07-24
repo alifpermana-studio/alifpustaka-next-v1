@@ -4,6 +4,7 @@ import { requireActiveStatus } from "@/lib/auth-middleware";
 import { successResponse, errorResponse } from "@/lib/api-response";
 import { createAuditLogAsync } from "@/lib/audit-log";
 import * as permissions from "@/lib/permissions";
+import { notifyPostApproved, notifyPostRejected } from "@/lib/notifications";
 
 export async function PUT(req: NextRequest) {
   const authResult = await requireActiveStatus(req);
@@ -88,6 +89,11 @@ export async function PUT(req: NextRequest) {
           metadata: { postTitle: post.title, postSlug: post.slug },
           req,
         });
+
+        // Notify post author if post was submitted and changed back to draft (rejected)
+        if (existingPost.status === "submitted" && existingPost.userId !== currentUser.userId) {
+          notifyPostRejected(existingPost.userId, existingPost.title, post.id);
+        }
       } else {
         post = await prisma.post.create({
           data: {
@@ -301,6 +307,11 @@ export async function PUT(req: NextRequest) {
         metadata: { postTitle: post.title, postSlug: post.slug },
         req,
       });
+
+      // Notify post author if post was submitted and now published (approved)
+      if (existingPost.status === "submitted" && existingPost.userId !== currentUser.userId) {
+        notifyPostApproved(existingPost.userId, existingPost.title, post.id);
+      }
 
       return NextResponse.json(
         successResponse("Post published successfully", post)

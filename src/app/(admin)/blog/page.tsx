@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/context/ToastContext";
 import { useNotification } from "@/context/NotificationContext";
 import { useState, useEffect, useCallback } from "react";
 import { Post, PostStatus } from "apus-post";
@@ -22,7 +23,8 @@ interface FilterState {
 
 export default function BlogPage() {
   const { user } = useAuth();
-  const { showNotification } = useNotification();
+  const { showToast } = useToast();
+  const { fetchNotifications } = useNotification();
   const router = useRouter();
 
   const [posts, setPosts] = useState<Post[]>([]);
@@ -73,18 +75,18 @@ export default function BlogPage() {
           }));
           setLastUpdated(new Date());
         } else {
-          showNotification(
+          showToast(
             result.error?.message || "Failed to fetch posts",
             "error",
           );
         }
       } catch (error) {
-        showNotification("Failed to fetch posts", "error");
+        showToast("Failed to fetch posts", "error");
       } finally {
         if (!silent) setLoading(false);
       }
     },
-    [pagination.skip, pagination.limit, filter, showNotification],
+    [pagination.skip, pagination.limit, filter, showToast],
   );
 
   useEffect(() => {
@@ -141,24 +143,24 @@ export default function BlogPage() {
       const result = await response.json();
 
       if (result.success) {
-        showNotification("Post deleted successfully", "success");
+        showToast("Post deleted successfully", "success");
         setDeleteModalOpen(false);
         setDeleteTarget(null);
         fetchPosts(false);
       } else {
-        showNotification(
+        showToast(
           result.error?.message || "Failed to delete post",
           "error",
         );
       }
     } catch (error) {
-      showNotification("Failed to delete post", "error");
+      showToast("Failed to delete post", "error");
     }
   };
 
   const handleBulkAction = (action: "status" | "delete" | "tags") => {
     if (selectedPosts.size === 0) {
-      showNotification("No posts selected", "warning");
+      showToast("No posts selected", "warning");
       return;
     }
 
@@ -188,18 +190,19 @@ export default function BlogPage() {
       const result = await response.json();
 
       if (result.success) {
-        showNotification(result.message, "success");
+        showToast(result.message, "success");
         setSelectedPosts(new Set());
         setBulkStatusModalOpen(false);
         fetchPosts(false);
+        fetchNotifications();
       } else {
-        showNotification(
+        showToast(
           result.error?.message || "Failed to change status",
           "error",
         );
       }
     } catch (error) {
-      showNotification("Failed to change status", "error");
+      showToast("Failed to change status", "error");
     }
   };
 
@@ -224,17 +227,18 @@ export default function BlogPage() {
       const result = await response.json();
 
       if (result.success) {
-        showNotification(result.message, "success");
+        showToast(result.message, "success");
         setSelectedPosts(new Set());
         fetchPosts(false);
+        fetchNotifications();
       } else {
-        showNotification(
+        showToast(
           result.error?.message || "Failed to delete posts",
           "error",
         );
       }
     } catch (error) {
-      showNotification("Failed to delete posts", "error");
+      showToast("Failed to delete posts", "error");
     }
   };
 
@@ -255,18 +259,18 @@ export default function BlogPage() {
       const result = await response.json();
 
       if (result.success) {
-        showNotification(result.message, "success");
+        showToast(result.message, "success");
         setSelectedPosts(new Set());
         setBulkTagModalOpen(false);
         fetchPosts(false);
       } else {
-        showNotification(
+        showToast(
           result.error?.message || "Failed to manage tags",
           "error",
         );
       }
     } catch (error) {
-      showNotification("Failed to manage tags", "error");
+      showToast("Failed to manage tags", "error");
     }
   };
 
@@ -287,13 +291,6 @@ export default function BlogPage() {
 
   return (
     <div className="">
-      <div className="mb-6">
-        <h1 className="text-base-content text-2xl font-bold">My Posts</h1>
-        <p className="text-base-content/70 mt-1">
-          Manage your blog posts
-        </p>
-      </div>
-
       <PostFilters
         filter={filter}
         onFilterChange={setFilter}

@@ -1,6 +1,11 @@
 import { PostStatus } from "apus-post";
 import { Select } from "@/components/ui/Select";
-import { Search, RefreshCw, ArrowUpNarrowWide, ArrowDownWideNarrow } from "lucide-react";
+import {
+  Search,
+  RefreshCw,
+  ArrowUpNarrowWide,
+  ArrowDownWideNarrow,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface FilterState {
@@ -50,7 +55,7 @@ export function PostFilters({
   ];
 
   return (
-    <div className="mt-6 space-y-4">
+    <div className="space-y-4">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="relative max-w-md flex-1">
           <Search className="text-base-content/50 absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
@@ -63,7 +68,7 @@ export function PostFilters({
           />
         </div>
 
-        <div className="flex gap-3 items-center">
+        <div className="flex items-center gap-3">
           <Select
             value={filter.status}
             onChange={(value) =>
@@ -74,9 +79,7 @@ export function PostFilters({
           />
           <Select
             value={filter.sort}
-            onChange={(value) =>
-              onFilterChange({ ...filter, sort: value })
-            }
+            onChange={(value) => onFilterChange({ ...filter, sort: value })}
             options={sortOptions}
             className="w-40"
           />

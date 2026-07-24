@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/context/ToastContext";
 import { useNotification } from "@/context/NotificationContext";
 import { useState, useEffect, useCallback } from "react";
 import { UserRole, UserStatus } from "@/types/roles";
@@ -37,7 +38,8 @@ interface BulkActionState {
 
 export function UserManagement() {
   const { user, hasPermission, canManageUser } = useAuth();
-  const { showNotification } = useNotification();
+  const { showToast } = useToast();
+  const { fetchNotifications } = useNotification();
   const router = useRouter();
 
   const [users, setUsers] = useState<UserListItem[]>([]);
@@ -98,18 +100,18 @@ export function UserManagement() {
           }));
           setLastUpdated(new Date());
         } else {
-          showNotification(
+          showToast(
             result.error?.message || "Failed to fetch users",
             "error",
           );
         }
       } catch (error) {
-        showNotification("Failed to fetch users", "error");
+        showToast("Failed to fetch users", "error");
       } finally {
         if (!silent) setLoading(false);
       }
     },
-    [pagination.skip, pagination.limit, filter, showNotification],
+    [pagination.skip, pagination.limit, filter, showToast],
   );
 
   useEffect(() => {
@@ -147,18 +149,19 @@ export function UserManagement() {
       const result = await response.json();
 
       if (result.success) {
-        showNotification("User updated successfully", "success");
+        showToast("User updated successfully", "success");
         setEditModalOpen(false);
         setEditingUser(null);
         fetchUsers(false);
+        fetchNotifications();
       } else {
-        showNotification(
+        showToast(
           result.error?.message || "Failed to update user",
           "error",
         );
       }
     } catch (error) {
-      showNotification("Failed to update user", "error");
+      showToast("Failed to update user", "error");
     }
   };
 
@@ -173,7 +176,7 @@ export function UserManagement() {
     });
 
     if (editableUserIds.length === 0) {
-      showNotification(
+      showToast(
         "No users selected that you have permission to edit",
         "warning",
       );
@@ -210,7 +213,7 @@ export function UserManagement() {
     const succeeded = results.filter((r) => r.status === "fulfilled").length;
     const failed = results.filter((r) => r.status === "rejected").length;
 
-    showNotification(
+    showToast(
       `${succeeded} users updated${failed > 0 ? `, ${failed} failed` : ""}`,
       failed > 0 ? "warning" : "success",
     );
@@ -219,6 +222,7 @@ export function UserManagement() {
     setBulkConfirmModalOpen(false);
     setBulkAction(null);
     fetchUsers(false);
+    fetchNotifications();
   };
 
   const handlePageChange = (skip: number) => {

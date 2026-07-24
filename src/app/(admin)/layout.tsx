@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/AdminHeader";
 import { usePathname } from "next/navigation";
 import { PostProvider } from "@/context/PostContext";
 import { GalleryProvider } from "@/context/GalleryContext";
+import { ToastProvider } from "@/context/ToastContext";
 import { NotificationProvider } from "@/context/NotificationContext";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -19,10 +20,11 @@ export default function AdminLayout({
   const pathname = usePathname();
   return (
     <div className="bg-base-100 text-base-content h-screen lg:flex">
-      <NotificationProvider>
-        <AuthProvider>
-          <GalleryProvider>
-            <PostProvider>
+      <ToastProvider>
+        <NotificationProvider>
+          <AuthProvider>
+            <GalleryProvider>
+              <PostProvider>
               <Sidebar
                 open={sidebarOpen}
                 onClose={() => setSidebarOpen(false)}
@@ -40,10 +42,11 @@ export default function AdminLayout({
                   </motion.div>
                 </main>
               </div>
-            </PostProvider>
-          </GalleryProvider>
-        </AuthProvider>
-      </NotificationProvider>
+              </PostProvider>
+            </GalleryProvider>
+          </AuthProvider>
+        </NotificationProvider>
+      </ToastProvider>
     </div>
   );
 }

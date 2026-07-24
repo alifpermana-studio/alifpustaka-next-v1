@@ -5,6 +5,7 @@ import { successResponse, errorResponse } from "@/lib/api-response";
 import { createAuditLogAsync } from "@/lib/audit-log";
 import { UserRole, UserStatus } from "@/types/roles";
 import * as permissions from "@/lib/permissions";
+import { notifyUserRoleChange, notifyUserStatusChange } from "@/lib/notifications";
 
 /**
  * GET /api/users
@@ -242,6 +243,17 @@ export async function PATCH(req: NextRequest) {
         },
         req,
       });
+
+      notifyUserStatusChange(
+        userId,
+        updatedUser.username || updatedUser.email,
+        oldValues.status,
+        newValues.status
+      );
+    }
+
+    if (updates.role) {
+      notifyUserRoleChange(userId, oldValues.role, newValues.role);
     }
 
     return NextResponse.json(

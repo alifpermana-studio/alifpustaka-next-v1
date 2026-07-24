@@ -1,18 +1,38 @@
-export type NotificationType = "success" | "error" | "warning" | "info";
+export type NotificationType = 
+  | "role_change" 
+  | "status_change" 
+  | "post_approved" 
+  | "post_rejected";
 
 export interface Notification {
   id: string;
+  userId: string;
   type: NotificationType;
+  title: string;
   message: string;
-  duration?: number; // auto-dismiss after X ms (default 5000)
+  linkTo?: string;
+  relatedEntityType?: string;
+  relatedEntityId?: string;
+  isRead: boolean;
+  readAt?: Date | null;
+  createdAt: Date;
 }
 
 export interface NotificationContextType {
   notifications: Notification[];
-  showNotification: (
-    message: string,
-    type: NotificationType,
-    duration?: number,
-  ) => void;
-  dismissNotification: (id: string) => void;
+  unreadCount: number;
+  fetchNotifications: () => Promise<void>;
+  markAsRead: (id: string) => Promise<void>;
+  markAllAsRead: () => Promise<void>;
+  isLoading: boolean;
+}
+
+export interface CreateNotificationParams {
+  userId: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  linkTo?: string;
+  relatedEntityType?: string;
+  relatedEntityId?: string;
 }
