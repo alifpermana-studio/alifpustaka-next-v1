@@ -24,6 +24,7 @@ The Gallery Management System provides a full-featured interface for Content Adm
 - **Public Content Only**: Only displays galleries where `isPrivate=false`
 - **Image Preview**: View full-size images with complete metadata in modal
 - **Block Images**: Make inappropriate images private with admin notes
+- **Bulk Actions**: Block multiple images at once with shared reason
 - **Author Information**: See who uploaded each gallery item
 - **Auto-refresh**: Automatically updates every 60 seconds
 - **Audit Logging**: Track all moderation actions
@@ -60,12 +61,21 @@ The Gallery Management System provides a full-featured interface for Content Adm
 
 #### Table Display
 
+- **Checkbox**: Select individual images for bulk actions
 - **Thumbnail**: Shows image preview (40x40px)
 - **Title & Slug**: Gallery identification
 - **Author**: User who uploaded with avatar
 - **Tags**: Display first 3 tags + count
-- **Dates**: Upload time and last update
+- **Updated Date**: Last modification date
 - **Actions**: View button to open modal
+
+#### Selection Features
+
+- **Individual Selection**: Click checkbox on each row
+- **Select All**: Checkbox in table header selects all on current page
+- **Indeterminate State**: Shows when some (but not all) are selected
+- **Selection Counter**: Shows count in bulk action bar
+- **Clear Selection**: X button in bulk action bar or auto-clear after action
 
 #### Image Modal
 
@@ -83,7 +93,7 @@ The Gallery Management System provides a full-featured interface for Content Adm
 
 ### 🚫 Image Blocking
 
-#### Block Feature
+#### Single Image Block
 
 - **Admin Notes Required**: Must provide reason before blocking (max 200 characters)
 - **Pre-filled Notes**: Shows existing footnote if available
@@ -96,6 +106,21 @@ The Gallery Management System provides a full-featured interface for Content Adm
   - Notifies image owner with reason
   - Removes image from admin gallery list
   - Refreshes gallery list automatically
+
+#### Bulk Image Block
+
+- **Selection Required**: Select multiple images using checkboxes
+- **Shared Footnote**: All selected images receive same admin note
+- **Bulk Confirmation Modal**: Shows count and requires footnote
+- **Character Limit**: 200 characters maximum
+- **Automatic Actions**:
+  - Moves all images from public to private storage
+  - Updates all database records simultaneously
+  - Creates individual audit logs with bulk metadata
+  - Groups notifications by owner (one notification per owner)
+  - Shows success/failure counts in toast
+  - Clears selection automatically
+  - Refreshes gallery list
 
 #### What Happens When Blocked
 
@@ -128,15 +153,20 @@ The Gallery Management System provides a full-featured interface for Content Adm
 │  [Search by title or slug...                          ]    │
 │  X gallery items found                                     │
 │                                                             │
-├─────────┬──────────┬──────┬──────────┬──────────┬─────────┤
-│ Gallery │ Author   │ Tags │ Uploaded │ Updated  │ Actions │
-├─────────┼──────────┼──────┼──────────┼──────────┼─────────┤
-│ 🖼️ Img1 │ John Doe │ nat  │ Jul 25   │ Jul 25   │ [View]  │
-│ 🖼️ Img2 │ Jane S.  │ art  │ Jul 24   │ Jul 24   │ [View]  │
-│ 🖼️ Img3 │ Bob Lee  │ tech │ Jul 23   │ Jul 23   │ [View]  │
-└─────────┴──────────┴──────┴──────────┴──────────┴─────────┘
+├───┬─────────┬──────────┬──────┬──────────┬─────────────────┤
+│ ☑ │ Gallery │ Author   │ Tags │ Updated  │ Actions         │
+├───┼─────────┼──────────┼──────┼──────────┼─────────────────┤
+│ ☐ │ 🖼️ Img1 │ John Doe │ nat  │ Jul 25   │ [View]          │
+│ ☑ │ 🖼️ Img2 │ Jane S.  │ art  │ Jul 24   │ [View]          │
+│ ☐ │ 🖼️ Img3 │ Bob Lee  │ tech │ Jul 23   │ [View]          │
+└───┴─────────┴──────────┴──────┴──────────┴─────────────────┘
 │                                                             │
 │  Showing 1-3 of 3        [← Previous]  Page 1 of 1  [Next →] │
+│                                                             │
+│  ┌────────────────────────────────────────────────────┐   │
+│  │ 2 images selected │ [Block Images] │ [×]           │   │
+│  └────────────────────────────────────────────────────┘   │
+│  (Fixed at bottom center when items selected)              │
 └────────────────────────────────────────────────────────────┘
 ```
 
@@ -178,25 +208,33 @@ The Gallery Management System provides a full-featured interface for Content Adm
 └─────────────────────────────────────────────────────┘
 ```
 
-### Block Confirmation Modal
+### Bulk Block Confirmation Modal
 
 ```
-┌───────────────────────────────────────┐
-│  Block Image?                     [×] │
-├───────────────────────────────────────┤
-│                                       │
-│  Are you sure you want to block       │
-│  "Beautiful Sunset"?                  │
-│                                       │
-│  ┌─────────────────────────────────┐  │
-│  │ This will:                      │  │
-│  │ • Make this image private       │  │
-│  │ • Notify John Doe               │  │
-│  │ • Remove it from public gallery │  │
-│  └─────────────────────────────────┘  │
-│                                       │
-│           [ Cancel ] [ Block Image ]  │
-└───────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│  ⚠️  Block Multiple Images?             [×] │
+├─────────────────────────────────────────────┤
+│                                             │
+│  You are about to block 3 images           │
+│                                             │
+│  Admin Notes (Required)                     │
+│  ┌─────────────────────────────────────┐   │
+│  │ Reason for blocking these images... │   │
+│  │                                     │   │
+│  │                                     │   │
+│  └─────────────────────────────────────┘   │
+│  0/200 characters                           │
+│                                             │
+│  ┌─────────────────────────────────────┐   │
+│  │ This will:                          │   │
+│  │ • Make all selected images private  │   │
+│  │ • Move files to private storage     │   │
+│  │ • Notify all owners with your reason│   │
+│  │ • Remove images from public gallery │   │
+│  └─────────────────────────────────────┘   │
+│                                             │
+│           [ Cancel ] [ Block Images ]       │
+└─────────────────────────────────────────────┘
 ```
 
 ### Color Scheme
@@ -275,11 +313,11 @@ Fetch public galleries for admin review.
 - Returns empty array if no galleries found
 - Requires `manage_public_gallery` permission
 
-**See**: [Gallery API Reference](../api/gallery-admin-api-reference.md) for complete documentation
+**See**: [Gallery Admin API Reference](../api/gallery-admin-api-reference.md) for complete documentation
 
 ### PATCH `/api/galleries/[id]`
 
-Block an image by making it private with admin notes.
+Block a single image by making it private with admin notes.
 
 **Request Body:**
 
@@ -315,6 +353,47 @@ Block an image by making it private with admin notes.
 - Creates audit log: `image_blocked`
 - Sends notification to owner with footnote
 
+### POST `/api/galleries/bulk-block`
+
+Block multiple images at once with a shared footnote.
+
+**Request Body:**
+
+```typescript
+{
+  galleryIds: string[],  // Array of gallery IDs
+  footnote: string       // Required, max 200 characters
+}
+```
+
+**Response:**
+
+```typescript
+{
+  success: true,
+  message: "3 image(s) blocked successfully",
+  data: {
+    succeeded: 3,
+    failed: 0,
+    results: [
+      { id: "id1", success: true },
+      { id: "id2", success: true },
+      { id: "id3", success: true }
+    ]
+  }
+}
+```
+
+**Behavior:**
+
+- Validates `manage_public_gallery` permission
+- Requires footnote (1-200 characters)
+- Processes all images with `Promise.allSettled`
+- Migrates each image to private storage
+- Creates individual audit logs with bulk metadata
+- Groups notifications by owner (one per owner)
+- Returns detailed success/failure results
+
 **See**: [Gallery Admin API Reference](../api/gallery-admin-api-reference.md) for complete documentation
 
 ---
@@ -329,19 +408,24 @@ GalleryManagementPage (page.tsx)
     ├── GalleryFilters
     │   ├── Search Input
     │   └── Total Count Display
-    ├── GalleryTable
-    │   ├── Table Headers
+    ├── GalleryTable (with selection)
+    │   ├── Table Headers (with Select All)
     │   └── GalleryTableRow (for each gallery)
+    │       ├── Checkbox
     │       ├── Image Thumbnail
     │       ├── Title & Slug
     │       ├── Author Info
     │       ├── Tags Display
-    │       ├── Upload & Update Dates
+    │       ├── Update Date
     │       └── View Button
     ├── GalleryPagination
     │   ├── Previous Button
     │   ├── Page Indicator
     │   └── Next Button
+    ├── GalleryBulkActionBar (conditional)
+    │   ├── Selection Count
+    │   ├── Block Images Button
+    │   └── Clear Selection Button
     ├── GalleryModal
     │   ├── Fixed Header (Title & Slug)
     │   └── Scrollable Content
@@ -351,8 +435,13 @@ GalleryManagementPage (page.tsx)
     │       ├── Dates Section
     │       ├── Admin Notes Textarea
     │       └── Block Button
-    └── BlockImageModal
-        ├── Confirmation Message
+    ├── BlockImageModal (single image)
+    │   ├── Confirmation Message
+    │   ├── Warning Notice
+    │   └── Action Buttons
+    └── BulkBlockConfirmModal (multiple images)
+        ├── Selection Count
+        ├── Footnote Textarea
         ├── Warning Notice
         └── Action Buttons
 ```
@@ -369,18 +458,22 @@ src/
 │   └── api/
 │       └── galleries/
 │           ├── route.ts                    # List galleries API
-│           └── [id]/
-│               └── route.ts                # Block image API
+│           ├── [id]/
+│           │   └── route.ts                # Block single image API
+│           └── bulk-block/
+│               └── route.ts                # Bulk block images API
 └── components/
     ├── admin/
     │   └── gallery-management/
     │       ├── GalleryManagement.tsx       # Main client component
     │       ├── GalleryFilters.tsx          # Search & filter bar
-    │       ├── GalleryTable.tsx            # Table container
-    │       ├── GalleryTableRow.tsx         # Individual gallery row
+    │       ├── GalleryTable.tsx            # Table container with selection
+    │       ├── GalleryTableRow.tsx         # Individual gallery row with checkbox
     │       ├── GalleryPagination.tsx       # Pagination controls
     │       ├── GalleryModal.tsx            # Image detail modal
-    │       └── BlockImageModal.tsx         # Block confirmation modal
+    │       ├── BlockImageModal.tsx         # Single block confirmation modal
+    │       ├── GalleryBulkActionBar.tsx    # Bulk action bar
+    │       └── BulkBlockConfirmModal.tsx   # Bulk block confirmation modal
     └── layout/
         └── AdminSidebar.tsx                # Navigation (updated)
 ```
@@ -404,9 +497,9 @@ State Update (galleries, pagination)
 Re-render Table
 ```
 
-**Blocking Image:**
+**Blocking Single Image:**
 ```
-Admin clicks Block Button
+Admin clicks Block Button in Modal
     ↓
 BlockImageModal opens
     ↓
@@ -429,6 +522,37 @@ Response: Success
 Modal closes, list refreshes
     ↓
 Image removed from admin list
+```
+
+**Bulk Blocking Images:**
+```
+Admin selects multiple images (checkboxes)
+    ↓
+Admin clicks "Block Images" in bulk bar
+    ↓
+BulkBlockConfirmModal opens
+    ↓
+Admin enters footnote and confirms
+    ↓
+API: POST /api/galleries/bulk-block { galleryIds: [...], footnote: "..." }
+    ↓
+For each image (Promise.allSettled):
+    ├─ S3: Copy (public → private)
+    ├─ S3: Delete from public
+    ├─ Prisma: Update gallery
+    └─ Prisma: Create audit log (image_blocked_bulk)
+    ↓
+Group notifications by owner
+    ↓
+Prisma: Create notifications (one per owner)
+    ↓
+Response: Success with counts (succeeded/failed)
+    ↓
+Toast shows results
+    ↓
+Selection cleared, list refreshes
+    ↓
+Blocked images removed from admin list
 ```
 
 ---
@@ -481,45 +605,61 @@ Image removed from admin list
 - Spam or offensive material
 - Terms of service violations
 
-**How to Block:**
+**Single Image Block:**
 
 1. Click on gallery item to open modal
 2. Scroll to **Admin Notes** section at bottom
 3. Enter reason for blocking (required, max 200 characters)
 4. Click **Block Image** button
-5. Review confirmation modal:
-   - Image title and author name displayed
-   - Warning about consequences shown
+5. Review confirmation modal showing image details
 6. Click **Block Image** to confirm or **Cancel** to abort
-7. Wait for processing (image is being moved to private storage)
-8. Success notification appears
-9. Modal closes automatically
-10. Gallery list refreshes (blocked image removed)
+7. Success notification appears
+8. Modal closes automatically
+9. Gallery list refreshes (blocked image removed)
+
+**Bulk Block (Multiple Images):**
+
+1. Select images using checkboxes (individual or Select All)
+2. Click **Block Images** in the bulk action bar (bottom center)
+3. Enter shared footnote in confirmation modal (required, max 200 characters)
+4. Review warning about consequences
+5. Click **Block Images** to confirm or **Cancel** to abort
+6. Wait for processing (all images being moved to private storage)
+7. Success toast shows counts (e.g., "3 images blocked successfully")
+8. Selection cleared automatically
+9. Gallery list refreshes (all blocked images removed)
 
 **What Happens:**
-- Image file moved from public to private storage bucket
+- Image files moved from public to private storage bucket
 - Database updated with block reason
-- Image owner receives notification with your reason
-- Action logged in audit trail
-- Image becomes private (only owner can see it)
-- Image removed from public gallery and admin list
+- Image owners receive notifications with your reason
+- Actions logged in audit trail
+- Images become private (only owners can see them)
+- Images removed from public gallery and admin list
+
+**Bulk-Specific Behavior:**
+- All selected images share the same footnote
+- One notification per owner (grouped if multiple images from same owner)
+- Individual audit logs created with bulk metadata
+- Success/failure counts shown in toast
+- Failed images remain in list for retry
 
 **Important Notes:**
 - Footnote is **required** - you must provide a reason
-- Block button is disabled until you enter a note
+- Block button disabled until you enter a note
 - Character limit is 200 characters
 - Action cannot be undone via this interface
-- Owner can view the blocked image in their private gallery
-- Owner can see your admin notes/reason
+- Owners can view blocked images in their private gallery
+- Owners can see your admin notes/reason
 
 #### Understanding Gallery Info
 
 **Table Columns:**
 
+- **Checkbox**: Select for bulk actions
 - **Gallery**: Thumbnail + Title + Slug
 - **Author**: User avatar + Name + Username
 - **Tags**: First 3 tags (e.g., "nature, photo, landscape +2 more")
-- **Uploaded**: Initial upload date
 - **Updated**: Last modification date
 - **Actions**: View button
 
@@ -532,6 +672,13 @@ Image removed from admin list
 - **Dates**: Full timestamps with time
 - **Admin Notes**: Textarea for moderation notes
 - **Block Button**: Action to make image private
+
+**Bulk Action Bar:**
+
+- Appears at bottom center when images selected
+- Shows selection count
+- **Block Images** button
+- **Clear selection** (X) button
 
 ---
 
@@ -849,32 +996,45 @@ try {
 - [ ] Only public galleries (`isPrivate=false`) are shown
 - [ ] Pagination navigates correctly
 - [ ] Auto-refresh updates every 60 seconds
-- [ ] Modal opens on row click
+- [ ] Modal opens on row click (not checkbox)
 - [ ] Modal shows full-size image
 - [ ] Modal displays all metadata
 - [ ] Modal header stays fixed while scrolling
 - [ ] Image URL format is correct (`/api/image?p=false&src=...`)
 - [ ] Author avatars display correctly
 - [ ] Tags display (first 3 + count)
-- [ ] Footnote textarea pre-fills existing notes
+- [ ] Checkbox selection works (individual)
+- [ ] Select All checkbox works
+- [ ] Indeterminate state shows correctly
+- [ ] Bulk action bar appears when items selected
+- [ ] Bulk action bar shows correct count
+- [ ] Clear selection button works
+- [ ] Footnote textarea pre-fills existing notes (single)
 - [ ] Character counter updates correctly (0-200)
 - [ ] Block button disabled when footnote empty
-- [ ] Block confirmation modal appears
-- [ ] Block confirmation shows correct details
-- [ ] Image moves from public to private bucket
+- [ ] Block confirmation modal appears (single)
+- [ ] Bulk block modal appears with correct count
+- [ ] Bulk footnote required and validated
+- [ ] Image moves from public to private bucket (single)
+- [ ] All images move to private bucket (bulk)
 - [ ] Database updates correctly (isPrivate, footnote, path)
-- [ ] Audit log created with action `image_blocked`
-- [ ] Notification sent to owner with footnote
+- [ ] Audit log created with action `image_blocked` (single)
+- [ ] Audit logs created with action `image_blocked_bulk` (bulk)
+- [ ] Notification sent to owner with footnote (single)
+- [ ] Notifications grouped by owner (bulk)
 - [ ] Notification links to `/gallery` (not specific image)
-- [ ] Blocked image disappears from admin list
+- [ ] Blocked image disappears from admin list (single)
+- [ ] All blocked images disappear from list (bulk)
 - [ ] Gallery list auto-refreshes after block
+- [ ] Selection cleared after bulk block
+- [ ] Toast shows success/failure counts (bulk)
 - [ ] Permission check works (`manage_public_gallery`)
 - [ ] Unauthorized users redirected
 - [ ] Styling matches post-management
 - [ ] TypeScript compiles without errors
 - [ ] Responsive design works on mobile
-- [ ] ESC key closes modal
-- [ ] Click outside closes modal
+- [ ] ESC key closes modals
+- [ ] Click outside closes modals
 - [ ] S3 error handling works properly
 
 ---
@@ -989,5 +1149,5 @@ Potential features for future development:
 ---
 
 **Last Updated:** July 26, 2026  
-**Version:** 1.1  
+**Version:** 1.2  
 **Maintained by:** Development Team

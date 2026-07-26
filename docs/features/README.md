@@ -66,6 +66,23 @@ Blog post management system documentation.
 
 ---
 
+### [public-blog-viewing.md](./public-blog-viewing.md) - Public Blog Viewing
+Public-facing blog post viewer documentation.
+
+**Contents:**
+- Public blog viewer at `/blog/[slug]`
+- Markdown rendering with custom components
+- Scroll progress indicator
+- Social sharing functionality
+- SEO and metadata generation
+
+**Use this for:**
+- Public blog feature
+- Markdown rendering
+- Share functionality
+
+---
+
 ### [blog-management-quick-reference.md](./blog-management-quick-reference.md)
 Quick reference for common blog management tasks.
 
@@ -114,7 +131,8 @@ Technical architecture and data flow for blog management.
 - Draft → Submit → Publish workflow
 - Role-based publishing
 - Content moderation
-- See [blog-management.md](./blog-management.md) for details
+- Public blog viewing with markdown rendering
+- See [blog-management.md](./blog-management.md) and [public-blog-viewing.md](./public-blog-viewing.md) for details
 
 ### User Management
 - Admin interface for user management
@@ -147,6 +165,7 @@ Technical architecture and data flow for blog management.
 **For Content Creators:**
 - [Blog Quick Reference](./blog-management-quick-reference.md)
 - [Post Workflow](./rbac.md#post-workflow)
+- [Public Blog Viewing](./public-blog-viewing.md)
 
 ---
 
@@ -159,4 +178,4 @@ Technical architecture and data flow for blog management.
 
 ---
 
-**Last Updated:** 2026-07-25
+**Last Updated:** 2026-07-26

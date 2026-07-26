@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
+import { Checkbox } from "@/components/ui/Checkbox";
 
 interface GalleryListItem {
   id: string;
@@ -22,6 +23,8 @@ interface GalleryListItem {
 
 interface GalleryTableRowProps {
   gallery: GalleryListItem;
+  isSelected: boolean;
+  onSelect: (id: string) => void;
   onClick: (slug: string) => void;
 }
 
@@ -34,13 +37,7 @@ const getInitials = (name: string) => {
     .slice(0, 2);
 };
 
-export function GalleryTableRow({ gallery, onClick }: GalleryTableRowProps) {
-  const formattedUploadDate = new Date(gallery.uploadTime).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-
+export function GalleryTableRow({ gallery, isSelected, onSelect, onClick }: GalleryTableRowProps) {
   const formattedUpdateDate = gallery.updatedAt
     ? new Date(gallery.updatedAt).toLocaleDateString("en-US", {
         year: "numeric",
@@ -53,11 +50,16 @@ export function GalleryTableRow({ gallery, onClick }: GalleryTableRowProps) {
   const remainingTags = gallery.tags.length - 3;
 
   return (
-    <tr
-      className="border-b border-base-300 transition-colors hover:bg-base-300/30 cursor-pointer"
-      onClick={() => onClick(gallery.slug)}
-    >
+    <tr className="border-b border-base-300 transition-colors hover:bg-base-300/30">
       <td className="p-4">
+        <Checkbox
+          checked={isSelected}
+          onChange={() => onSelect(gallery.id)}
+          onClick={(e) => e.stopPropagation()}
+        />
+      </td>
+
+      <td className="p-4 cursor-pointer" onClick={() => onClick(gallery.slug)}>
         <div className="flex items-center gap-3">
           <Image
             src={`/api/image?p=${gallery.isPrivate}&src=${gallery.slug}${gallery.format}`}
@@ -73,7 +75,7 @@ export function GalleryTableRow({ gallery, onClick }: GalleryTableRowProps) {
         </div>
       </td>
 
-      <td className="p-4">
+      <td className="p-4 cursor-pointer" onClick={() => onClick(gallery.slug)}>
         <div className="flex items-center gap-3">
           {gallery.author.image ? (
             <Image
@@ -97,7 +99,7 @@ export function GalleryTableRow({ gallery, onClick }: GalleryTableRowProps) {
         </div>
       </td>
 
-      <td className="p-4">
+      <td className="p-4 cursor-pointer" onClick={() => onClick(gallery.slug)}>
         <div className="flex flex-wrap gap-1">
           {displayTags.length > 0 ? (
             <>
@@ -122,11 +124,7 @@ export function GalleryTableRow({ gallery, onClick }: GalleryTableRowProps) {
         </div>
       </td>
 
-      <td className="p-4">
-        <div className="text-sm text-base-content/70">{formattedUploadDate}</div>
-      </td>
-
-      <td className="p-4">
+      <td className="p-4 cursor-pointer" onClick={() => onClick(gallery.slug)}>
         <div className="text-sm text-base-content/70">{formattedUpdateDate}</div>
       </td>
 

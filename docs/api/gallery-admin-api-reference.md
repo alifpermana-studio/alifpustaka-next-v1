@@ -11,9 +11,10 @@ Complete API reference for admin gallery management endpoints.
 1. [Overview](#overview)
 2. [Authentication](#authentication)
 3. [List Public Galleries](#list-public-galleries)
-4. [Block Image](#block-image)
-5. [Error Codes](#error-codes)
-6. [Examples](#examples)
+4. [Block Single Image](#block-single-image)
+5. [Bulk Block Images](#bulk-block-images)
+6. [Error Codes](#error-codes)
+7. [Examples](#examples)
 
 ---
 
@@ -23,13 +24,15 @@ The Gallery Admin API provides endpoints for Content Admins to review and manage
 
 **Features:**
 - List public galleries with filtering and search
-- Block inappropriate images (make private)
+- Block single inappropriate image (make private)
+- Bulk block multiple images at once
 - Pagination support
 - Author information included
 - Privacy filtering (public only)
 - Role-based access control
 - Storage bucket migration
 - Audit logging and notifications
+- Grouped notifications for bulk actions
 
 **Access Control:**
 ```
@@ -306,7 +309,7 @@ if (result.success) {
 
 ---
 
-## Block Image
+## Block Single Image
 
 Block an inappropriate image by making it private with admin notes.
 
@@ -577,6 +580,288 @@ The image owner receives a notification:
   "relatedEntityId": "gallery_123",
   "isRead": false,
   "createdAt": "2026-07-26T06:30:00.000Z"
+}
+```
+
+---
+
+## Bulk Block Images
+
+Block multiple images at once with a shared footnote.
+
+### Endpoint
+
+```
+POST /api/galleries/bulk-block
+```
+
+### Request Body
+
+```json
+{
+  "galleryIds": ["gallery_123", "gallery_124", "gallery_125"],
+  "footnote": "These images contain inappropriate content and violate our community guidelines."
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `galleryIds` | string[] | Yes | Array of gallery IDs to block |
+| `footnote` | string | Yes | Admin notes/reason for blocking (1-200 characters) |
+
+### Authentication
+
+**Required:** Active user session with `manage_public_gallery` permission
+
+### Permission Checks
+
+- Must have `manage_public_gallery` permission
+- Only Content Admin and Super Admin roles have this permission
+
+### Business Logic
+
+**Validation:**
+- Gallery IDs array required and cannot be empty
+- Footnote is required (cannot be empty)
+- Footnote must be 1-200 characters
+- All galleries must exist in database
+- Only public images are processed (private images skipped with error)
+
+**Bulk Processing:**
+- Uses `Promise.allSettled` for parallel processing
+- Each image processed independently
+- Tracks succeeded and failed operations
+- Continues processing even if some images fail
+
+**Storage Migration (Per Image):**
+1. Copy image from `apus-user-public` to `apus-user-private` bucket
+2. Delete image from `apus-user-public` bucket
+3. Update database path to `apus-user-private/[slug]`
+
+**Database Updates (Per Image):**
+- Set `isPrivate=true`
+- Store `footnote` with admin notes
+- Update `path` to private bucket location
+- Update `updatedAt` timestamp
+
+**Audit & Notifications:**
+- Creates individual audit log per image with action: `image_blocked_bulk`
+- Includes bulk metadata (totalInBatch, batchIndex)
+- Groups notifications by owner (one notification per owner)
+- If owner has multiple images blocked, sends single notification with count
+- Notification links to `/gallery` page
+
+### Success Response
+
+**Status:** 200 OK
+
+```json
+{
+  "success": true,
+  "message": "3 image(s) blocked successfully",
+  "data": {
+    "succeeded": 3,
+    "failed": 0,
+    "results": [
+      {
+        "id": "gallery_123",
+        "success": true
+      },
+      {
+        "id": "gallery_124",
+        "success": true
+      },
+      {
+        "id": "gallery_125",
+        "success": true
+      }
+    ]
+  }
+}
+```
+
+**Partial Success (Some Failed):**
+
+```json
+{
+  "success": true,
+  "message": "2 image(s) blocked successfully, 1 failed",
+  "data": {
+    "succeeded": 2,
+    "failed": 1,
+    "results": [
+      {
+        "id": "gallery_123",
+        "success": true
+      },
+      {
+        "id": "gallery_124",
+        "success": false,
+        "error": "Image \"Mountain View\" is already private"
+      },
+      {
+        "id": "gallery_125",
+        "success": true
+      }
+    ]
+  }
+}
+```
+
+### Error Responses
+
+**400 Bad Request** - Missing gallery IDs
+```json
+{
+  "success": false,
+  "error": {
+    "code": "missing_parameter",
+    "message": "Gallery IDs are required"
+  }
+}
+```
+
+**400 Bad Request** - Missing footnote
+```json
+{
+  "success": false,
+  "error": {
+    "code": "missing_parameter",
+    "message": "Footnote is required"
+  }
+}
+```
+
+**400 Bad Request** - Footnote too long
+```json
+{
+  "success": false,
+  "error": {
+    "code": "invalid_parameter",
+    "message": "Footnote must not exceed 200 characters"
+  }
+}
+```
+
+**403 Forbidden** - No permission
+```json
+{
+  "success": false,
+  "error": {
+    "code": "insufficient_permissions",
+    "message": "You do not have permission to manage images"
+  }
+}
+```
+
+**404 Not Found** - No galleries found
+```json
+{
+  "success": false,
+  "error": {
+    "code": "not_found",
+    "message": "No galleries found"
+  }
+}
+```
+
+**500 Internal Server Error**
+```json
+{
+  "success": false,
+  "error": {
+    "code": "internal_error",
+    "message": "Failed to block images"
+  }
+}
+```
+
+### Example
+
+```typescript
+// Block multiple images with shared reason
+const response = await fetch('/api/galleries/bulk-block', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  credentials: 'include',
+  body: JSON.stringify({
+    galleryIds: ['gallery_123', 'gallery_124', 'gallery_125'],
+    footnote: 'These images contain inappropriate content and violate our community guidelines.'
+  })
+});
+
+const result = await response.json();
+if (result.success) {
+  console.log(`Successfully blocked: ${result.data.succeeded} images`);
+  console.log(`Failed: ${result.data.failed} images`);
+  
+  result.data.results.forEach(item => {
+    if (item.success) {
+      console.log(`✓ Image ${item.id} blocked`);
+    } else {
+      console.log(`✗ Image ${item.id} failed: ${item.error}`);
+    }
+  });
+}
+```
+
+### Grouped Notifications
+
+When multiple images from the same owner are blocked, they receive a single notification:
+
+**Single Image (Owner A):**
+```json
+{
+  "userId": "user_456",
+  "type": "image_blocked",
+  "title": "Your image has been blocked",
+  "message": "Your image \"Sunset Beach\" has been blocked. Reason: Inappropriate content.",
+  "linkTo": "/gallery"
+}
+```
+
+**Multiple Images (Owner A):**
+```json
+{
+  "userId": "user_456",
+  "type": "image_blocked",
+  "title": "Your images have been blocked",
+  "message": "3 of your images have been blocked. Reason: Inappropriate content.",
+  "linkTo": "/gallery"
+}
+```
+
+### Audit Log Entries
+
+Each blocked image creates an audit log entry with bulk metadata:
+
+```json
+{
+  "action": "image_blocked_bulk",
+  "entityType": "gallery",
+  "entityId": "gallery_123",
+  "performedBy": "admin_user_id",
+  "performedByRole": "content_admin",
+  "oldValue": {
+    "isPrivate": false,
+    "footnote": null
+  },
+  "newValue": {
+    "isPrivate": true,
+    "footnote": "Inappropriate content..."
+  },
+  "metadata": {
+    "galleryTitle": "Sunset Beach",
+    "gallerySlug": "sunset-beach",
+    "ownerId": "user_456",
+    "ownerName": "John Doe",
+    "bulkOperation": true,
+    "totalInBatch": 3,
+    "batchIndex": 1
+  },
+  "ipAddress": "192.168.1.1",
+  "userAgent": "Mozilla/5.0...",
+  "createdAt": "2026-07-26T11:30:00.000Z"
 }
 ```
 
@@ -999,4 +1284,4 @@ hasPermission(userRole, "manage_public_gallery")
 ---
 
 **Last Updated:** 2026-07-26  
-**API Version:** 1.1
+**API Version:** 1.2

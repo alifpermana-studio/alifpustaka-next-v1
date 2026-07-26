@@ -8,6 +8,8 @@ import { GalleryFilters } from "./GalleryFilters";
 import { GalleryTable } from "./GalleryTable";
 import { GalleryPagination } from "./GalleryPagination";
 import { GalleryModal } from "./GalleryModal";
+import { GalleryBulkActionBar } from "./GalleryBulkActionBar";
+import { BulkBlockConfirmModal } from "./BulkBlockConfirmModal";
 import { useRouter } from "next/navigation";
 
 interface GalleryListItem {
@@ -53,6 +55,9 @@ export function GalleryManagement() {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [selectedGallery, setSelectedGallery] = useState<GalleryListItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedGalleries, setSelectedGalleries] = useState<Set<string>>(new Set());
+  const [bulkBlockModalOpen, setBulkBlockModalOpen] = useState(false);
+  const [isBlocking, setIsBlocking] = useState(false);
 
   if (!hasPermission("manage_public_gallery")) {
     router.push("/admin");
@@ -134,6 +139,67 @@ export function GalleryManagement() {
     fetchGalleries(false);
   };
 
+  const handleSelectGallery = (id: string) => {
+    setSelectedGalleries((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      const allIds = galleries.map((g) => g.id);
+      setSelectedGalleries(new Set(allIds));
+    } else {
+      setSelectedGalleries(new Set());
+    }
+  };
+
+  const handleBulkBlockClick = () => {
+    if (selectedGalleries.size === 0) {
+      showToast("No images selected", "warning");
+      return;
+    }
+    setBulkBlockModalOpen(true);
+  };
+
+  const handleBulkBlockConfirm = async (footnote: string) => {
+    setIsBlocking(true);
+
+    try {
+      const response = await fetch("/api/galleries/bulk-block", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          galleryIds: Array.from(selectedGalleries),
+          footnote: footnote,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        showToast(result.message, "success");
+        setSelectedGalleries(new Set());
+        setBulkBlockModalOpen(false);
+        fetchGalleries(false);
+        fetchNotifications();
+      } else {
+        showToast(result.error?.message || "Failed to block images", "error");
+      }
+    } catch (error) {
+      showToast("Failed to block images", "error");
+    } finally {
+      setIsBlocking(false);
+    }
+  };
+
   const handlePageChange = (skip: number) => {
     setPagination((prev) => ({ ...prev, skip }));
   };
@@ -160,6 +226,9 @@ export function GalleryManagement() {
         <>
           <GalleryTable
             galleries={galleries}
+            selectedGalleries={selectedGalleries}
+            onSelectGallery={handleSelectGallery}
+            onSelectAll={handleSelectAll}
             onGalleryClick={handleGalleryClick}
           />
 
@@ -172,11 +241,27 @@ export function GalleryManagement() {
         </>
       )}
 
+      {selectedGalleries.size > 0 && (
+        <GalleryBulkActionBar
+          selectedCount={selectedGalleries.size}
+          onClearSelection={() => setSelectedGalleries(new Set())}
+          onBulkBlock={handleBulkBlockClick}
+        />
+      )}
+
       <GalleryModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         gallery={selectedGallery}
         onBlockSuccess={handleBlockSuccess}
+      />
+
+      <BulkBlockConfirmModal
+        isOpen={bulkBlockModalOpen}
+        onClose={() => setBulkBlockModalOpen(false)}
+        count={selectedGalleries.size}
+        onConfirm={handleBulkBlockConfirm}
+        isBlocking={isBlocking}
       />
     </div>
   );
