@@ -46,7 +46,7 @@ export function Profile({
         <div className="flex flex-col gap-6 md:flex-row md:items-center">
           {user?.image ? (
             <Image
-              className="ring-accent/30 h-24 w-24 rounded-2xl object-cover ring-2"
+              className="h-24 w-24 object-cover"
               src={user?.image}
               alt="Alif Pustaka"
               width={96}

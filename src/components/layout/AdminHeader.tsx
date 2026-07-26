@@ -27,7 +27,7 @@ import { useNotification } from "@/context/NotificationContext";
 import { Dropdown } from "@/components/ui/dropdown/Dropdown";
 import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
 import { formatRole } from "@/lib/utils/format-role";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import type { Notification } from "@/types/notification";
 
 interface HeaderProps {
@@ -50,7 +50,7 @@ const pageMetaConfigs: PageMetaConfig[] = [
   },
   {
     pattern: "/blog",
-    title: "Blog Management",
+    title: "Blog Post Overview",
     subtitle: "List of your blog post content",
   },
   {
@@ -80,33 +80,6 @@ const pageMetaConfigs: PageMetaConfig[] = [
     subtitle: "Workspace preferences and notification controls",
   },
 ];
-
-const pageMeta: Record<string, { title: string; subtitle: string }> = {
-  "/dashboard": {
-    title: "Dashboard",
-    subtitle: "Overview of revenue, users, and operational health",
-  },
-  "/blog": {
-    title: "Blog Management",
-    subtitle: "List of your blog post content",
-  },
-  "/blog/editor": {
-    title: "Text Editor",
-    subtitle: "Create or edit your blog post",
-  },
-  "/gallery": {
-    title: "Gallery",
-    subtitle: "Upload your image here",
-  },
-  "/p": {
-    title: "Profile",
-    subtitle: "Your admin identity and account security",
-  },
-  "/settings": {
-    title: "Settings",
-    subtitle: "Workspace preferences and notification controls",
-  },
-};
 
 export function Header({ onMenuClick }: HeaderProps) {
   const pathname = usePathname();
@@ -209,7 +182,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             isOpen={isUserDropdownOpen}
             onClose={() => setIsUserDropdownOpen(false)}
             triggerRef={userButtonRef}
-            className="border-base-300 animate-in fade-in slide-in-from-top-2 text-base-content bg-base-300/40 flex w-56 flex-col rounded-2xl border p-2 shadow-lg backdrop-blur-lg duration-200"
+            className="border-base-content/20 animate-in fade-in slide-in-from-top-2 text-base-content bg-base-300/40 flex w-56 flex-col rounded-2xl border p-2 shadow-lg backdrop-blur-lg duration-200"
           >
             <ul className="flex flex-col gap-1 py-1">
               <li>
@@ -273,7 +246,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             isOpen={isNotificationDropdownOpen}
             onClose={() => setIsNotificationDropdownOpen(false)}
             triggerRef={notificationButtonRef}
-            className="border-base-300 animate-in fade-in slide-in-from-top-2 text-base-content bg-base-300/40 w-96 rounded-2xl border shadow-lg backdrop-blur-lg duration-200"
+            className="border-base-content/20 animate-in fade-in slide-in-from-top-2 text-base-content bg-base-300/70 w-96 overflow-hidden rounded-2xl border shadow-lg backdrop-blur-lg duration-200"
           >
             <div className="flex max-h-125 flex-col">
               <div className="border-base-300 flex items-center justify-between border-b p-4">

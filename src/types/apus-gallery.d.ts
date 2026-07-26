@@ -28,6 +28,7 @@ declare module "apus-gallery" {
     uploadTime: string;
     size: number;
     tags: string[];
+    format: string;
     path: string;
     isPrivate: boolean;
     isFeatured: boolean;

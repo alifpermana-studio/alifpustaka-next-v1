@@ -94,7 +94,7 @@ const BoxImage = ({ image }: PropsBoxImage) => {
       <div className="relative aspect-3/2 cursor-pointer overflow-hidden rounded-md">
         <Image
           className={`h-full w-full object-cover transition-all duration-500 ease-in-out ${hover && "scale-110"}`}
-          src={`/api/image?src=${image.slug}&p=${image.isPrivate}`}
+          src={`/api/image?src=${image.slug}${image.format}&p=${image.isPrivate}`}
           alt="thumbnail"
           width={240}
           height={108}
@@ -204,14 +204,14 @@ const EditModal = ({ image, closeModal }: EditModalProps) => {
   const [isUpdating, setIsupdating] = useState(false);
   const [editData, setEditData] = useState({
     title: image.title,
-    slug: image.slug.substring(0, image.slug.lastIndexOf(".")),
-    oldSlug: image.slug.substring(0, image.slug.lastIndexOf(".")),
+    slug: image.slug,
+    oldSlug: image.slug,
     isPrivate: image.isPrivate,
     oldIsPrivate: image.isPrivate,
     id: image.id,
     size: image.size,
     isFeatured: image.isFeatured,
-    format: getExtension(image.slug),
+    format: image.format,
     uploadTime: image.uploadTime,
     tags: image.tags,
     path: image.path,

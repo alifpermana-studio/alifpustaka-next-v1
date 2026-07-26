@@ -186,6 +186,7 @@ export const GalleryScalarFieldEnum = {
   path: 'path',
   type: 'type',
   tags: 'tags',
+  footnote: 'footnote',
   uploadTime: 'uploadTime',
   isPrivate: 'isPrivate',
   isFeatured: 'isFeatured',

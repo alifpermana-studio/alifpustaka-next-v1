@@ -42,6 +42,7 @@ export type GalleryMinAggregateOutputType = {
   format: string | null
   path: string | null
   type: string | null
+  footnote: string | null
   uploadTime: Date | null
   isPrivate: boolean | null
   isFeatured: boolean | null
@@ -58,6 +59,7 @@ export type GalleryMaxAggregateOutputType = {
   format: string | null
   path: string | null
   type: string | null
+  footnote: string | null
   uploadTime: Date | null
   isPrivate: boolean | null
   isFeatured: boolean | null
@@ -75,6 +77,7 @@ export type GalleryCountAggregateOutputType = {
   path: number
   type: number
   tags: number
+  footnote: number
   uploadTime: number
   isPrivate: number
   isFeatured: number
@@ -101,6 +104,7 @@ export type GalleryMinAggregateInputType = {
   format?: true
   path?: true
   type?: true
+  footnote?: true
   uploadTime?: true
   isPrivate?: true
   isFeatured?: true
@@ -117,6 +121,7 @@ export type GalleryMaxAggregateInputType = {
   format?: true
   path?: true
   type?: true
+  footnote?: true
   uploadTime?: true
   isPrivate?: true
   isFeatured?: true
@@ -134,6 +139,7 @@ export type GalleryCountAggregateInputType = {
   path?: true
   type?: true
   tags?: true
+  footnote?: true
   uploadTime?: true
   isPrivate?: true
   isFeatured?: true
@@ -238,6 +244,7 @@ export type GalleryGroupByOutputType = {
   path: string
   type: string
   tags: string[]
+  footnote: string | null
   uploadTime: Date
   isPrivate: boolean
   isFeatured: boolean
@@ -278,6 +285,7 @@ export type GalleryWhereInput = {
   path?: Prisma.StringFilter<"Gallery"> | string
   type?: Prisma.StringFilter<"Gallery"> | string
   tags?: Prisma.StringNullableListFilter<"Gallery">
+  footnote?: Prisma.StringNullableFilter<"Gallery"> | string | null
   uploadTime?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   isPrivate?: Prisma.BoolFilter<"Gallery"> | boolean
   isFeatured?: Prisma.BoolFilter<"Gallery"> | boolean
@@ -296,6 +304,7 @@ export type GalleryOrderByWithRelationInput = {
   path?: Prisma.SortOrder
   type?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  footnote?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadTime?: Prisma.SortOrder
   isPrivate?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
@@ -317,6 +326,7 @@ export type GalleryWhereUniqueInput = Prisma.AtLeast<{
   path?: Prisma.StringFilter<"Gallery"> | string
   type?: Prisma.StringFilter<"Gallery"> | string
   tags?: Prisma.StringNullableListFilter<"Gallery">
+  footnote?: Prisma.StringNullableFilter<"Gallery"> | string | null
   uploadTime?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   isPrivate?: Prisma.BoolFilter<"Gallery"> | boolean
   isFeatured?: Prisma.BoolFilter<"Gallery"> | boolean
@@ -335,6 +345,7 @@ export type GalleryOrderByWithAggregationInput = {
   path?: Prisma.SortOrder
   type?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  footnote?: Prisma.SortOrderInput | Prisma.SortOrder
   uploadTime?: Prisma.SortOrder
   isPrivate?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
@@ -360,6 +371,7 @@ export type GalleryScalarWhereWithAggregatesInput = {
   path?: Prisma.StringWithAggregatesFilter<"Gallery"> | string
   type?: Prisma.StringWithAggregatesFilter<"Gallery"> | string
   tags?: Prisma.StringNullableListFilter<"Gallery">
+  footnote?: Prisma.StringNullableWithAggregatesFilter<"Gallery"> | string | null
   uploadTime?: Prisma.DateTimeWithAggregatesFilter<"Gallery"> | Date | string
   isPrivate?: Prisma.BoolWithAggregatesFilter<"Gallery"> | boolean
   isFeatured?: Prisma.BoolWithAggregatesFilter<"Gallery"> | boolean
@@ -377,6 +389,7 @@ export type GalleryCreateInput = {
   path: string
   type: string
   tags?: Prisma.GalleryCreatetagsInput | string[]
+  footnote?: string | null
   uploadTime?: Date | string
   isPrivate?: boolean
   isFeatured?: boolean
@@ -394,6 +407,7 @@ export type GalleryUncheckedCreateInput = {
   path: string
   type: string
   tags?: Prisma.GalleryCreatetagsInput | string[]
+  footnote?: string | null
   uploadTime?: Date | string
   isPrivate?: boolean
   isFeatured?: boolean
@@ -411,6 +425,7 @@ export type GalleryUpdateInput = {
   path?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.GalleryUpdatetagsInput | string[]
+  footnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPrivate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -428,6 +443,7 @@ export type GalleryUncheckedUpdateInput = {
   path?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.GalleryUpdatetagsInput | string[]
+  footnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPrivate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -445,6 +461,7 @@ export type GalleryCreateManyInput = {
   path: string
   type: string
   tags?: Prisma.GalleryCreatetagsInput | string[]
+  footnote?: string | null
   uploadTime?: Date | string
   isPrivate?: boolean
   isFeatured?: boolean
@@ -462,6 +479,7 @@ export type GalleryUpdateManyMutationInput = {
   path?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.GalleryUpdatetagsInput | string[]
+  footnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPrivate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -478,6 +496,7 @@ export type GalleryUncheckedUpdateManyInput = {
   path?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.GalleryUpdatetagsInput | string[]
+  footnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPrivate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -513,6 +532,7 @@ export type GalleryCountOrderByAggregateInput = {
   path?: Prisma.SortOrder
   type?: Prisma.SortOrder
   tags?: Prisma.SortOrder
+  footnote?: Prisma.SortOrder
   uploadTime?: Prisma.SortOrder
   isPrivate?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
@@ -533,6 +553,7 @@ export type GalleryMaxOrderByAggregateInput = {
   format?: Prisma.SortOrder
   path?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  footnote?: Prisma.SortOrder
   uploadTime?: Prisma.SortOrder
   isPrivate?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
@@ -549,6 +570,7 @@ export type GalleryMinOrderByAggregateInput = {
   format?: Prisma.SortOrder
   path?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  footnote?: Prisma.SortOrder
   uploadTime?: Prisma.SortOrder
   isPrivate?: Prisma.SortOrder
   isFeatured?: Prisma.SortOrder
@@ -629,6 +651,7 @@ export type GalleryCreateWithoutUserInput = {
   path: string
   type: string
   tags?: Prisma.GalleryCreatetagsInput | string[]
+  footnote?: string | null
   uploadTime?: Date | string
   isPrivate?: boolean
   isFeatured?: boolean
@@ -645,6 +668,7 @@ export type GalleryUncheckedCreateWithoutUserInput = {
   path: string
   type: string
   tags?: Prisma.GalleryCreatetagsInput | string[]
+  footnote?: string | null
   uploadTime?: Date | string
   isPrivate?: boolean
   isFeatured?: boolean
@@ -690,6 +714,7 @@ export type GalleryScalarWhereInput = {
   path?: Prisma.StringFilter<"Gallery"> | string
   type?: Prisma.StringFilter<"Gallery"> | string
   tags?: Prisma.StringNullableListFilter<"Gallery">
+  footnote?: Prisma.StringNullableFilter<"Gallery"> | string | null
   uploadTime?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   isPrivate?: Prisma.BoolFilter<"Gallery"> | boolean
   isFeatured?: Prisma.BoolFilter<"Gallery"> | boolean
@@ -707,6 +732,7 @@ export type GalleryCreateManyUserInput = {
   path: string
   type: string
   tags?: Prisma.GalleryCreatetagsInput | string[]
+  footnote?: string | null
   uploadTime?: Date | string
   isPrivate?: boolean
   isFeatured?: boolean
@@ -723,6 +749,7 @@ export type GalleryUpdateWithoutUserInput = {
   path?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.GalleryUpdatetagsInput | string[]
+  footnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPrivate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -739,6 +766,7 @@ export type GalleryUncheckedUpdateWithoutUserInput = {
   path?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.GalleryUpdatetagsInput | string[]
+  footnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPrivate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -755,6 +783,7 @@ export type GalleryUncheckedUpdateManyWithoutUserInput = {
   path?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   tags?: Prisma.GalleryUpdatetagsInput | string[]
+  footnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   uploadTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPrivate?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -773,6 +802,7 @@ export type GallerySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   path?: boolean
   type?: boolean
   tags?: boolean
+  footnote?: boolean
   uploadTime?: boolean
   isPrivate?: boolean
   isFeatured?: boolean
@@ -791,6 +821,7 @@ export type GallerySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   path?: boolean
   type?: boolean
   tags?: boolean
+  footnote?: boolean
   uploadTime?: boolean
   isPrivate?: boolean
   isFeatured?: boolean
@@ -809,6 +840,7 @@ export type GallerySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   path?: boolean
   type?: boolean
   tags?: boolean
+  footnote?: boolean
   uploadTime?: boolean
   isPrivate?: boolean
   isFeatured?: boolean
@@ -827,6 +859,7 @@ export type GallerySelectScalar = {
   path?: boolean
   type?: boolean
   tags?: boolean
+  footnote?: boolean
   uploadTime?: boolean
   isPrivate?: boolean
   isFeatured?: boolean
@@ -835,7 +868,7 @@ export type GallerySelectScalar = {
   updatedAt?: boolean
 }
 
-export type GalleryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "size" | "format" | "path" | "type" | "tags" | "uploadTime" | "isPrivate" | "isFeatured" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["gallery"]>
+export type GalleryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "size" | "format" | "path" | "type" | "tags" | "footnote" | "uploadTime" | "isPrivate" | "isFeatured" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["gallery"]>
 export type GalleryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -860,6 +893,7 @@ export type $GalleryPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     path: string
     type: string
     tags: string[]
+    footnote: string | null
     uploadTime: Date
     isPrivate: boolean
     isFeatured: boolean
@@ -1298,6 +1332,7 @@ export interface GalleryFieldRefs {
   readonly path: Prisma.FieldRef<"Gallery", 'String'>
   readonly type: Prisma.FieldRef<"Gallery", 'String'>
   readonly tags: Prisma.FieldRef<"Gallery", 'String[]'>
+  readonly footnote: Prisma.FieldRef<"Gallery", 'String'>
   readonly uploadTime: Prisma.FieldRef<"Gallery", 'DateTime'>
   readonly isPrivate: Prisma.FieldRef<"Gallery", 'Boolean'>
   readonly isFeatured: Prisma.FieldRef<"Gallery", 'Boolean'>

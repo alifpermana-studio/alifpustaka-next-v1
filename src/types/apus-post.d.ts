@@ -44,4 +44,38 @@ declare module "apus-post" {
       name: string;
     };
   };
+
+  interface PostListItem {
+    id: string;
+    title: string;
+    slug: string;
+    desc: string | null;
+    image: string;
+    status: PostStatus;
+    tags: string[];
+    uploadTime: Date;
+    updatedAt?: Date;
+    author: {
+      id: string;
+      name: string;
+      username: string | null;
+      image: string | null;
+      role: string;
+    };
+  }
+
+  interface PostReviewDetail extends Post {
+    author: {
+      id: string;
+      name: string;
+      username: string | null;
+      image: string | null;
+      role: string;
+    };
+  }
+
+  interface PostFilterState {
+    search: string;
+    status: PostStatus | "";
+  }
 }

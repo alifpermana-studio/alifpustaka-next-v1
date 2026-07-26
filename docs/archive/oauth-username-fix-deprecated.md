@@ -1,6 +1,10 @@
 # OAuth Username Required Error - Fix Applied
 
-## 🔴 Error Encountered
+> **⚠️ DEPRECATED APPROACH**  
+> This approach (making username nullable) has been superseded. For current OAuth implementation, see [/docs/auth/oauth-implementation.md](../auth/oauth-implementation.md)
+
+**Date:** July 21, 2026  
+**Status:** Deprecated - Better approach implemented using database hooks
 ```
 http://localhost:3000/api/auth/error?error=username_is_required
 ```

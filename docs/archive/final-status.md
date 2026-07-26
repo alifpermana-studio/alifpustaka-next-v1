@@ -1,5 +1,8 @@
 # RBAC Implementation - Final Status
 
+> **⚠️ HISTORICAL DOCUMENT**  
+> This document is kept for historical reference. For current RBAC documentation, see [/docs/features/rbac-implementation.md](../features/rbac-implementation.md)
+
 **Date:** July 20, 2026  
 **Status:** ✅ COMPLETE & OPERATIONAL
 

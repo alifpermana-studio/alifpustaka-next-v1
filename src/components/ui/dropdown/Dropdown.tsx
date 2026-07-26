@@ -49,13 +49,13 @@ export const Dropdown: React.FC<DropdownProps> = ({
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
 
-      let top = triggerRect.bottom + window.scrollY + 8;
+      let top = triggerRect.bottom + window.scrollY + 20;
       let left = triggerRect.right + window.scrollX - dropdownRect.width;
 
       // Check if dropdown overflows bottom of viewport
-      if (triggerRect.bottom + dropdownRect.height + 8 > viewportHeight) {
+      if (triggerRect.bottom + dropdownRect.height + 20 > viewportHeight) {
         // Position above the trigger instead
-        top = triggerRect.top + window.scrollY - dropdownRect.height - 8;
+        top = triggerRect.top + window.scrollY - dropdownRect.height - 20;
       }
 
       // Check if dropdown overflows left of viewport
@@ -65,7 +65,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
       // Check if dropdown overflows right of viewport
       if (left + dropdownRect.width > viewportWidth) {
-        left = viewportWidth - dropdownRect.width - 16 + window.scrollX;
+        left = viewportWidth - dropdownRect.width - 20 + window.scrollX;
       }
 
       setPosition({ top, left });

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireActiveStatus } from "@/lib/auth-middleware";
 import { successResponse, errorResponse } from "@/lib/api-response";
-import * as permissions from "@/lib/permissions";
 
 export async function GET(req: NextRequest) {
   const authResult = await requireActiveStatus(req);
@@ -23,22 +22,8 @@ export async function GET(req: NextRequest) {
 
     const where: any = {};
 
-    // Role-based filtering
-    const canViewAll = currentUser.role === "super_admin";
-    const canManagePublic = permissions.canManagePublicGallery(currentUser.role);
-
-    if (canViewAll) {
-      // Super Admin sees everything
-    } else if (canManagePublic) {
-      // Content Admin sees all public + own private
-      where.OR = [
-        { isPrivate: false },
-        { userId: currentUser.userId },
-      ];
-    } else {
-      // Regular users see only their own
-      where.userId = currentUser.userId;
-    }
+    // All users can only see their own images
+    where.userId = currentUser.userId;
 
     // Search filter
     if (search) {

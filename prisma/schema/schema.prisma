@@ -120,6 +120,7 @@ model Gallery {
 	path String
 	type String
 	tags String[]
+	footnote String?
 	uploadTime DateTime @default(now()) @db.Timestamptz(3)
 	isPrivate Boolean @default(false)
 	isFeatured Boolean @default(false)

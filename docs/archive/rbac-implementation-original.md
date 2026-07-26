@@ -1,5 +1,12 @@
 # User Roles & Status System Implementation
 
+> **⚠️ ARCHIVED - REPLACED BY CONSOLIDATED VERSION**  
+> This document has been replaced by [/docs/features/rbac.md](../features/rbac.md). Kept for historical reference only.
+
+**Archived Date:** July 25, 2026
+
+---
+
 ## Overview
 
 This implementation adds a comprehensive role-based access control (RBAC) system with user status management and audit logging to the Alif Pustaka application.

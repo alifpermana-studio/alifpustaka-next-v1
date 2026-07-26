@@ -1,5 +1,8 @@
 # Documentation Organization - Complete ✅
 
+> **⚠️ HISTORICAL DOCUMENT**  
+> This document records the July 21, 2026 documentation reorganization effort. Kept for historical reference.
+
 **Date:** July 21, 2026
 **Task:** Organize scattered documentation files into structured docs/ directory
 

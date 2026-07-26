@@ -27,6 +27,8 @@ export type AuditAction =
   | 'post_published'
   | 'post_drafted'
   | 'post_deleted'
+  | 'post_approved'
+  | 'post_rejected'
   | 'gallery_uploaded'
   | 'gallery_visibility_changed'
   | 'gallery_deleted';

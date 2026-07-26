@@ -74,7 +74,7 @@ const getNavItems = (
       icon: ImagesIcon,
       subMenu: [
         { to: "/gallery/upload", label: "Upload", icon: ImagePlus },
-        { to: "/gallery/browse", label: "Browse", icon: FolderOpen },
+        { to: "/gallery", label: "Browse", icon: FolderOpen },
         { to: "/gallery/archived", label: "Archived", icon: Archive },
       ],
     },
@@ -95,9 +95,14 @@ const getNavItems = (
 
     if (canManageContent) {
       adminSubMenu.push({
-        to: "/admin/content-management",
-        label: "Content Management",
+        to: "/admin/post-management",
+        label: "Post Management",
         icon: Newspaper,
+      });
+      adminSubMenu.push({
+        to: "/admin/gallery-management",
+        label: "Gallery Management",
+        icon: ImagesIcon,
       });
     }
 

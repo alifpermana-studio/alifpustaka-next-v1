@@ -1,5 +1,8 @@
 # RBAC Implementation Summary
 
+> **⚠️ HISTORICAL DOCUMENT**  
+> This document is kept for historical reference. For current RBAC documentation, see [/docs/features/rbac-implementation.md](../features/rbac-implementation.md)
+
 **Implementation Date:** July 20, 2026  
 **Status:** ✅ COMPLETE  
 **Total Implementation Time:** ~2 hours
