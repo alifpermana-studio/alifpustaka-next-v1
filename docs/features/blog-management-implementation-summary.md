@@ -102,7 +102,7 @@ Successfully implemented a comprehensive blog post management system that allows
 
 ### 3. Page Component
 
-**src/app/(admin)/blog/page.tsx**
+**src/app/(admin)/post/page.tsx**
 - Complete rewrite with state management
 - Filter state with defaults
 - Pagination handling
@@ -284,7 +284,7 @@ Updated `apus-post.d.ts`:
 
 ### Modified Files
 1. `src/app/api/post-list/route.ts` - Enhanced with status filter
-2. `src/app/(admin)/blog/page.tsx` - Complete rewrite
+2. `src/app/(admin)/post/page.tsx` - Complete rewrite
 3. `src/types/apus-post.d.ts` - Added fields
 
 ### Created Files
@@ -293,15 +293,15 @@ Updated `apus-post.d.ts`:
 1. `src/app/api/posts/bulk/route.ts`
 
 **Components:**
-2. `src/components/blog/PostFilters.tsx`
-3. `src/components/blog/PostTable.tsx`
-4. `src/components/blog/PostTableRow.tsx`
-5. `src/components/blog/PostActionsDropdown.tsx`
-6. `src/components/blog/PostBulkActionBar.tsx`
-7. `src/components/blog/PostPagination.tsx`
-8. `src/components/blog/BulkStatusChangeModal.tsx`
-9. `src/components/blog/BulkTagModal.tsx`
-10. `src/components/blog/DeletePostModal.tsx`
+2. `src/components/post/PostFilters.tsx`
+3. `src/components/post/PostTable.tsx`
+4. `src/components/post/PostTableRow.tsx`
+5. `src/components/post/PostActionsDropdown.tsx`
+6. `src/components/post/PostBulkActionBar.tsx`
+7. `src/components/post/PostPagination.tsx`
+8. `src/components/post/BulkStatusChangeModal.tsx`
+9. `src/components/post/BulkTagModal.tsx`
+10. `src/components/post/DeletePostModal.tsx`
 
 **Documentation:**
 11. `docs/features/blog-management.md`
@@ -310,10 +310,10 @@ Updated `apus-post.d.ts`:
 14. `CHANGELOG.md`
 
 ### Removed Files
-1. `src/components/blog/BlogComponent.tsx`
-2. `src/components/blog/BlogOptions.tsx`
-3. `src/components/blog/PostFilter.tsx`
-4. `src/components/blog/OptionList.tsx`
+1. `src/components/post/BlogComponent.tsx`
+2. `src/components/post/BlogOptions.tsx`
+3. `src/components/post/PostFilter.tsx`
+4. `src/components/post/OptionList.tsx`
 
 ---
 

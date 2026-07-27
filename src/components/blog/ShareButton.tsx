@@ -1,15 +1,18 @@
 "use client";
 
+import { MotionValue } from "framer-motion";
 import { Share2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ShareButtonProps {
+  progress?: MotionValue<number>;
   title: string;
   url: string;
 }
 
-export function ShareButton({ title, url }: ShareButtonProps) {
+export function ShareButton({ progress, title, url }: ShareButtonProps) {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [percentage, setPercentage] = useState(0);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -25,20 +28,28 @@ export function ShareButton({ title, url }: ShareButtonProps) {
     }
   };
 
+  useEffect(() => {
+    const unsubscribe = progress
+      ? progress.on("change", (latest) => {
+          setPercentage(Math.round(latest * 100));
+        })
+      : () => {};
+
+    return () => unsubscribe();
+  }, [progress]);
+
   return (
-    <div className="sticky top-24">
-      <button
-        onClick={handleShare}
-        className="group relative flex items-center justify-center rounded-full bg-white p-3 shadow-lg transition-all hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700"
-        aria-label="Share post"
-      >
-        <Share2 className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-        {showTooltip && (
-          <div className="absolute left-full ml-2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white dark:bg-gray-700">
-            Copied to clipboard!
-          </div>
-        )}
-      </button>
-    </div>
+    <button
+      onClick={handleShare}
+      className={`${percentage <= 0 ? "hidden md:flex" : "flex"} group bg-accent hover:bg-accent/80 relative h-12 w-12 cursor-pointer items-center justify-center rounded-full shadow-lg transition-all`}
+      aria-label="Share post"
+    >
+      <Share2 className="text-accent-content h-5 w-5" />
+      {showTooltip && (
+        <div className="text-accent-content bg-accent absolute left-full ml-2 rounded px-2 py-1 text-xs whitespace-nowrap">
+          Copied to clipboard!
+        </div>
+      )}
+    </button>
   );
 }

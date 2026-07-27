@@ -13,10 +13,10 @@
 2. **`src/types/apus-editor.d.ts`** ✅
 
 ### Files Updated (4)
-1. **`src/components/blog/editor/Editor.tsx`** ✅
-2. **`src/components/blog/editor/ActionButton.tsx`** ✅
-3. **`src/components/blog/editor/PostMetadata.tsx`** ✅
-4. **`src/components/blog/editor/MarkdownEditor.tsx`** ✅
+1. **`src/components/post/editor/Editor.tsx`** ✅
+2. **`src/components/post/editor/ActionButton.tsx`** ✅
+3. **`src/components/post/editor/PostMetadata.tsx`** ✅
+4. **`src/components/post/editor/MarkdownEditor.tsx`** ✅
 
 **Time:** ~30 minutes | **Status:** ✅ COMPLETE
 
@@ -25,21 +25,21 @@
 ## ✅ Task 2.2: Extract Modal Components - COMPLETE
 
 ### Files Created (7)
-1. **`src/components/blog/editor/modals/index.ts`** ✅
-2. **`src/components/blog/editor/modals/UnsavedPostModal.tsx`** ✅
-3. **`src/components/blog/editor/modals/SubmitConsentModal.tsx`** ✅
-4. **`src/components/blog/editor/modals/DeleteConsentModal.tsx`** ✅
-5. **`src/components/blog/editor/modals/MissingMetadataModal.tsx`** ✅
-6. **`src/components/blog/editor/modals/PostSavedModal.tsx`** ✅
-7. **`src/components/blog/editor/modals/DeleteFailedModal.tsx`** ✅
+1. **`src/components/post/editor/modals/index.ts`** ✅
+2. **`src/components/post/editor/modals/UnsavedPostModal.tsx`** ✅
+3. **`src/components/post/editor/modals/SubmitConsentModal.tsx`** ✅
+4. **`src/components/post/editor/modals/DeleteConsentModal.tsx`** ✅
+5. **`src/components/post/editor/modals/MissingMetadataModal.tsx`** ✅
+6. **`src/components/post/editor/modals/PostSavedModal.tsx`** ✅
+7. **`src/components/post/editor/modals/DeleteFailedModal.tsx`** ✅
 
 ### Files Updated (2)
-1. **`src/components/blog/editor/Editor.tsx`** ✅
+1. **`src/components/post/editor/Editor.tsx`** ✅
    - Removed 70+ lines of modal code
    - Now uses UnsavedPostModal component
    - Much cleaner and readable
 
-2. **`src/components/blog/editor/ActionButton.tsx`** ✅
+2. **`src/components/post/editor/ActionButton.tsx`** ✅
    - Removed 180+ lines of modal code
    - Now uses 5 extracted modal components
    - Reduced file size by ~50%
@@ -67,8 +67,8 @@ Estimated time: 30 minutes
 
 ### Plan
 - Extract Toolbar component from MarkdownEditor.tsx (~250 lines)
-- Create `src/components/blog/editor/toolbar/Toolbar.tsx`
-- Create `src/components/blog/editor/toolbar/ToolbarButton.tsx`
+- Create `src/components/post/editor/toolbar/Toolbar.tsx`
+- Create `src/components/post/editor/toolbar/ToolbarButton.tsx`
 - Update MarkdownEditor.tsx to use extracted Toolbar
 
 ---

@@ -27,7 +27,7 @@ The Blog Management System provides a full-featured interface for authors to man
 - **Tag Management**: Add or remove tags in bulk or individually
 - **Pagination**: Navigate through large post collections efficiently
 
-**Access**: Available at `/blog` (requires authentication)
+**Access**: Available at `/post` (requires authentication)
 
 ---
 
@@ -361,7 +361,7 @@ BlogPage (page.tsx)
 src/
 ├── app/
 │   ├── (admin)/
-│   │   └── blog/
+│   │   └── post/
 │   │       └── page.tsx                    # Main page component
 │   └── api/
 │       ├── post-list/
@@ -370,7 +370,7 @@ src/
 │           └── bulk/
 │               └── route.ts                # Bulk operations API
 └── components/
-    └── blog/
+    └── post/
         ├── PostFilters.tsx                 # Search & filter bar
         ├── PostTable.tsx                   # Table container
         ├── PostTableRow.tsx                # Individual post row
@@ -390,7 +390,7 @@ src/
 
 #### Creating and Managing Posts
 
-1. **Access your posts**: Navigate to `/blog`
+1. **Access your posts**: Navigate to `/post`
 2. **View all posts**: Default view shows published posts
 3. **Find a post**: 
    - Type in search box (waits 2 seconds before searching)

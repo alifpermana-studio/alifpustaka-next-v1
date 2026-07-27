@@ -114,7 +114,7 @@ src/
 ├── types/
 │   ├── apus-post.d.ts           # Post types
 │   └── apus-editor.d.ts         # Editor types
-├── components/blog/editor/
+├── components/post/editor/
 │   ├── modals/                   # 6 modal components
 │   │   ├── UnsavedPostModal.tsx
 │   │   ├── SubmitConsentModal.tsx
@@ -187,8 +187,8 @@ npx tsc --noEmit     # Type check
 ### Implementation
 1. `src/constants/editor.ts` - All constants
 2. `src/types/apus-editor.d.ts` - Shared types
-3. `src/components/blog/editor/modals/` - Modal components
-4. `src/components/blog/editor/toolbar/` - Toolbar
+3. `src/components/post/editor/modals/` - Modal components
+4. `src/components/post/editor/toolbar/` - Toolbar
 
 ### Documentation
 1. `SPRINT1_FINAL_REPORT.md` - Sprint 1 details

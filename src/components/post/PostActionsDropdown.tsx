@@ -45,7 +45,7 @@ export function PostActionsDropdown({
         <div className="border-base-content/40 bg-base-300 w-48 rounded-xl border p-1 shadow-lg">
           <DropdownItem
             onClick={() => {
-              router.push(`/blog/preview/${post.slug}`);
+              router.push(`/post/preview/${post.slug}`);
               setIsOpen(false);
             }}
             className="hover:bg-base-200 text-base-content flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2"
@@ -64,7 +64,7 @@ export function PostActionsDropdown({
 
           <DropdownItem
             onClick={() => {
-              router.push(`/blog/editor?key=${post.id}`);
+              router.push(`/post/editor?key=${post.id}`);
               setIsOpen(false);
             }}
             className="hover:bg-base-200 text-base-content flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2"

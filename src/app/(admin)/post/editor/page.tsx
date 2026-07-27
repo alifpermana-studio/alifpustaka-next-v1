@@ -1,4 +1,4 @@
-import Editor from "@/components/blog/editor/Editor";
+import Editor from "@/components/post/editor/Editor";
 import { redirect } from "next/navigation";
 import { PostTag } from "apus-post";
 import { v4 } from "uuid";

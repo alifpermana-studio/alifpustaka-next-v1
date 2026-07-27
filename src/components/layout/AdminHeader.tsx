@@ -49,12 +49,12 @@ const pageMetaConfigs: PageMetaConfig[] = [
     subtitle: "Overview of revenue, users, and operational health",
   },
   {
-    pattern: "/blog",
+    pattern: "/post",
     title: "Blog Post Overview",
     subtitle: "List of your blog post content",
   },
   {
-    pattern: "/blog/editor",
+    pattern: "/post/editor",
     title: "Text Editor",
     subtitle: "Create or edit your blog post",
   },

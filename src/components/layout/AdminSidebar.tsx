@@ -64,9 +64,9 @@ const getNavItems = (
       label: "Blog",
       icon: NotebookTextIcon,
       subMenu: [
-        { to: "/blog/editor", label: "Editor", icon: PenSquare },
-        { to: "/blog", label: "Overview", icon: FileText },
-        { to: "/blog/trash", label: "Trash", icon: Trash2 },
+        { to: "/post/editor", label: "Editor", icon: PenSquare },
+        { to: "/post", label: "Overview", icon: FileText },
+        { to: "/post/trash", label: "Trash", icon: Trash2 },
       ],
     },
     {

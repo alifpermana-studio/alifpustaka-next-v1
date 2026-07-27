@@ -5,13 +5,13 @@ import { useToast } from "@/context/ToastContext";
 import { useNotification } from "@/context/NotificationContext";
 import { useState, useEffect, useCallback } from "react";
 import { Post, PostStatus } from "apus-post";
-import { PostFilters } from "@/components/blog/PostFilters";
-import { PostTable } from "@/components/blog/PostTable";
-import { PostBulkActionBar } from "@/components/blog/PostBulkActionBar";
-import { PostPagination } from "@/components/blog/PostPagination";
-import { DeletePostModal } from "@/components/blog/DeletePostModal";
-import { BulkStatusChangeModal } from "@/components/blog/BulkStatusChangeModal";
-import { BulkTagModal } from "@/components/blog/BulkTagModal";
+import { PostFilters } from "@/components/post/PostFilters";
+import { PostTable } from "@/components/post/PostTable";
+import { PostBulkActionBar } from "@/components/post/PostBulkActionBar";
+import { PostPagination } from "@/components/post/PostPagination";
+import { DeletePostModal } from "@/components/post/DeletePostModal";
+import { BulkStatusChangeModal } from "@/components/post/BulkStatusChangeModal";
+import { BulkTagModal } from "@/components/post/BulkTagModal";
 import { useRouter } from "next/navigation";
 
 interface FilterState {
@@ -75,10 +75,7 @@ export default function BlogPage() {
           }));
           setLastUpdated(new Date());
         } else {
-          showToast(
-            result.error?.message || "Failed to fetch posts",
-            "error",
-          );
+          showToast(result.error?.message || "Failed to fetch posts", "error");
         }
       } catch (error) {
         showToast("Failed to fetch posts", "error");
@@ -148,10 +145,7 @@ export default function BlogPage() {
         setDeleteTarget(null);
         fetchPosts(false);
       } else {
-        showToast(
-          result.error?.message || "Failed to delete post",
-          "error",
-        );
+        showToast(result.error?.message || "Failed to delete post", "error");
       }
     } catch (error) {
       showToast("Failed to delete post", "error");
@@ -196,10 +190,7 @@ export default function BlogPage() {
         fetchPosts(false);
         fetchNotifications();
       } else {
-        showToast(
-          result.error?.message || "Failed to change status",
-          "error",
-        );
+        showToast(result.error?.message || "Failed to change status", "error");
       }
     } catch (error) {
       showToast("Failed to change status", "error");
@@ -232,10 +223,7 @@ export default function BlogPage() {
         fetchPosts(false);
         fetchNotifications();
       } else {
-        showToast(
-          result.error?.message || "Failed to delete posts",
-          "error",
-        );
+        showToast(result.error?.message || "Failed to delete posts", "error");
       }
     } catch (error) {
       showToast("Failed to delete posts", "error");
@@ -264,10 +252,7 @@ export default function BlogPage() {
         setBulkTagModalOpen(false);
         fetchPosts(false);
       } else {
-        showToast(
-          result.error?.message || "Failed to manage tags",
-          "error",
-        );
+        showToast(result.error?.message || "Failed to manage tags", "error");
       }
     } catch (error) {
       showToast("Failed to manage tags", "error");

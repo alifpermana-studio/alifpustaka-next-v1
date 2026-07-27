@@ -23,7 +23,7 @@ Tests for:
 
 ### 2. **ActionButton.test.tsx** (50+ assertions)
 Tests for:
-- ✅ Delete operation redirects to /blog
+- ✅ Delete operation redirects to /post
 - ✅ localStorage cleared after delete
 - ✅ Error modal shown on delete failure
 - ✅ Save draft success feedback

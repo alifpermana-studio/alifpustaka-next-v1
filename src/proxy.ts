@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { UserRole, ADMIN_ROLES } from "@/types/roles";
 
-const PROTECTED_ROUTES = ["/dashboard", "/p", "/settings", "/blog", "/gallery", "/admin"];
+const PROTECTED_ROUTES = ["/dashboard", "/p", "/settings", "/post", "/gallery", "/admin"];
 const AUTH_ROUTES = ["/signin", "/signup", "/forgot-password", "/verify-email"];
 const PUBLIC_ROUTES = ["/about", "/contact", "/terms", "/privacy"];
 

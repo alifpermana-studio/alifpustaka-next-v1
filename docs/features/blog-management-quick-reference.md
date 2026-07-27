@@ -6,7 +6,7 @@ Quick reference guide for common blog management tasks.
 
 ## Quick Access
 
-**URL:** `/blog`  
+**URL:** `/post`  
 **Permission Required:** Authenticated user  
 **Default View:** Published posts
 
@@ -252,7 +252,7 @@ Content-Type: application/json
 - Use bulk actions for efficiency
 
 ❌ **Don't:**
-- Delete posts unnecessarily (they can't be recovered from /blog)
+- Delete posts unnecessarily (they can't be recovered from /post)
 - Use too many tags per post
 - Forget to save drafts
 - Change status without reviewing content

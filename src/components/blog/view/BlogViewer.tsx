@@ -8,6 +8,7 @@ import rehypeRaw from "rehype-raw";
 import { formatDistanceToNow } from "date-fns";
 import { ScrollProgress } from "@/components/blog/ScrollProgress";
 import { ShareButton } from "@/components/blog/ShareButton";
+import { TableOfContents } from "@/components/blog/view/TableOfContents";
 import { Badge } from "@/components/ui/Badge";
 import {
   CustomBlockquote,
@@ -23,7 +24,9 @@ import {
   CustomTr,
   CustomTh,
   CustomTd,
-} from "@/components/blog/editor/MdComponents";
+} from "@/components/post/editor/MdComponents";
+import { useRef, useState } from "react";
+import { useScroll } from "framer-motion";
 
 interface PostData {
   id: string;
@@ -49,14 +52,31 @@ interface BlogViewerProps {
   postUrl: string;
 }
 
+function slugify(text: string | React.ReactNode): string {
+  const textString = typeof text === "string" ? text : String(text);
+  return textString
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
+}
+
 export function BlogViewer({ post, postUrl }: BlogViewerProps) {
-  const timeAgo = formatDistanceToNow(new Date(post.uploadTime), {
+  const timeAgo = formatDistanceToNow(new Date(post.updatedAt), {
     addSuffix: true,
+  });
+
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end end"],
   });
 
   return (
     <>
-      <ScrollProgress />
       <article className="bg-base-100 min-h-screen pt-20 pb-6">
         <div className="mx-auto max-w-4xl px-4">
           <div className="relative aspect-video w-full overflow-hidden rounded-lg">
@@ -69,30 +89,22 @@ export function BlogViewer({ post, postUrl }: BlogViewerProps) {
             />
           </div>
 
-          <div className="mt-8 flex gap-6">
-            <aside className="hidden lg:block lg:w-16">
-              <ShareButton title={post.title} url={postUrl} />
+          <div className="relative mt-8 flex gap-6">
+            <aside className="z-10 hidden lg:block lg:w-16">
+              <div className="sticky top-24 flex flex-col items-center gap-4">
+                <ScrollProgress progress={scrollYProgress} />
+                <TableOfContents content={post.content} />
+                <ShareButton title={post.title} url={postUrl} />
+              </div>
             </aside>
 
-            <div className="flex-1">
+            <div className="relative w-full">
               <header className="mb-8">
                 <h1 className="text-base-content mb-4 text-4xl font-bold">
                   {post.title}
                 </h1>
 
-                {post.desc && (
-                  <p className="text-base-content mb-4 text-lg">{post.desc}</p>
-                )}
-
-                <div className="mb-4 flex flex-wrap gap-2">
-                  {post.tags.map((tag) => (
-                    <Badge key={tag} variant="info" size="sm">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="border-base-content flex items-center gap-4 border-t border-b py-4">
+                <div className="border-base-content/30 flex items-center gap-4 border-t border-b py-4">
                   {post.author.image && (
                     <Image
                       src={post.author.image}
@@ -106,12 +118,14 @@ export function BlogViewer({ post, postUrl }: BlogViewerProps) {
                     <p className="text-base-content font-semibold">
                       {post.author.name}
                     </p>
-                    <p className="text-base-content text-sm">{timeAgo}</p>
+                    <p className="text-base-content text-sm">
+                      Last updated {timeAgo}
+                    </p>
                   </div>
                 </div>
               </header>
 
-              <div className="max-w-none">
+              <div className="w-full" ref={ref}>
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeHighlight, rehypeRaw]}
@@ -131,15 +145,23 @@ export function BlogViewer({ post, postUrl }: BlogViewerProps) {
                       );
                     },
                     h3(props) {
+                      const id = slugify(props.children);
                       return (
-                        <h3 className="mt-8 mb-4 text-2xl font-semibold md:text-3xl">
+                        <h3
+                          id={id}
+                          className="mt-8 mb-4 scroll-mt-24 text-2xl font-semibold md:text-3xl"
+                        >
                           {props.children}
                         </h3>
                       );
                     },
                     h4(props) {
+                      const id = slugify(props.children);
                       return (
-                        <h4 className="mt-6 mb-3 text-xl font-semibold md:text-2xl">
+                        <h4
+                          id={id}
+                          className="mt-6 mb-3 scroll-mt-24 text-xl font-semibold md:text-2xl"
+                        >
                           {props.children}
                         </h4>
                       );
@@ -211,18 +233,34 @@ export function BlogViewer({ post, postUrl }: BlogViewerProps) {
                 </ReactMarkdown>
               </div>
 
-              {post.footnote && (
+              {/* {post.footnote && (
                 <footer className="border-base-content/20 mt-8 border-t pt-8">
                   <p className="text-base-content/70 text-sm">
                     {post.footnote}
                   </p>
                 </footer>
-              )}
+              )} */}
 
-              <div className="mt-8 lg:hidden">
-                <ShareButton title={post.title} url={postUrl} />
+              {/* Mobile Shortcut */}
+              <div className="sticky bottom-0 lg:hidden">
+                <div className="mb-5 flex items-end gap-2">
+                  <ShareButton
+                    progress={scrollYProgress}
+                    title={post.title}
+                    url={postUrl}
+                  />
+                  <TableOfContents content={post.content} />
+                </div>
+                <ScrollProgress progress={scrollYProgress} />
               </div>
             </div>
+          </div>
+          <div className="my-8 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <Badge key={tag} variant="info" size="sm">
+                {tag}
+              </Badge>
+            ))}
           </div>
         </div>
       </article>

@@ -22,14 +22,14 @@ export async function createNotification(params: CreateNotificationParams) {
 export async function notifyUserRoleChange(
   userId: string,
   oldRole: string,
-  newRole: string
+  newRole: string,
 ) {
   await createNotification({
     userId,
     type: "role_change",
     title: "Role Updated",
     message: `Your role has been changed from ${oldRole} to ${newRole}`,
-    linkTo: undefined,
+    linkTo: `/p`,
     relatedEntityType: "user",
     relatedEntityId: userId,
   });
@@ -39,7 +39,7 @@ export async function notifyUserStatusChange(
   userId: string,
   username: string,
   oldStatus: string,
-  newStatus: string
+  newStatus: string,
 ) {
   const statusMessages: Record<string, string> = {
     active: "Your account is now active",
@@ -61,14 +61,14 @@ export async function notifyUserStatusChange(
 export async function notifyPostApproved(
   userId: string,
   postTitle: string,
-  postId: string
+  postId: string,
 ) {
   await createNotification({
     userId,
     type: "post_approved",
     title: "Post Approved",
     message: `Your post "${postTitle}" has been published`,
-    linkTo: "/blog",
+    linkTo: "/post",
     relatedEntityType: "post",
     relatedEntityId: postId,
   });
@@ -77,14 +77,14 @@ export async function notifyPostApproved(
 export async function notifyPostRejected(
   userId: string,
   postTitle: string,
-  postId: string
+  postId: string,
 ) {
   await createNotification({
     userId,
     type: "post_rejected",
     title: "Post Needs Revision",
     message: `Your post "${postTitle}" has been sent back for revision`,
-    linkTo: "/blog",
+    linkTo: "/post",
     relatedEntityType: "post",
     relatedEntityId: postId,
   });

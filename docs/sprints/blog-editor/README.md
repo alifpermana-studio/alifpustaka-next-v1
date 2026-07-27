@@ -233,7 +233,7 @@ Sprint 2 progress tracking.
 
 ### Sprint 2 Components Extracted
 
-Located in `src/components/blog/editor/`:
+Located in `src/components/post/editor/`:
 
 1. **Modals/** (6 components)
    - Image upload modal
@@ -266,7 +266,7 @@ Created `src/constants/editor.ts`:
 ## File Structure
 
 ```
-docs/sprints/blog-editor/
+docs/sprints/post-editor/
 ├── README.md                        # This file
 ├── SPRINTS_COMPLETE.md             # Combined summary (start here)
 ├── COMPLETION_CHECKLIST.md         # Full checklist
@@ -294,8 +294,8 @@ docs/sprints/blog-editor/
 
 ### Extracted Components
 
-- `src/components/blog/editor/modals/` - 6 modal components
-- `src/components/blog/editor/toolbar/` - Toolbar components
+- `src/components/post/editor/modals/` - 6 modal components
+- `src/components/post/editor/toolbar/` - Toolbar components
 
 ### Tests
 

@@ -49,12 +49,12 @@ Sprint 1 successfully addressed 10 critical bugs in the blog editor system. All 
    - Fixed `tags: String[]` → `tags: string[]`
    - Renamed `Tag` → `PostTag` with export
 
-2. **src/app/(admin)/blog/editor/page.tsx**
+2. **src/app/(admin)/post/editor/page.tsx**
    - Removed dummy token
    - Added session null check
    - Fixed PostTag import
 
-3. **src/components/blog/editor/MarkdownEditor.tsx**
+3. **src/components/post/editor/MarkdownEditor.tsx**
    - Initialize history with initial content
    - Add cleanup for timeout (prevent memory leak)
    - Fix stale closure in commitToHistory
@@ -66,32 +66,32 @@ Sprint 1 successfully addressed 10 critical bugs in the blog editor system. All 
    - Remove tick condition for initial load
    - Remove console.log
 
-5. **src/components/blog/editor/ActionButton.tsx**
+5. **src/components/post/editor/ActionButton.tsx**
    - Add redirect after delete
    - Add delete error modal
    - Clear localStorage on delete/publish
    - Remove 6 console.log statements
 
-6. **src/components/blog/editor/MdComponents.tsx**
+6. **src/components/post/editor/MdComponents.tsx**
    - Remove 4 console.log statements
    - Clean up commented code
 
-7. **src/components/blog/editor/PostMetadata.tsx**
+7. **src/components/post/editor/PostMetadata.tsx**
    - Remove dead submitMetadata function
    - Add proper form submit handler
 
-8. **src/components/blog/editor/GalleryImageCard.tsx**
+8. **src/components/post/editor/GalleryImageCard.tsx**
    - Remove console.log
 
-9. **src/components/blog/editor/UploadImageCard.tsx**
+9. **src/components/post/editor/UploadImageCard.tsx**
    - Remove 6 console.log/error/dir statements
 
 ### Test Code (8 files)
 
 1. **jest.config.js** - Jest configuration
 2. **jest.setup.js** - Test environment setup
-3. **src/__tests__/components/blog/editor/MarkdownEditor.test.tsx** - 70+ assertions
-4. **src/__tests__/components/blog/editor/ActionButton.test.tsx** - 50+ assertions
+3. **src/__tests__/components/post/editor/MarkdownEditor.test.tsx** - 70+ assertions
+4. **src/__tests__/components/post/editor/ActionButton.test.tsx** - 50+ assertions
 5. **src/__tests__/context/PostContext.test.tsx** - 40+ assertions
 6. **src/__tests__/types/type-safety.test.ts** - 30+ assertions
 7. **src/__tests__/integration/editor-workflow.test.tsx** - 50+ assertions
@@ -205,7 +205,7 @@ Time:        18.5 seconds
 For complete verification, perform these manual tests:
 
 ### Editor Functionality
-- [ ] Open `/blog/editor` when logged in
+- [ ] Open `/post/editor` when logged in
 - [ ] Type text and press Ctrl+Z immediately
 - [ ] Verify undo works from first character
 - [ ] Press Ctrl+Y to redo
@@ -214,7 +214,7 @@ For complete verification, perform these manual tests:
 ### Delete Operation
 - [ ] Open existing post
 - [ ] Click Delete button
-- [ ] Verify redirect to `/blog?message=post-deleted`
+- [ ] Verify redirect to `/post?message=post-deleted`
 - [ ] Check localStorage is cleared
 - [ ] Open browser console
 - [ ] Verify no console.log statements
@@ -224,7 +224,7 @@ For complete verification, perform these manual tests:
 - [ ] Click Save Draft
 - [ ] Verify success modal appears
 - [ ] Click Publish
-- [ ] Verify redirect to `/blog`
+- [ ] Verify redirect to `/post`
 - [ ] Check localStorage is cleared
 
 ### Memory Leak Check

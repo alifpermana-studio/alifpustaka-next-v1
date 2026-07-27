@@ -91,7 +91,7 @@ export const ActionButton = ({ metadata, md }: Props) => {
 
       if (success) {
         localStorage.removeItem(EDITOR_CONSTANTS.STORAGE_KEY);
-        router.push("/blog");
+        router.push("/post");
       } else {
         if (error === "missing-required-metadata") {
           setAction(error);
@@ -119,7 +119,7 @@ export const ActionButton = ({ metadata, md }: Props) => {
 
       if (success) {
         localStorage.removeItem(EDITOR_CONSTANTS.STORAGE_KEY);
-        router.push("/blog?message=post-deleted");
+        router.push("/post?message=post-deleted");
       } else {
         setAction("delete-failed");
         setMessage("delete-failed");

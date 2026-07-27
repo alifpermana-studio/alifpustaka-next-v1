@@ -52,7 +52,7 @@ export const PostSavedModal = ({
         </button>
         <button
           onClick={() => {
-            router.push("/blog");
+            router.push("/post");
           }}
           className="flex flex-row gap-3 rounded-xl bg-blue-700 px-4 py-2 text-gray-200 hover:bg-blue-800 focus:bg-blue-600"
         >

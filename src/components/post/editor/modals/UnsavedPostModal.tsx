@@ -37,7 +37,7 @@ export const UnsavedPostModal = ({
     localStorage.removeItem(EDITOR_CONSTANTS.STORAGE_KEY);
     setMessage("");
     onClose();
-    router.push("/blog/editor");
+    router.push("/post/editor");
   };
 
   return (

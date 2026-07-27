@@ -28,7 +28,7 @@ import {
   CustomTr,
   CustomTh,
   CustomTd,
-} from "@/components/blog/editor/MdComponents";
+} from "@/components/post/editor/MdComponents";
 
 interface PostReviewDetail {
   id: string;

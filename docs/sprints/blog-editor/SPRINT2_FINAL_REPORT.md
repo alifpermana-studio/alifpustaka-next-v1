@@ -46,13 +46,13 @@ Sprint 2 successfully established a solid foundation for the blog editor by crea
 ### ✅ Task 2.2: Extract Modal Components (45 min)
 
 **Files Created:**
-1. `src/components/blog/editor/modals/UnsavedPostModal.tsx`
-2. `src/components/blog/editor/modals/SubmitConsentModal.tsx`
-3. `src/components/blog/editor/modals/DeleteConsentModal.tsx`
-4. `src/components/blog/editor/modals/MissingMetadataModal.tsx`
-5. `src/components/blog/editor/modals/PostSavedModal.tsx`
-6. `src/components/blog/editor/modals/DeleteFailedModal.tsx`
-7. `src/components/blog/editor/modals/index.ts`
+1. `src/components/post/editor/modals/UnsavedPostModal.tsx`
+2. `src/components/post/editor/modals/SubmitConsentModal.tsx`
+3. `src/components/post/editor/modals/DeleteConsentModal.tsx`
+4. `src/components/post/editor/modals/MissingMetadataModal.tsx`
+5. `src/components/post/editor/modals/PostSavedModal.tsx`
+6. `src/components/post/editor/modals/DeleteFailedModal.tsx`
+7. `src/components/post/editor/modals/index.ts`
 
 **Code Reduction:**
 - `Editor.tsx`: -70 lines (removed inline modal)
@@ -70,9 +70,9 @@ Sprint 2 successfully established a solid foundation for the blog editor by crea
 ### ✅ Task 2.3: Extract Toolbar Component (30 min)
 
 **Files Created:**
-1. `src/components/blog/editor/toolbar/Toolbar.tsx` - Main toolbar logic
-2. `src/components/blog/editor/toolbar/ToolbarButton.tsx` - Reusable button
-3. `src/components/blog/editor/toolbar/index.ts` - Barrel export
+1. `src/components/post/editor/toolbar/Toolbar.tsx` - Main toolbar logic
+2. `src/components/post/editor/toolbar/ToolbarButton.tsx` - Reusable button
+3. `src/components/post/editor/toolbar/index.ts` - Barrel export
 
 **Code Reduction:**
 - `MarkdownEditor.tsx`: 557 lines → 224 lines (-333 lines, -60%)
@@ -136,24 +136,24 @@ Sprint 2 successfully established a solid foundation for the blog editor by crea
 2. `src/types/apus-editor.d.ts`
 
 **Modal Components:**
-3. `src/components/blog/editor/modals/UnsavedPostModal.tsx`
-4. `src/components/blog/editor/modals/SubmitConsentModal.tsx`
-5. `src/components/blog/editor/modals/DeleteConsentModal.tsx`
-6. `src/components/blog/editor/modals/MissingMetadataModal.tsx`
-7. `src/components/blog/editor/modals/PostSavedModal.tsx`
-8. `src/components/blog/editor/modals/DeleteFailedModal.tsx`
-9. `src/components/blog/editor/modals/index.ts`
+3. `src/components/post/editor/modals/UnsavedPostModal.tsx`
+4. `src/components/post/editor/modals/SubmitConsentModal.tsx`
+5. `src/components/post/editor/modals/DeleteConsentModal.tsx`
+6. `src/components/post/editor/modals/MissingMetadataModal.tsx`
+7. `src/components/post/editor/modals/PostSavedModal.tsx`
+8. `src/components/post/editor/modals/DeleteFailedModal.tsx`
+9. `src/components/post/editor/modals/index.ts`
 
 **Toolbar Components:**
-10. `src/components/blog/editor/toolbar/Toolbar.tsx`
-11. `src/components/blog/editor/toolbar/ToolbarButton.tsx`
-12. `src/components/blog/editor/toolbar/index.ts`
+10. `src/components/post/editor/toolbar/Toolbar.tsx`
+11. `src/components/post/editor/toolbar/ToolbarButton.tsx`
+12. `src/components/post/editor/toolbar/index.ts`
 
 ### Modified (4 files)
-1. `src/components/blog/editor/Editor.tsx`
-2. `src/components/blog/editor/ActionButton.tsx`
-3. `src/components/blog/editor/PostMetadata.tsx`
-4. `src/components/blog/editor/MarkdownEditor.tsx`
+1. `src/components/post/editor/Editor.tsx`
+2. `src/components/post/editor/ActionButton.tsx`
+3. `src/components/post/editor/PostMetadata.tsx`
+4. `src/components/post/editor/MarkdownEditor.tsx`
 
 ---
 

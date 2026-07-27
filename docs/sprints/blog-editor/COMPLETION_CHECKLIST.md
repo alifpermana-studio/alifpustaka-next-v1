@@ -118,22 +118,22 @@
 - [x] src/types/apus-editor.d.ts
 
 ### Modals (7)
-- [x] src/components/blog/editor/modals/UnsavedPostModal.tsx
-- [x] src/components/blog/editor/modals/SubmitConsentModal.tsx
-- [x] src/components/blog/editor/modals/DeleteConsentModal.tsx
-- [x] src/components/blog/editor/modals/MissingMetadataModal.tsx
-- [x] src/components/blog/editor/modals/PostSavedModal.tsx
-- [x] src/components/blog/editor/modals/DeleteFailedModal.tsx
-- [x] src/components/blog/editor/modals/index.ts
+- [x] src/components/post/editor/modals/UnsavedPostModal.tsx
+- [x] src/components/post/editor/modals/SubmitConsentModal.tsx
+- [x] src/components/post/editor/modals/DeleteConsentModal.tsx
+- [x] src/components/post/editor/modals/MissingMetadataModal.tsx
+- [x] src/components/post/editor/modals/PostSavedModal.tsx
+- [x] src/components/post/editor/modals/DeleteFailedModal.tsx
+- [x] src/components/post/editor/modals/index.ts
 
 ### Toolbar (3)
-- [x] src/components/blog/editor/toolbar/Toolbar.tsx
-- [x] src/components/blog/editor/toolbar/ToolbarButton.tsx
-- [x] src/components/blog/editor/toolbar/index.ts
+- [x] src/components/post/editor/toolbar/Toolbar.tsx
+- [x] src/components/post/editor/toolbar/ToolbarButton.tsx
+- [x] src/components/post/editor/toolbar/index.ts
 
 ### Tests (6)
-- [x] src/__tests__/components/blog/editor/MarkdownEditor.test.tsx
-- [x] src/__tests__/components/blog/editor/ActionButton.test.tsx
+- [x] src/__tests__/components/post/editor/MarkdownEditor.test.tsx
+- [x] src/__tests__/components/post/editor/ActionButton.test.tsx
 - [x] src/__tests__/context/PostContext.test.tsx
 - [x] src/__tests__/types/type-safety.test.ts
 - [x] src/__tests__/integration/editor-workflow.test.tsx
@@ -149,20 +149,20 @@
 
 ### Sprint 1 (9)
 - [x] src/types/apus-post.d.ts
-- [x] src/app/(admin)/blog/editor/page.tsx
-- [x] src/components/blog/editor/MarkdownEditor.tsx
+- [x] src/app/(admin)/post/editor/page.tsx
+- [x] src/components/post/editor/MarkdownEditor.tsx
 - [x] src/context/PostContext.tsx
-- [x] src/components/blog/editor/ActionButton.tsx
-- [x] src/components/blog/editor/MdComponents.tsx
-- [x] src/components/blog/editor/GalleryImageCard.tsx
-- [x] src/components/blog/editor/UploadImageCard.tsx
-- [x] src/components/blog/editor/PostMetadata.tsx
+- [x] src/components/post/editor/ActionButton.tsx
+- [x] src/components/post/editor/MdComponents.tsx
+- [x] src/components/post/editor/GalleryImageCard.tsx
+- [x] src/components/post/editor/UploadImageCard.tsx
+- [x] src/components/post/editor/PostMetadata.tsx
 
 ### Sprint 2 (4)
-- [x] src/components/blog/editor/Editor.tsx
-- [x] src/components/blog/editor/ActionButton.tsx
-- [x] src/components/blog/editor/PostMetadata.tsx
-- [x] src/components/blog/editor/MarkdownEditor.tsx
+- [x] src/components/post/editor/Editor.tsx
+- [x] src/components/post/editor/ActionButton.tsx
+- [x] src/components/post/editor/PostMetadata.tsx
+- [x] src/components/post/editor/MarkdownEditor.tsx
 
 ---
 

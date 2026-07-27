@@ -523,7 +523,7 @@ Go through this checklist to ensure everything is working:
 #### ✅ Super Admin Access
 - [ ] Can access `/admin` dashboard
 - [ ] Can access `/admin/user-management`
-- [ ] Can access `/blog`
+- [ ] Can access `/post`
 - [ ] Can access `/gallery`
 
 #### ✅ OAuth (if configured)
@@ -584,7 +584,7 @@ Login with each test user and verify:
 ### 5. Create Sample Content
 
 As an **Author:**
-1. Go to `/blog/editor`
+1. Go to `/post/editor`
 2. Create a blog post
 3. Save as draft
 4. Submit for review

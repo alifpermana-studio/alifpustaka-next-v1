@@ -18,7 +18,7 @@ _____________________________________________
 ---
 
 ### ✅ Test 2: Type Safety & Authentication
-- [ ] PASS - Unauthorized access redirects to `/blog?error=unauthorized`
+- [ ] PASS - Unauthorized access redirects to `/post?error=unauthorized`
 - [ ] FAIL - (describe issue): __________
 
 **Notes:**
@@ -46,7 +46,7 @@ _____________________________________________
 ---
 
 ### ✅ Test 4: PostContext Initial Load
-- [ ] PASS - Posts load immediately on `/blog` page
+- [ ] PASS - Posts load immediately on `/post` page
 - [ ] FAIL - (describe issue): __________
 
 **Notes:**
@@ -55,7 +55,7 @@ _____________________________________________
 ---
 
 ### ✅ Test 5: Delete Post Feedback
-- [ ] PASS - Delete success redirects to `/blog?message=post-deleted`
+- [ ] PASS - Delete success redirects to `/post?message=post-deleted`
 - [ ] PASS - localStorage cleared after delete
 - [ ] FAIL - (describe issue): __________
 
