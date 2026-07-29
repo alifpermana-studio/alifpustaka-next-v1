@@ -6,7 +6,7 @@ Quick reference guide for common blog management tasks.
 
 ## Quick Access
 
-**URL:** `/post`  
+**URL:** `/posts`  
 **Permission Required:** Authenticated user  
 **Default View:** Published posts
 
@@ -24,6 +24,7 @@ Quick reference guide for common blog management tasks.
 ```
 
 **Search Tips:**
+
 - Searches title and slug
 - Case-insensitive
 - Combines with status filter
@@ -45,6 +46,7 @@ Quick reference guide for common blog management tasks.
 ### 🗑️ Delete Posts
 
 **Single Post:**
+
 ```
 1. Click ⋮ menu
 2. Select "Delete"
@@ -52,6 +54,7 @@ Quick reference guide for common blog management tasks.
 ```
 
 **Multiple Posts:**
+
 ```
 1. Check boxes for posts to delete
 2. Click "Delete" in bottom bar
@@ -63,6 +66,7 @@ Quick reference guide for common blog management tasks.
 ### 🏷️ Manage Tags
 
 **Add Tags to Multiple Posts:**
+
 ```
 1. Select posts with checkboxes
 2. Click "Manage Tags"
@@ -72,6 +76,7 @@ Quick reference guide for common blog management tasks.
 ```
 
 **Remove Tags from Multiple Posts:**
+
 ```
 1. Select posts with checkboxes
 2. Click "Manage Tags"
@@ -84,11 +89,13 @@ Quick reference guide for common blog management tasks.
 ### 📝 Change Status
 
 **Single Post:**
+
 ```
 Use the editor to change status
 ```
 
 **Multiple Posts:**
+
 ```
 1. Select posts with checkboxes
 2. Click "Change Status"
@@ -100,12 +107,12 @@ Use the editor to change status
 
 ## Status Reference
 
-| Status | Color | Meaning |
-|--------|-------|---------|
-| 🟢 Published | Green | Live on website |
-| 🟡 Submitted | Yellow | Awaiting review |
-| 🔵 Drafted | Blue | Work in progress |
-| 🔴 Deleted | Red | Soft deleted |
+| Status       | Color  | Meaning          |
+| ------------ | ------ | ---------------- |
+| 🟢 Published | Green  | Live on website  |
+| 🟡 Submitted | Yellow | Awaiting review  |
+| 🔵 Drafted   | Blue   | Work in progress |
+| 🔴 Deleted   | Red    | Soft deleted     |
 
 ---
 
@@ -118,6 +125,7 @@ Currently none implemented. Consider adding in future versions.
 ## Filter Options
 
 ### Status Filter
+
 - **All Status** - Show all posts
 - **Published** (default) - Only published posts
 - **Submitted** - Posts awaiting review
@@ -125,11 +133,13 @@ Currently none implemented. Consider adding in future versions.
 - **Deleted** - Deleted posts
 
 ### Sort By
+
 - **Title** - Alphabetical by title
 - **Slug** - Alphabetical by URL slug
 - **Last Updated** - Most recently modified
 
 ### Order
+
 - **↓ Descending** - Newest/Z-A first
 - **↑ Ascending** - Oldest/A-Z first
 
@@ -146,6 +156,7 @@ Appears at bottom of screen when posts are selected.
 ```
 
 **Actions:**
+
 - **Change Status** - Update status for all selected posts
 - **Manage Tags** - Add or remove tags
 - **Delete** - Soft delete all selected posts
@@ -157,12 +168,12 @@ Appears at bottom of screen when posts are selected.
 
 Available on each post row:
 
-| Icon | Action | Description |
-|------|--------|-------------|
-| 👁️ | Preview | View post as published |
-| 📋 | Copy Link | Copy URL to clipboard |
-| ✏️ | Edit | Open in editor |
-| 🗑️ | Delete | Soft delete post |
+| Icon | Action    | Description            |
+| ---- | --------- | ---------------------- |
+| 👁️   | Preview   | View post as published |
+| 📋   | Copy Link | Copy URL to clipboard  |
+| ✏️   | Edit      | Open in editor         |
+| 🗑️   | Delete    | Soft delete post       |
 
 ---
 
@@ -183,14 +194,17 @@ Showing 1-20 of 45          [← Previous] Page 1 of 3 [Next →]
 Tags must be comma-separated:
 
 ✅ **Correct:**
+
 ```
 tutorial, nextjs, typescript
 ```
+
 ```
 web development, react, coding
 ```
 
 ❌ **Incorrect:**
+
 ```
 tutorial nextjs typescript    (missing commas)
 tutorial;nextjs;typescript    (wrong separator)
@@ -201,11 +215,13 @@ tutorial;nextjs;typescript    (wrong separator)
 ## API Quick Reference
 
 ### Get Posts
+
 ```http
 GET /api/post-list?search=&status=published&sort=updatedAt&order=desc&skip=0&max=20
 ```
 
 ### Bulk Actions
+
 ```http
 PATCH /api/posts/bulk
 Content-Type: application/json
@@ -222,20 +238,24 @@ Content-Type: application/json
 ## Troubleshooting
 
 ### Posts not showing?
+
 - Check status filter (default is "published")
 - Clear search box
 - Click refresh button
 
 ### Can't select a post?
+
 - Deleted posts cannot be selected
 - Check if post belongs to you
 
 ### Bulk action not working?
+
 - Ensure posts are selected (checkboxes checked)
 - Verify you own all selected posts
 - Check browser console for errors
 
 ### Tags not saving?
+
 - Use comma-separated format
 - Avoid special characters
 - Check spelling
@@ -245,6 +265,7 @@ Content-Type: application/json
 ## Best Practices
 
 ✅ **Do:**
+
 - Use descriptive titles
 - Add relevant tags
 - Keep drafts organized
@@ -252,6 +273,7 @@ Content-Type: application/json
 - Use bulk actions for efficiency
 
 ❌ **Don't:**
+
 - Delete posts unnecessarily (they can't be recovered from /post)
 - Use too many tags per post
 - Forget to save drafts

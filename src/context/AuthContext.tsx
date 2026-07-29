@@ -12,7 +12,14 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
-const PROTECTED_ROUTES = ["/p", "/dashboard", "/settings", "/blog", "/gallery"];
+const PROTECTED_ROUTES = [
+  "/p",
+  "/dashboard",
+  "/settings",
+  "/galleries",
+  "/posts",
+  "/admin",
+];
 const AUTH_ROUTES = ["/signin", "/signup"];
 
 function isProtectedRoute(pathname: string): boolean {
@@ -104,13 +111,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [isPending, user, pathname, router]);
 
-  if (isPending) {
+  /* if (isPending) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <LoaderCircle className="h-6 w-6 animate-spin text-blue-500" />
       </div>
     );
-  }
+  } */
 
   const value: AuthContextType = {
     user,

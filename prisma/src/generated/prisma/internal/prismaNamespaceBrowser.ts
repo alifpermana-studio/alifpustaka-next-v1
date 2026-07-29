@@ -60,7 +60,8 @@ export const ModelName = {
   PostTag: 'PostTag',
   Gallery: 'Gallery',
   AuditLog: 'AuditLog',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  Discussion: 'Discussion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -231,6 +232,25 @@ export const NotificationScalarFieldEnum = {
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const DiscussionScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  status: 'status',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  userId: 'userId',
+  parentId: 'parentId',
+  editedAt: 'editedAt',
+  editCount: 'editCount',
+  deletedAt: 'deletedAt',
+  permanentDeleteAt: 'permanentDeleteAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DiscussionScalarFieldEnum = (typeof DiscussionScalarFieldEnum)[keyof typeof DiscussionScalarFieldEnum]
 
 
 export const SortOrder = {

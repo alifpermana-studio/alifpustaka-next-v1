@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import { ScrollProgress } from "@/components/blog/ScrollProgress";
 import { ShareButton } from "@/components/blog/ShareButton";
 import { TableOfContents } from "@/components/blog/view/TableOfContents";
@@ -27,6 +27,7 @@ import {
 } from "@/components/post/editor/MdComponents";
 import { useRef, useState } from "react";
 import { useScroll } from "framer-motion";
+import { CommentSection } from "@/components/blog/comment/CommentSection";
 
 interface PostData {
   id: string;
@@ -262,6 +263,8 @@ export function BlogViewer({ post, postUrl }: BlogViewerProps) {
               </Badge>
             ))}
           </div>
+
+          <CommentSection postId={post.id} postSlug={post.slug} postTitle={post.title} />
         </div>
       </article>
     </>

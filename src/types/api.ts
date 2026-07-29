@@ -33,36 +33,39 @@ export interface PaginationMeta {
 }
 
 // Error Codes
-export type ErrorCode = 
-  | 'insufficient_permissions'
-  | 'account_inactive'
-  | 'account_banned'
-  | 'account_deleted'
-  | 'invalid_role_assignment'
-  | 'invalid_status_transition'
-  | 'session_expired'
-  | 'unauthorized'
-  | 'not_found'
-  | 'validation_error'
-  | 'forbidden'
-  | 'internal_error'
-  | 'missing_parameter'
-  | 'invalid_parameter';
+export type ErrorCode =
+  | "insufficient_permissions"
+  | "account_inactive"
+  | "account_banned"
+  | "account_deleted"
+  | "invalid_request"
+  | "invalid_role_assignment"
+  | "invalid_status_transition"
+  | "session_expired"
+  | "unauthorized"
+  | "not_found"
+  | "validation_error"
+  | "forbidden"
+  | "internal_error"
+  | "missing_parameter"
+  | "invalid_parameter";
 
 // Error Code Messages
 export const ERROR_MESSAGES: Record<ErrorCode, string> = {
-  insufficient_permissions: 'You do not have sufficient permissions to perform this action',
-  account_inactive: 'Your account is inactive. Please contact support.',
-  account_banned: 'Your account has been banned. Please contact support.',
-  account_deleted: 'Your account has been deleted.',
-  invalid_role_assignment: 'Cannot assign the specified role',
-  invalid_status_transition: 'Invalid status transition',
-  session_expired: 'Your session has expired. Please sign in again.',
-  unauthorized: 'Authentication required',
-  not_found: 'Resource not found',
-  validation_error: 'Validation error',
-  forbidden: 'Access forbidden',
-  internal_error: 'Internal server error',
-  missing_parameter: 'Missing required parameter',
-  invalid_parameter: 'Invalid parameter value',
+  insufficient_permissions:
+    "You do not have sufficient permissions to perform this action",
+  account_inactive: "Your account is inactive. Please contact support.",
+  account_banned: "Your account has been banned. Please contact support.",
+  account_deleted: "Your account has been deleted.",
+  invalid_role_assignment: "Cannot assign the specified role",
+  invalid_status_transition: "Invalid status transition",
+  invalid_request: "Your request can not be proceed.",
+  session_expired: "Your session has expired. Please sign in again.",
+  unauthorized: "Authentication required",
+  not_found: "Resource not found",
+  validation_error: "Validation error",
+  forbidden: "Access forbidden",
+  internal_error: "Internal server error",
+  missing_parameter: "Missing required parameter",
+  invalid_parameter: "Invalid parameter value",
 };

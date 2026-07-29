@@ -27,33 +27,43 @@ interface PostTableProps {
 
 export function PostTable({ posts, onPostClick }: PostTableProps) {
   return (
-    <div className="mt-6 overflow-x-auto rounded-xl border border-base-300 bg-base-200">
+    <div className="border-base-300 bg-base-200 mt-6 overflow-x-auto rounded-xl border">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-base-300 bg-base-300/50">
-            <th className="p-4 text-left text-sm font-semibold text-base-content">Post</th>
-            <th className="p-4 text-left text-sm font-semibold text-base-content">Author</th>
-            <th className="p-4 text-left text-sm font-semibold text-base-content">Status</th>
-            <th className="p-4 text-left text-sm font-semibold text-base-content">Tags</th>
-            <th className="p-4 text-left text-sm font-semibold text-base-content">Submitted</th>
-            <th className="p-4 text-left text-sm font-semibold text-base-content">Updated</th>
-            <th className="p-4 text-left text-sm font-semibold text-base-content">Actions</th>
+          <tr className="border-base-300 bg-base-300/50 border-b">
+            <th className="text-base-content p-4 text-left text-sm font-semibold">
+              Post
+            </th>
+            <th className="text-base-content p-4 text-left text-sm font-semibold">
+              Author
+            </th>
+            <th className="text-base-content p-4 text-left text-sm font-semibold">
+              Status
+            </th>
+            <th className="text-base-content p-4 text-left text-sm font-semibold">
+              Tags
+            </th>
+            <th className="text-base-content p-4 text-left text-sm font-semibold">
+              Submitted
+            </th>
+            <th className="text-base-content p-4 text-left text-sm font-semibold">
+              Updated
+            </th>
+            <th className="text-base-content p-4 text-left text-sm font-semibold">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
           {posts.length === 0 ? (
             <tr>
-              <td colSpan={7} className="p-8 text-center text-base-content/70">
+              <td colSpan={7} className="text-base-content/70 p-8 text-center">
                 No posts found
               </td>
             </tr>
           ) : (
             posts.map((post) => (
-              <PostTableRow
-                key={post.id}
-                post={post}
-                onClick={onPostClick}
-              />
+              <PostTableRow key={post.id} post={post} onClick={onPostClick} />
             ))
           )}
         </tbody>

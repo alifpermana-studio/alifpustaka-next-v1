@@ -4,7 +4,7 @@
 
 The User Management system provides a comprehensive interface for Super Admins and User Admins to manage user accounts, roles, and statuses within the Alif Pustaka application.
 
-**Route:** `/admin/user-management`  
+**Route:** `/admin/users`  
 **Access:** Super Admin, User Admin (requires `view_all_users` permission)  
 **Component Structure:** Server component wrapper → Client component logic
 
@@ -34,7 +34,7 @@ The User Management system provides a comprehensive interface for Super Admins a
 
 ### 2. Search and Filters
 
-- **Search:** 
+- **Search:**
   - Searches by name, username, or email
   - Debounced 500ms for performance
   - Real-time results
@@ -60,6 +60,7 @@ The User Management system provides a comprehensive interface for Super Admins a
 ### 4. Single User Actions
 
 **Edit User:**
+
 - Opens modal with current user information
 - Change role (filtered by permission)
 - Change status (active/inactive/banned)
@@ -67,6 +68,7 @@ The User Management system provides a comprehensive interface for Super Admins a
 - Confirmation with audit trail notice
 
 **Permission Rules:**
+
 - User Admin can assign: User, Author, Editor
 - Super Admin can assign: All roles
 - Cannot edit users with higher role hierarchy
@@ -75,11 +77,13 @@ The User Management system provides a comprehensive interface for Super Admins a
 ### 5. Bulk Actions
 
 **Available Actions:**
+
 - Activate (set status to active)
 - Deactivate (set status to inactive)
 - Ban (set status to banned)
 
 **Features:**
+
 - Select all checkbox (selects only manageable users on current page)
 - Individual selection checkboxes
 - Fixed bottom action bar appears when users selected
@@ -88,6 +92,7 @@ The User Management system provides a comprehensive interface for Super Admins a
 - Success/error notifications with counts
 
 **Selection Behavior:**
+
 - Selection clears on page change
 - Selection clears on filter change
 - Cannot select deleted users
@@ -106,7 +111,8 @@ The User Management system provides a comprehensive interface for Super Admins a
 
 ### Server Component Pattern
 
-**File:** `src/app/(admin)/admin/user-management/page.tsx`
+**File:** `src/app/(admin)/admin/users/page.tsx`
+
 ```typescript
 import { UserManagement } from "@/components/admin/user-management/UserManagement";
 
@@ -116,6 +122,7 @@ export default function UserManagementPage() {
 ```
 
 **Benefits:**
+
 - Clean server component wrapper
 - Future-ready for server-side data fetching
 - Easy to add server-side permission checks
@@ -124,6 +131,7 @@ export default function UserManagementPage() {
 ### Client Component
 
 **File:** `src/components/admin/user-management/UserManagement.tsx`
+
 - Main container with all client-side logic
 - State management for users, filters, pagination, modals
 - API integration for CRUD operations
@@ -149,6 +157,7 @@ All located in `src/components/admin/user-management/`:
 ### GET /api/users
 
 **Query Parameters:**
+
 - `search` - Search term for name/username/email
 - `role` - Filter by role
 - `status` - Filter by status
@@ -156,6 +165,7 @@ All located in `src/components/admin/user-management/`:
 - `limit` - Results per page (default: 20)
 
 **Response:**
+
 ```typescript
 {
   success: true,
@@ -174,6 +184,7 @@ All located in `src/components/admin/user-management/`:
 ### PATCH /api/users
 
 **Request Body:**
+
 ```typescript
 {
   userId: string,
@@ -183,11 +194,13 @@ All located in `src/components/admin/user-management/`:
 ```
 
 **Permission Checks:**
+
 - `canAssignRole()` - Validates role assignment rights
 - `canManageUser()` - Validates user management rights
 - `canManageUserStatus()` - Validates status change rights
 
 **Audit Logging:**
+
 - Creates `user_role_change` audit log entry
 - Creates `user_status_change` audit log entry
 - Includes old/new values and metadata
@@ -196,17 +209,18 @@ All located in `src/components/admin/user-management/`:
 
 ## Permission Matrix
 
-| Role | Access User Management | Can Assign Roles | Can Change Status |
-|------|----------------------|------------------|-------------------|
-| **Super Admin** | ✅ Yes | All roles | ✅ Yes |
-| **User Admin** | ✅ Yes | User, Author, Editor | ✅ Yes |
-| **Content Admin** | ❌ No | ❌ No | ❌ No |
-| **Sales Admin** | ❌ No | ❌ No | ❌ No |
-| **Support Admin** | ❌ No | ❌ No | ❌ No |
-| **Editor/Author/User** | ❌ No | ❌ No | ❌ No |
+| Role                   | Access User Management | Can Assign Roles     | Can Change Status |
+| ---------------------- | ---------------------- | -------------------- | ----------------- |
+| **Super Admin**        | ✅ Yes                 | All roles            | ✅ Yes            |
+| **User Admin**         | ✅ Yes                 | User, Author, Editor | ✅ Yes            |
+| **Content Admin**      | ❌ No                  | ❌ No                | ❌ No             |
+| **Sales Admin**        | ❌ No                  | ❌ No                | ❌ No             |
+| **Support Admin**      | ❌ No                  | ❌ No                | ❌ No             |
+| **Editor/Author/User** | ❌ No                  | ❌ No                | ❌ No             |
 
 **Access Control:**
-- Non-admins accessing `/admin/user-management` → Redirected to `/p/{username}`
+
+- Non-admins accessing `/admin/users` → Redirected to `/p/{username}`
 - Admins without `view_all_users` → Redirected to `/admin`
 - Client-side access check in UserManagement component
 
@@ -275,13 +289,13 @@ const [loading, setLoading] = useState(true);
 const [filter, setFilter] = useState({
   search: "",
   role: "",
-  status: ""
+  status: "",
 });
 const [pagination, setPagination] = useState({
   skip: 0,
   limit: 20,
   total: 0,
-  hasMore: false
+  hasMore: false,
 });
 const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
 const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
@@ -321,26 +335,28 @@ const [bulkConfirmModalOpen, setBulkConfirmModalOpen] = useState(false);
 ### Possible Server-Side Features
 
 1. **Server-Side Permission Check:**
+
 ```typescript
 // In page.tsx
 export default async function UserManagementPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-  
+
   if (!session?.user) redirect("/signin");
-  
+
   const hasPermission = /* check permission */;
   if (!hasPermission) redirect("/admin");
-  
+
   return <UserManagement />;
 }
 ```
 
 2. **Server-Side Initial Data:**
+
 ```typescript
 export default async function UserManagementPage() {
   const initialUsers = await prisma.user.findMany({ take: 20 });
   const totalCount = await prisma.user.count();
-  
+
   return <UserManagement initialUsers={initialUsers} initialTotal={totalCount} />;
 }
 ```
@@ -349,7 +365,7 @@ export default async function UserManagementPage() {
 
 ## Testing Checklist
 
-- [ ] Page loads at `/admin/user-management`
+- [ ] Page loads at `/admin/users`
 - [ ] Search by name works
 - [ ] Search by username works
 - [ ] Search by email works

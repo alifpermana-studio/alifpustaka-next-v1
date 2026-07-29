@@ -36,7 +36,11 @@ export type Permission =
   | 'view_post_audit_logs'
   | 'view_own_audit_logs'
   | 'manage_sales'
-  | 'manage_support';
+  | 'manage_support'
+  | 'manage_discussions'
+  | 'moderate_discussions'
+  | 'edit_own_discussions'
+  | 'reply_discussions';
 
 // Role Hierarchy - Higher number = more privileges
 export const ROLE_HIERARCHY: Record<UserRole, number> = {
@@ -72,6 +76,10 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'view_own_audit_logs',
     'manage_sales',
     'manage_support',
+    'manage_discussions',
+    'moderate_discussions',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
   content_admin: [
     'manage_all_posts',
@@ -84,6 +92,10 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'manage_own_gallery',
     'view_post_audit_logs',
     'view_own_audit_logs',
+    'manage_discussions',
+    'moderate_discussions',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
   user_admin: [
     'manage_user_roles',
@@ -94,18 +106,25 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'view_own_audit_logs',
     'manage_own_gallery',
     'edit_own_posts',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
   sales_admin: [
     'manage_sales',
     'manage_own_gallery',
     'edit_own_posts',
     'view_own_audit_logs',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
   support_admin: [
     'manage_support',
     'manage_own_gallery',
     'edit_own_posts',
     'view_own_audit_logs',
+    'moderate_discussions',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
   editor: [
     'publish_posts',
@@ -115,16 +134,22 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     'delete_posts',
     'manage_own_gallery',
     'view_own_audit_logs',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
   author: [
     'edit_own_posts',
     'submit_posts',
     'manage_own_gallery',
     'view_own_audit_logs',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
   user: [
     'manage_own_gallery',
     'view_own_audit_logs',
+    'edit_own_discussions',
+    'reply_discussions',
   ],
 };
 

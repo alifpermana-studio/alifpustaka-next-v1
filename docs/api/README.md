@@ -10,6 +10,7 @@ This directory contains comprehensive API endpoint documentation organized by fe
 
 **API Categories:**
 - Blog Management
+- Discussion & Comments
 - Gallery/Image Management
 - User Management
 - Notifications
@@ -34,6 +35,25 @@ Complete API reference for blog post management endpoints.
 - Blog post CRUD operations
 - Post listing and filtering
 - Bulk operations
+
+---
+
+### [discussion-api-reference.md](./discussion-api-reference.md) - Discussion & Comments
+Complete API reference for discussion and comment management endpoints.
+
+**Endpoints:**
+- `GET /api/discussions` - List own comments
+- `POST /api/discussions` - Create comment
+- `PUT /api/discussions/[id]` - Edit comment
+- `DELETE /api/discussions/[id]` - Delete comment
+- `GET /api/admin/discussions` - List all comments (admin)
+- `PATCH /api/admin/discussions/[id]` - Change comment status (admin)
+
+**Use this for:**
+- Comment posting and management
+- User comment retrieval
+- Admin comment moderation
+- Status change operations
 
 ---
 
@@ -137,8 +157,9 @@ API reference for authentication utility endpoints.
 
 - [Error Codes](../development/error-codes.md) - API error code reference
 - [RBAC System](../features/rbac.md) - Role-based access control for APIs
-- [Blog Management](../features/blog-management.md) - Blog feature documentation
-- [User Management](../features/user-management.md) - User management feature
+- [Blog Management](../features/posts-management.md) - Blog feature documentation
+- [Discussion System](../features/discussions-and-comments.md) - Discussion feature documentation
+- [User Management](../features/admin-users.md) - User management feature
 
 ---
 
@@ -303,6 +324,14 @@ API endpoints do not currently include version numbers in the URL. Breaking chan
 - Bulk update: `PATCH /api/posts/bulk`
 - Delete: `DELETE /api/blog-post`
 
+### Discussion & Comments
+- List own comments: `GET /api/discussions`
+- Create comment: `POST /api/discussions`
+- Edit comment: `PUT /api/discussions/[id]`
+- Delete comment: `DELETE /api/discussions/[id]`
+- List all (admin): `GET /api/admin/discussions`
+- Change status (admin): `PATCH /api/admin/discussions/[id]`
+
 ### Gallery Management
 - List images: `GET /api/image-list`
 - Get image: `GET /api/image?src=...&p=...`
@@ -332,5 +361,5 @@ API endpoints do not currently include version numbers in the URL. Breaking chan
 
 ---
 
-**Last Updated:** 2026-07-25  
-**Total API Endpoints Documented:** 20+
+**Last Updated:** 2026-07-28  
+**Total API Endpoints Documented:** 26+

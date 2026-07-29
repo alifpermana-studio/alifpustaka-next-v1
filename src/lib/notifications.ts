@@ -68,7 +68,7 @@ export async function notifyPostApproved(
     type: "post_approved",
     title: "Post Approved",
     message: `Your post "${postTitle}" has been published`,
-    linkTo: "/post",
+    linkTo: "/posts",
     relatedEntityType: "post",
     relatedEntityId: postId,
   });
@@ -84,7 +84,7 @@ export async function notifyPostRejected(
     type: "post_rejected",
     title: "Post Needs Revision",
     message: `Your post "${postTitle}" has been sent back for revision`,
-    linkTo: "/post",
+    linkTo: "/posts",
     relatedEntityType: "post",
     relatedEntityId: postId,
   });

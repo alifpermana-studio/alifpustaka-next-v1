@@ -6,7 +6,7 @@ const variants = {
   danger: "bg-danger/15 text-danger border-danger/20",
   info: "bg-info/15 text-info border-info/20",
   neutral: "bg-surface-700/60 text-surface-300 border-surface-600/50",
-  accent: "bg-accent/15 text-accent-soft border-accent/25",
+  accent: "bg-accent/15 text-accent border-accent/25",
 } as const;
 
 interface BadgeProps {

@@ -2,7 +2,9 @@ export type NotificationType =
   | "role_change" 
   | "status_change" 
   | "post_approved" 
-  | "post_rejected";
+  | "post_rejected"
+  | "comment_reply"
+  | "comment_status_changed";
 
 export interface Notification {
   id: string;

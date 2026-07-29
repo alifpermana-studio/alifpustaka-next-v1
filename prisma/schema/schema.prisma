@@ -29,6 +29,7 @@ model User {
 	posts           Post[]
 	gallery         Gallery[]
 	notifications   Notification[]
+	discussions     Discussion[]
 
 	@@map("user")
 }
@@ -173,4 +174,37 @@ model Notification {
 	@@map("notification")
 	@@index([userId, isRead])
 	@@index([userId, createdAt])
+}
+
+model Discussion {
+	id                String      @id @default(uuid())
+	content           String
+	status            String      @default("pending")
+	
+	sourceType        String
+	sourceId          String
+	
+	userId            String
+	user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+	
+	parentId          String?
+	parent            Discussion? @relation("DiscussionReplies", fields: [parentId], references: [id], onDelete: Cascade)
+	replies           Discussion[] @relation("DiscussionReplies")
+	
+	editedAt          DateTime?   @db.Timestamptz(3)
+	editCount         Int         @default(0)
+	
+	deletedAt         DateTime?   @db.Timestamptz(3)
+	permanentDeleteAt DateTime?   @db.Timestamptz(3)
+	
+	createdAt         DateTime    @default(now()) @db.Timestamptz(3)
+	updatedAt         DateTime    @updatedAt @db.Timestamptz(3)
+	
+	@@map("discussion")
+	@@index([userId])
+	@@index([sourceType, sourceId])
+	@@index([status])
+	@@index([parentId])
+	@@index([createdAt])
+	@@index([permanentDeleteAt])
 }

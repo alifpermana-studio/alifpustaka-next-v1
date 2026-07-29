@@ -393,7 +393,8 @@ export const ModelName = {
   PostTag: 'PostTag',
   Gallery: 'Gallery',
   AuditLog: 'AuditLog',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  Discussion: 'Discussion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "post" | "tag" | "postTag" | "gallery" | "auditLog" | "notification"
+    modelProps: "user" | "session" | "account" | "verification" | "post" | "tag" | "postTag" | "gallery" | "auditLog" | "notification" | "discussion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1153,6 +1154,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Discussion: {
+      payload: Prisma.$DiscussionPayload<ExtArgs>
+      fields: Prisma.DiscussionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DiscussionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DiscussionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>
+        }
+        findFirst: {
+          args: Prisma.DiscussionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DiscussionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>
+        }
+        findMany: {
+          args: Prisma.DiscussionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>[]
+        }
+        create: {
+          args: Prisma.DiscussionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>
+        }
+        createMany: {
+          args: Prisma.DiscussionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DiscussionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>[]
+        }
+        delete: {
+          args: Prisma.DiscussionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>
+        }
+        update: {
+          args: Prisma.DiscussionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DiscussionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DiscussionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DiscussionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DiscussionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DiscussionPayload>
+        }
+        aggregate: {
+          args: Prisma.DiscussionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDiscussion>
+        }
+        groupBy: {
+          args: Prisma.DiscussionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DiscussionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DiscussionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DiscussionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1344,6 +1419,25 @@ export const NotificationScalarFieldEnum = {
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const DiscussionScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  status: 'status',
+  sourceType: 'sourceType',
+  sourceId: 'sourceId',
+  userId: 'userId',
+  parentId: 'parentId',
+  editedAt: 'editedAt',
+  editCount: 'editCount',
+  deletedAt: 'deletedAt',
+  permanentDeleteAt: 'permanentDeleteAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DiscussionScalarFieldEnum = (typeof DiscussionScalarFieldEnum)[keyof typeof DiscussionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1589,6 +1683,7 @@ export type GlobalOmitConfig = {
   gallery?: Prisma.GalleryOmit
   auditLog?: Prisma.AuditLogOmit
   notification?: Prisma.NotificationOmit
+  discussion?: Prisma.DiscussionOmit
 }
 
 /* Types for Logging */

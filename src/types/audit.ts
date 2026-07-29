@@ -31,10 +31,14 @@ export type AuditAction =
   | 'post_rejected'
   | 'gallery_uploaded'
   | 'gallery_visibility_changed'
-  | 'gallery_deleted';
+  | 'gallery_deleted'
+  | 'discussion_created'
+  | 'discussion_edited'
+  | 'discussion_deleted'
+  | 'discussion_status_changed';
 
 // Entity Types
-export type EntityType = 'user' | 'post' | 'gallery';
+export type EntityType = 'user' | 'post' | 'gallery' | 'discussion';
 
 // Create Audit Log Parameters
 export interface CreateAuditLogParams {

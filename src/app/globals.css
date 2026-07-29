@@ -37,7 +37,7 @@
   * {
     @variant dark {
       --color-primary: #5865ff;
-      --color-primary-content: #0a0d2e;
+      --color-primary-content: #fff258;
 
       --color-secondary: #6ec5ff;
       --color-secondary-content: #0a1f2e;

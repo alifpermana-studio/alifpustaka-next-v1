@@ -1,6 +1,6 @@
 # Blog Management System
 
-Comprehensive guide for the blog post management system at `/blog`. This system allows users to manage their own blog posts with advanced filtering, bulk operations, and status management.
+Comprehensive guide for the blog post management system at `/posts`. This system allows users to manage their own blog posts with advanced filtering, bulk operations, and status management.
 
 ---
 
@@ -27,7 +27,7 @@ The Blog Management System provides a full-featured interface for authors to man
 - **Tag Management**: Add or remove tags in bulk or individually
 - **Pagination**: Navigate through large post collections efficiently
 
-**Access**: Available at `/post` (requires authentication)
+**Access**: Available at `/posts` (requires authentication)
 
 ---
 
@@ -36,23 +36,27 @@ The Blog Management System provides a full-featured interface for authors to man
 ### 🔍 Search & Filtering
 
 #### Search
+
 - **Debounced search** (2-second delay) to avoid excessive API calls
 - Searches in: Post titles and slugs
 - Case-insensitive matching
 - Works in combination with status filter
 
 #### Status Filter
+
 - **Default**: Shows "Published" posts
 - **Options**: All Status, Published, Submitted, Drafted, Deleted
 - Search results respect the selected status filter
 - Real-time filtering without page refresh
 
 #### Sorting
+
 - **Sort by**: Title, Slug, Last Updated
 - **Order**: Ascending or Descending (toggle button)
 - Default: Last Updated (Descending)
 
 #### Refresh
+
 - Manual refresh button to reload posts
 - Updates timestamp display
 - Maintains current filter settings
@@ -60,20 +64,22 @@ The Blog Management System provides a full-featured interface for authors to man
 ### ✅ Selection & Bulk Actions
 
 #### Selection
+
 - **Individual selection**: Click checkbox on each row
 - **Select all**: Checkbox in table header
 - **Indeterminate state**: Shows when some (but not all) posts are selected
 - Deleted posts cannot be selected
 
 #### Bulk Operations
+
 - **Change Status**: Update status for multiple posts at once
   - Published, Submitted, Drafted, Deleted
   - Confirmation modal with status selection
-  
+
 - **Delete Posts**: Soft delete multiple posts
   - Browser confirmation dialog
   - Sets status to "deleted" (can be recovered)
-  
+
 - **Manage Tags**: Add or remove tags from multiple posts
   - Add tags: Comma-separated input (e.g., `tech, tutorial, nextjs`)
   - Remove tags: Comma-separated input
@@ -82,6 +88,7 @@ The Blog Management System provides a full-featured interface for authors to man
 ### 📄 Individual Post Actions
 
 Each post has a dropdown menu with:
+
 - **Preview**: View post as it appears to readers
 - **Copy Link**: Copy post URL to clipboard
 - **Edit**: Open post in editor
@@ -121,12 +128,12 @@ Each post has a dropdown menu with:
 
 ### Status Descriptions
 
-| Status | Description | Visible To | Actions Available |
-|--------|-------------|------------|-------------------|
-| **Drafted** | Work in progress | Author only | Edit, Submit, Delete |
-| **Submitted** | Awaiting review | Author + Reviewers | Edit, Publish (reviewers), Delete |
-| **Published** | Live on site | Everyone | Edit, Unpublish, Delete |
-| **Deleted** | Soft deleted | Author + Admins | Recover (via content management) |
+| Status        | Description      | Visible To         | Actions Available                 |
+| ------------- | ---------------- | ------------------ | --------------------------------- |
+| **Drafted**   | Work in progress | Author only        | Edit, Submit, Delete              |
+| **Submitted** | Awaiting review  | Author + Reviewers | Edit, Publish (reviewers), Delete |
+| **Published** | Live on site     | Everyone           | Edit, Unpublish, Delete           |
+| **Deleted**   | Soft deleted     | Author + Admins    | Recover (via content management)  |
 
 ---
 
@@ -176,12 +183,12 @@ Matches the User Management system exactly:
 
 ### Status Badges
 
-| Status | Badge Color | Variant |
-|--------|-------------|---------|
-| Published | Green | `success` |
-| Submitted | Yellow | `warning` |
-| Drafted | Blue | `info` |
-| Deleted | Red | `danger` |
+| Status    | Badge Color | Variant   |
+| --------- | ----------- | --------- |
+| Published | Green       | `success` |
+| Submitted | Yellow      | `warning` |
+| Drafted   | Blue        | `info`    |
+| Deleted   | Red         | `danger`  |
 
 ---
 
@@ -192,6 +199,7 @@ Matches the User Management system exactly:
 Fetch user's posts with filtering and pagination.
 
 **Query Parameters:**
+
 ```typescript
 {
   search?: string;      // Search in title/slug
@@ -204,6 +212,7 @@ Fetch user's posts with filtering and pagination.
 ```
 
 **Response:**
+
 ```typescript
 {
   success: true,
@@ -222,6 +231,7 @@ Fetch user's posts with filtering and pagination.
 ```
 
 **Behavior:**
+
 - Only returns posts where `userId` matches authenticated user
 - Combines search with status filter
 - Returns empty array if no posts found
@@ -231,6 +241,7 @@ Fetch user's posts with filtering and pagination.
 Perform bulk operations on multiple posts.
 
 **Request Body:**
+
 ```typescript
 {
   action: "change_status" | "delete" | "add_tags" | "remove_tags",
@@ -245,6 +256,7 @@ Perform bulk operations on multiple posts.
 **Actions:**
 
 #### 1. Change Status
+
 ```json
 {
   "action": "change_status",
@@ -254,6 +266,7 @@ Perform bulk operations on multiple posts.
 ```
 
 #### 2. Delete Posts
+
 ```json
 {
   "action": "delete",
@@ -262,6 +275,7 @@ Perform bulk operations on multiple posts.
 ```
 
 #### 3. Add Tags
+
 ```json
 {
   "action": "add_tags",
@@ -271,6 +285,7 @@ Perform bulk operations on multiple posts.
 ```
 
 #### 4. Remove Tags
+
 ```json
 {
   "action": "remove_tags",
@@ -280,6 +295,7 @@ Perform bulk operations on multiple posts.
 ```
 
 **Response:**
+
 ```typescript
 {
   success: true,
@@ -292,6 +308,7 @@ Perform bulk operations on multiple posts.
 ```
 
 **Security:**
+
 - Verifies all posts belong to authenticated user
 - Returns 403 if any post is owned by another user
 - Uses `Promise.allSettled` for parallel processing
@@ -301,6 +318,7 @@ Perform bulk operations on multiple posts.
 Update or delete individual post (existing endpoint).
 
 Used for single post deletion:
+
 ```json
 {
   "action": "deleted",
@@ -361,7 +379,7 @@ BlogPage (page.tsx)
 src/
 ├── app/
 │   ├── (admin)/
-│   │   └── post/
+│   │   └── posts/
 │   │       └── page.tsx                    # Main page component
 │   └── api/
 │       ├── post-list/
@@ -390,9 +408,9 @@ src/
 
 #### Creating and Managing Posts
 
-1. **Access your posts**: Navigate to `/post`
+1. **Access your posts**: Navigate to `/posts`
 2. **View all posts**: Default view shows published posts
-3. **Find a post**: 
+3. **Find a post**:
    - Type in search box (waits 2 seconds before searching)
    - Select status filter to narrow results
    - Use sort options to organize list
@@ -407,12 +425,14 @@ src/
 #### Deleting a Post
 
 **Single Post:**
+
 1. Click **⋮** menu on post row
 2. Select **Delete**
 3. Confirm in modal
 4. Post status changes to "deleted"
 
 **Multiple Posts:**
+
 1. Select posts using checkboxes
 2. Click **Delete** in bulk action bar
 3. Confirm in browser dialog
@@ -421,6 +441,7 @@ src/
 #### Managing Tags
 
 **Bulk Add Tags:**
+
 1. Select posts using checkboxes
 2. Click **Manage Tags** in bulk action bar
 3. Enter tags in "Add Tags" field (comma-separated)
@@ -428,6 +449,7 @@ src/
 4. Click **Add Tags**
 
 **Bulk Remove Tags:**
+
 1. Select posts using checkboxes
 2. Click **Manage Tags** in bulk action bar
 3. Enter tags in "Remove Tags" field (comma-separated)
@@ -436,9 +458,11 @@ src/
 #### Changing Post Status
 
 **Single Post:**
+
 - Use the editor to change status and save
 
 **Multiple Posts:**
+
 1. Select posts using checkboxes
 2. Click **Change Status** in bulk action bar
 3. Select new status from dropdown
@@ -453,17 +477,19 @@ src/
 #### Add New Filter
 
 1. Update `FilterState` interface in `page.tsx`:
+
 ```typescript
 interface FilterState {
   search: string;
   status: PostStatus | "";
   sort: string;
   order: string;
-  newFilter: string;  // Add here
+  newFilter: string; // Add here
 }
 ```
 
 2. Update API endpoint in `api/post-list/route.ts`:
+
 ```typescript
 const newFilter = searchParams.get("newFilter") || "";
 
@@ -474,6 +500,7 @@ if (newFilter) {
 ```
 
 3. Add UI control in `PostFilters.tsx`:
+
 ```typescript
 <Select
   value={filter.newFilter}
@@ -487,6 +514,7 @@ if (newFilter) {
 #### Add New Bulk Action
 
 1. Update bulk API in `api/posts/bulk/route.ts`:
+
 ```typescript
 if (action === "new_action") {
   // Implementation
@@ -495,17 +523,18 @@ if (action === "new_action") {
       // Perform action
       await prisma.post.update({
         where: { id: postId },
-        data: { /* updates */ },
+        data: {/* updates */},
       });
       return postId;
-    })
+    }),
   );
-  
+
   // Return results
 }
 ```
 
 2. Add button in `PostBulkActionBar.tsx`:
+
 ```typescript
 <Button
   variant="secondary"
@@ -518,8 +547,11 @@ if (action === "new_action") {
 ```
 
 3. Handle action in `page.tsx`:
+
 ```typescript
-const handleBulkAction = (action: "status" | "delete" | "tags" | "new_action") => {
+const handleBulkAction = (
+  action: "status" | "delete" | "tags" | "new_action",
+) => {
   // Handle new action
 };
 ```
@@ -557,7 +589,7 @@ const [loading, setLoading] = useState(true);
 // Filters
 const [filter, setFilter] = useState<FilterState>({
   search: "",
-  status: "published",  // Default
+  status: "published", // Default
   sort: "updatedAt",
   order: "desc",
 });
@@ -598,10 +630,7 @@ try {
   if (result.success) {
     // Handle success
   } else {
-    showNotification(
-      result.error?.message || "Failed to fetch posts",
-      "error",
-    );
+    showNotification(result.error?.message || "Failed to fetch posts", "error");
   }
 } catch (error) {
   showNotification("Failed to fetch posts", "error");
@@ -634,27 +663,32 @@ try {
 ### Common Issues
 
 #### Posts not loading
+
 - **Check**: User is authenticated
 - **Check**: Database connection is active
 - **Check**: API endpoint returns valid data
 - **Solution**: Check browser console for errors
 
 #### Search not working
+
 - **Check**: Debounce timer (wait 2 seconds after typing)
 - **Check**: Status filter is set correctly
 - **Solution**: Try clearing filters and searching again
 
 #### Bulk actions failing
+
 - **Check**: Posts are owned by current user
 - **Check**: Network tab for API errors
 - **Solution**: Ensure all selected posts belong to the user
 
 #### Tags not saving
+
 - **Check**: Tag input format (comma-separated)
 - **Check**: No special characters in tag names
 - **Solution**: Use simple alphanumeric tags
 
 #### Styling looks different
+
 - **Check**: Tailwind classes are correct
 - **Check**: Base colors defined in theme
 - **Solution**: Compare with UserTable styling

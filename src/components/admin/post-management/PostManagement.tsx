@@ -54,8 +54,13 @@ export function PostManagement() {
   });
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
+  useEffect(() => {
+    if (!hasPermission("review_posts")) {
+      router.push("/admin");
+    }
+  }, [hasPermission, router]);
+
   if (!hasPermission("review_posts")) {
-    router.push("/admin");
     return (
       <div className="p-6">
         <h1 className="text-base-content text-2xl font-bold">Access Denied</h1>

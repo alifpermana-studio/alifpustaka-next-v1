@@ -29,6 +29,8 @@ import {
   Newspaper,
   DollarSign,
   Headphones,
+  MessageSquare,
+  MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -53,6 +55,7 @@ const getNavItems = (
   canManageContent: boolean,
   canManageSales: boolean,
   canManageSupport: boolean,
+  canModerateDiscussions: boolean,
 ): NavItem[] => {
   const items: NavItem[] = [
     { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -64,21 +67,27 @@ const getNavItems = (
       label: "Blog",
       icon: NotebookTextIcon,
       subMenu: [
-        { to: "/post/editor", label: "Editor", icon: PenSquare },
-        { to: "/post", label: "Overview", icon: FileText },
-        { to: "/post/trash", label: "Trash", icon: Trash2 },
+        { to: "/posts/editor", label: "Editor", icon: PenSquare },
+        { to: "/posts", label: "Overview", icon: FileText },
+        { to: "/posts/trash", label: "Trash", icon: Trash2 },
       ],
     },
     {
       label: "Gallery",
       icon: ImagesIcon,
       subMenu: [
-        { to: "/gallery/upload", label: "Upload", icon: ImagePlus },
-        { to: "/gallery", label: "Browse", icon: FolderOpen },
-        { to: "/gallery/archived", label: "Archived", icon: Archive },
+        { to: "/galleries/upload", label: "Upload", icon: ImagePlus },
+        { to: "/galleries", label: "Browse", icon: FolderOpen },
+        { to: "/galleries/archived", label: "Archived", icon: Archive },
       ],
     },
   );
+
+  items.push({
+    to: "/discussions",
+    label: "My Comments",
+    icon: MessageSquare,
+  });
 
   if (isAdmin) {
     const adminSubMenu: SubMenuItem[] = [
@@ -87,7 +96,7 @@ const getNavItems = (
 
     if (canViewUsers) {
       adminSubMenu.push({
-        to: "/admin/user-management",
+        to: "/admin/users",
         label: "User Management",
         icon: Users,
       });
@@ -95,20 +104,28 @@ const getNavItems = (
 
     if (canManageContent) {
       adminSubMenu.push({
-        to: "/admin/post-management",
+        to: "/admin/posts",
         label: "Post Management",
         icon: Newspaper,
       });
       adminSubMenu.push({
-        to: "/admin/gallery-management",
+        to: "/admin/galleries",
         label: "Gallery Management",
         icon: ImagesIcon,
       });
     }
 
+    if (canModerateDiscussions) {
+      adminSubMenu.push({
+        to: "/admin/discussions",
+        label: "Discussion Management",
+        icon: MessageCircle,
+      });
+    }
+
     if (canManageSales) {
       adminSubMenu.push({
-        to: "/admin/sales-management",
+        to: "/admin/sales",
         label: "Sales Management",
         icon: DollarSign,
       });
@@ -116,7 +133,7 @@ const getNavItems = (
 
     if (canManageSupport) {
       adminSubMenu.push({
-        to: "/admin/support-management",
+        to: "/admin/supports",
         label: "Support Management",
         icon: Headphones,
       });
@@ -177,6 +194,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
     return hasPermission("manage_support");
   }, [hasPermission]);
 
+  const canModerateDiscussions = useMemo(() => {
+    return hasPermission("moderate_discussions");
+  }, [hasPermission]);
+
   const navItems = useMemo(
     () =>
       getNavItems(
@@ -185,8 +206,9 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         canManageContent,
         canManageSales,
         canManageSupport,
+        canModerateDiscussions,
       ),
-    [isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport],
+    [isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport, canModerateDiscussions],
   );
 
   const toggleDropdown = (label: string) => {

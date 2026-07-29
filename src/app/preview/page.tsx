@@ -7,7 +7,7 @@ import {
   CustomTable,
   CustomUL,
   PreComponent,
-} from "@/components/blog/editor/MdComponents";
+} from "@/components/post/editor/MdComponents";
 import { useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
