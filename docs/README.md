@@ -61,7 +61,8 @@ Welcome to the Alif Pustaka CMS documentation. Find everything you need to get s
 - [RBAC System](./explanation/features/rbac.md)
 - [OAuth Setup](./tutorials/setting-up-oauth.md)
 - [User Management](./tutorials/managing-users-tutorial.md)
-- [VPS Deployment](./guides/deployment/vps-postgresql-setup.md)
+- [Docker Deployment](./guides/deployment/docker/)
+- [VPS Database Setup](./guides/deployment/vps-postgresql-setup.md)
 
 </td>
 </tr>
@@ -89,7 +90,7 @@ Step-by-step instructions to accomplish specific tasks.
 **Guide categories:**
 - **[Setup](./guides/setup/)** - Installation and configuration
 - **[Authentication](./guides/authentication/)** - OAuth and auth setup
-- **[Deployment](./guides/deployment/)** - Production deployment
+- **[Deployment](./guides/deployment/)** - Production deployment (Docker/Traefik, VPS, Cloud)
 - **[Configuration](./guides/configuration/)** - Feature configuration
 - **[Administration](./guides/administration/)** - Managing the system
 
@@ -129,7 +130,8 @@ Technical specifications and API documentation.
 - [Enable OAuth login](./tutorials/setting-up-oauth.md)
 - [Configure email service](./guides/configuration/email-service.md)
 - [Setup image storage](./guides/configuration/cloudflare-r2.md)
-- [Deploy to production](./guides/deployment/production-deployment.md)
+- [Deploy with Docker + Traefik](./guides/deployment/docker/)
+- [Deploy to VPS](./guides/deployment/vps-postgresql-setup.md)
 
 **Manage Content:**
 - [Create blog posts](./tutorials/your-first-blog-post.md)
@@ -205,14 +207,16 @@ Alif Pustaka is an enterprise-grade Content Management System built with Next.js
 **Advanced:**
 1. [API Reference](./reference/api/)
 2. [Architecture Documentation](./explanation/architecture/)
-3. [VPS Deployment Guide](./guides/deployment/vps-postgresql-setup.md)
+3. [Docker Deployment Guide](./guides/deployment/docker/)
+4. [VPS Database Setup](./guides/deployment/vps-postgresql-setup.md)
 
 ### By Role
 
 **For System Administrators:**
 - [Installation Guide](./guides/setup/installation.md)
 - [User Management](./tutorials/managing-users-tutorial.md)
-- [Production Deployment](./guides/deployment/production-deployment.md)
+- [Docker Deployment](./guides/deployment/docker/)
+- [VPS PostgreSQL Setup](./guides/deployment/vps-postgresql-setup.md)
 - [RBAC System](./explanation/features/rbac.md)
 
 **For Content Managers:**
@@ -260,7 +264,7 @@ Found an error or want to improve the docs?
 - **Total Documentation Files:** 50+
 - **API Endpoints Documented:** 26+
 - **Tutorials Available:** 3
-- **Last Updated:** 2026-08-01
+- **Last Updated:** 2026-08-02
 - **Documentation Version:** 2.0
 
 ---

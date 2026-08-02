@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     return config;
   },*/
 
+  output: "standalone",
   reactStrictMode: true,
   reactCompiler: true,
   images: {
