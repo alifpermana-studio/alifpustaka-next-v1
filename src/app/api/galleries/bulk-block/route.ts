@@ -129,8 +129,9 @@ export async function POST(req: NextRequest) {
           },
         });
 
-        await prisma.auditLog.create({
+        await prisma.audit_log.create({
           data: {
+            id: require('uuid').v4(),
             action: "image_blocked_bulk",
             entityType: "gallery",
             entityId: gallery.id,
@@ -199,6 +200,7 @@ export async function POST(req: NextRequest) {
 
       await prisma.notification.create({
         data: {
+          id: require('uuid').v4(),
           userId,
           type: "image_blocked",
           title: data.count === 1 ? "Your image has been blocked" : "Your images have been blocked",

@@ -45,14 +45,18 @@ export function BulkActionConfirmModal({
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-full max-w-md p-6">
         <div className="flex items-start gap-3">
-          <div className={`rounded-full p-2 ${action === "delete" ? "bg-danger/15" : action === "ban" ? "bg-warning/15" : "bg-success/15"}`}>
-            <AlertTriangle className={`h-5 w-5 ${action === "delete" ? "text-danger" : action === "ban" ? "text-warning" : "text-success"}`} />
+          <div
+            className={`rounded-full p-2 ${action === "delete" ? "bg-danger/15" : action === "ban" ? "bg-warning/15" : "bg-success/15"}`}
+          >
+            <AlertTriangle
+              className={`h-5 w-5 ${action === "delete" ? "text-danger" : action === "ban" ? "text-warning" : "text-success"}`}
+            />
           </div>
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-base-content">
+            <h2 className="text-base-content text-xl font-bold">
               {actionLabels[action]}
             </h2>
-            <p className="mt-2 text-sm text-base-content/70">
+            <p className="text-base-content/70 mt-2 text-sm">
               Are you sure you want to{" "}
               <span className={`font-medium ${actionColors[action]}`}>
                 {actionDescriptions[action]}
@@ -62,18 +66,19 @@ export function BulkActionConfirmModal({
           </div>
         </div>
 
-        <div className="mt-4 rounded-lg bg-base-300/50 p-3">
-          <div className="text-sm text-base-content">
-            <span className="font-semibold">{count}</span> comment{count !== 1 ? "s" : ""} selected
+        <div className="bg-base-300/50 mt-4 rounded-lg p-3">
+          <div className="text-base-content text-sm">
+            <span className="font-semibold">{count}</span> comment
+            {count !== 1 ? "s" : ""} selected
           </div>
           {actionWarnings[action] && (
-            <div className="mt-1 text-xs text-base-content/60">
+            <div className="text-base-content/60 mt-1 text-xs">
               {actionWarnings[action]}
             </div>
           )}
         </div>
 
-        <div className="mt-4 rounded-lg bg-info/10 border border-info/20 p-3 text-sm text-base-content">
+        <div className="bg-info/10 border-info/20 text-base-content mt-4 rounded-lg border p-3 text-sm">
           This action will be logged in the audit trail.
         </div>
 

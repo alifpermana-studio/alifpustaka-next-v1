@@ -106,7 +106,7 @@ export async function GET(req: NextRequest) {
         skip: skipAsNum,
         take: maxContentAsNum,
         include: {
-          tags: {
+          post_tag: {
             include: {
               tag: true,
             },
@@ -118,7 +118,7 @@ export async function GET(req: NextRequest) {
 
     const listWithTagNames = list.map((post) => ({
       ...post,
-      tags: post.tags.map((pt) => pt.tag.name),
+      tags: post.post_tag.map((pt) => pt.tag.name),
     }));
 
     return NextResponse.json(

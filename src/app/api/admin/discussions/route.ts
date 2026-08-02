@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { requireActiveStatus } from "@/lib/auth-middleware";
 import { successResponse, errorResponse } from "@/lib/api-response";
 import { createAuditLogAsync } from "@/lib/audit-log";
-import { notifyCommentStatusChanged } from "@/lib/discussion-notifications";
+import { notifyCommentStatusChanged } from "@/lib/notifications";
 import * as permissions from "@/lib/permissions";
 import { DiscussionStatus } from "@/types/discussion";
 
@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
           },
           _count: {
             select: {
-              replies: true,
+              other_discussion: true,
             },
           },
         },
@@ -109,7 +109,7 @@ export async function GET(req: NextRequest) {
           createdAt: discussion.createdAt,
           updatedAt: discussion.updatedAt,
           user: discussion.user,
-          replyCount: discussion._count.replies,
+          replyCount: discussion._count.other_discussion,
         };
       })
     );

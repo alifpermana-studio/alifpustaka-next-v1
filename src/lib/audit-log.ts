@@ -36,7 +36,7 @@ export async function createAuditLog(
     "unknown";
   const userAgent = req.headers.get("user-agent") || "unknown";
 
-  const auditLog = await prisma.auditLog.create({
+  const auditLog = await prisma.audit_log.create({
     data: {
       id: randomUUID(),
       action,
@@ -100,13 +100,13 @@ export async function getAuditLogs(
   }
 
   const [logs, total] = await Promise.all([
-    prisma.auditLog.findMany({
+    prisma.audit_log.findMany({
       where,
       orderBy: { createdAt: "desc" },
       skip,
       take: limit,
     }),
-    prisma.auditLog.count({ where }),
+    prisma.audit_log.count({ where }),
   ]);
 
   return {
@@ -124,7 +124,7 @@ export async function getUserAuditLogs(
   userId: string,
   limit: number = 50
 ): Promise<AuditLog[]> {
-  const logs = await prisma.auditLog.findMany({
+  const logs = await prisma.audit_log.findMany({
     where: {
       OR: [{ performedBy: userId }, { entityId: userId, entityType: "user" }],
     },
@@ -142,7 +142,7 @@ export async function getEntityAuditLogs(
   entityId: string,
   limit: number = 50
 ): Promise<AuditLog[]> {
-  const logs = await prisma.auditLog.findMany({
+  const logs = await prisma.audit_log.findMany({
     where: {
       entityType,
       entityId,
@@ -160,7 +160,7 @@ export async function deleteOldAuditLogs(): Promise<number> {
   const oneYearAgo = new Date();
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-  const result = await prisma.auditLog.deleteMany({
+  const result = await prisma.audit_log.deleteMany({
     where: {
       createdAt: {
         lt: oneYearAgo,

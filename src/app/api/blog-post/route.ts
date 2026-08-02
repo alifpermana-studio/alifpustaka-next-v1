@@ -74,7 +74,7 @@ export async function PUT(req: NextRequest) {
           },
         });
 
-        await prisma.postTag.deleteMany({
+        await prisma.post_tag.deleteMany({
           where: { postId: data.id },
         });
 
@@ -105,6 +105,7 @@ export async function PUT(req: NextRequest) {
             footnote: data.footnote || "",
             status: "drafted",
             content: data.md || "",
+            updatedAt: new Date(),
             user: {
               connect: {
                 id: currentUser.userId,
@@ -134,11 +135,15 @@ export async function PUT(req: NextRequest) {
 
           if (!tag) {
             tag = await prisma.tag.create({
-              data: { name: tagName },
+              data: { 
+                id: require('uuid').v4(),
+                name: tagName,
+                updatedAt: new Date()
+              },
             });
           }
 
-          await prisma.postTag.create({
+          await prisma.post_tag.create({
             data: {
               postId: post.id,
               tagId: tag.id,
@@ -194,7 +199,7 @@ export async function PUT(req: NextRequest) {
           },
         });
 
-        await prisma.postTag.deleteMany({
+        await prisma.post_tag.deleteMany({
           where: { postId: data.id },
         });
       } else {
@@ -208,6 +213,7 @@ export async function PUT(req: NextRequest) {
             footnote: data.footnote || "",
             status: "submitted",
             content: data.md || "",
+            updatedAt: new Date(),
             user: {
               connect: {
                 id: currentUser.userId,
@@ -226,11 +232,15 @@ export async function PUT(req: NextRequest) {
 
           if (!tag) {
             tag = await prisma.tag.create({
-              data: { name: tagName },
+              data: { 
+                id: require('uuid').v4(),
+                name: tagName,
+                updatedAt: new Date()
+              },
             });
           }
 
-          await prisma.postTag.create({
+          await prisma.post_tag.create({
             data: {
               postId: post.id,
               tagId: tag.id,

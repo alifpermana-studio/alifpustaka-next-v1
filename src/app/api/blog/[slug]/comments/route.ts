@@ -48,7 +48,7 @@ export async function GET(
               image: true,
             },
           },
-          replies: {
+          other_discussion: {
             where: {
               status: "published",
             },
@@ -68,7 +68,7 @@ export async function GET(
           },
           _count: {
             select: {
-              replies: true,
+              other_discussion: true,
             },
           },
         },
@@ -89,8 +89,8 @@ export async function GET(
       createdAt: discussion.createdAt,
       updatedAt: discussion.updatedAt,
       user: discussion.user,
-      replies: discussion.replies,
-      replyCount: discussion._count.replies,
+      replies: discussion.other_discussion,
+      replyCount: discussion._count.other_discussion,
     }));
 
     return NextResponse.json(

@@ -4,7 +4,7 @@
 // biome-ignore-all lint: generated file
 // @ts-nocheck 
 /*
- * This file exports the `Discussion` model and its related types.
+ * This file exports the `discussion` model and its related types.
  *
  * 🟢 You can import this file directly.
  */
@@ -13,10 +13,10 @@ import type * as $Enums from "../enums"
 import type * as Prisma from "../internal/prismaNamespace"
 
 /**
- * Model Discussion
+ * Model discussion
  * 
  */
-export type DiscussionModel = runtime.Types.Result.DefaultSelection<Prisma.$DiscussionPayload>
+export type discussionModel = runtime.Types.Result.DefaultSelection<Prisma.$discussionPayload>
 
 export type AggregateDiscussion = {
   _count: DiscussionCountAggregateOutputType | null
@@ -143,37 +143,37 @@ export type DiscussionCountAggregateInputType = {
 
 export type DiscussionAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which Discussion to aggregate.
+   * Filter which discussion to aggregate.
    */
-  where?: Prisma.DiscussionWhereInput
+  where?: Prisma.discussionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of Discussions to fetch.
+   * Determine the order of discussions to fetch.
    */
-  orderBy?: Prisma.DiscussionOrderByWithRelationInput | Prisma.DiscussionOrderByWithRelationInput[]
+  orderBy?: Prisma.discussionOrderByWithRelationInput | Prisma.discussionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
    * Sets the start position
    */
-  cursor?: Prisma.DiscussionWhereUniqueInput
+  cursor?: Prisma.discussionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` Discussions from the position of the cursor.
+   * Take `±n` discussions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` Discussions.
+   * Skip the first `n` discussions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Count returned Discussions
+   * Count returned discussions
   **/
   _count?: true | DiscussionCountAggregateInputType
   /**
@@ -213,11 +213,11 @@ export type GetDiscussionAggregateType<T extends DiscussionAggregateArgs> = {
 
 
 
-export type DiscussionGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DiscussionWhereInput
-  orderBy?: Prisma.DiscussionOrderByWithAggregationInput | Prisma.DiscussionOrderByWithAggregationInput[]
+export type discussionGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.discussionWhereInput
+  orderBy?: Prisma.discussionOrderByWithAggregationInput | Prisma.discussionOrderByWithAggregationInput[]
   by: Prisma.DiscussionScalarFieldEnum[] | Prisma.DiscussionScalarFieldEnum
-  having?: Prisma.DiscussionScalarWhereWithAggregatesInput
+  having?: Prisma.discussionScalarWhereWithAggregatesInput
   take?: number
   skip?: number
   _count?: DiscussionCountAggregateInputType | true
@@ -248,7 +248,7 @@ export type DiscussionGroupByOutputType = {
   _max: DiscussionMaxAggregateOutputType | null
 }
 
-export type GetDiscussionGroupByPayload<T extends DiscussionGroupByArgs> = Prisma.PrismaPromise<
+export type GetDiscussionGroupByPayload<T extends discussionGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<DiscussionGroupByOutputType, T['by']> &
       {
@@ -263,29 +263,29 @@ export type GetDiscussionGroupByPayload<T extends DiscussionGroupByArgs> = Prism
 
 
 
-export type DiscussionWhereInput = {
-  AND?: Prisma.DiscussionWhereInput | Prisma.DiscussionWhereInput[]
-  OR?: Prisma.DiscussionWhereInput[]
-  NOT?: Prisma.DiscussionWhereInput | Prisma.DiscussionWhereInput[]
-  id?: Prisma.StringFilter<"Discussion"> | string
-  content?: Prisma.StringFilter<"Discussion"> | string
-  status?: Prisma.StringFilter<"Discussion"> | string
-  sourceType?: Prisma.StringFilter<"Discussion"> | string
-  sourceId?: Prisma.StringFilter<"Discussion"> | string
-  userId?: Prisma.StringFilter<"Discussion"> | string
-  parentId?: Prisma.StringNullableFilter<"Discussion"> | string | null
-  editedAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  editCount?: Prisma.IntFilter<"Discussion"> | number
-  deletedAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  permanentDeleteAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Discussion"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Discussion"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  parent?: Prisma.XOR<Prisma.DiscussionNullableScalarRelationFilter, Prisma.DiscussionWhereInput> | null
-  replies?: Prisma.DiscussionListRelationFilter
+export type discussionWhereInput = {
+  AND?: Prisma.discussionWhereInput | Prisma.discussionWhereInput[]
+  OR?: Prisma.discussionWhereInput[]
+  NOT?: Prisma.discussionWhereInput | Prisma.discussionWhereInput[]
+  id?: Prisma.StringFilter<"discussion"> | string
+  content?: Prisma.StringFilter<"discussion"> | string
+  status?: Prisma.StringFilter<"discussion"> | string
+  sourceType?: Prisma.StringFilter<"discussion"> | string
+  sourceId?: Prisma.StringFilter<"discussion"> | string
+  userId?: Prisma.StringFilter<"discussion"> | string
+  parentId?: Prisma.StringNullableFilter<"discussion"> | string | null
+  editedAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  editCount?: Prisma.IntFilter<"discussion"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  permanentDeleteAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"discussion"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"discussion"> | Date | string
+  discussion?: Prisma.XOR<Prisma.DiscussionNullableScalarRelationFilter, Prisma.discussionWhereInput> | null
+  other_discussion?: Prisma.DiscussionListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
 }
 
-export type DiscussionOrderByWithRelationInput = {
+export type discussionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -299,34 +299,34 @@ export type DiscussionOrderByWithRelationInput = {
   permanentDeleteAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
-  parent?: Prisma.DiscussionOrderByWithRelationInput
-  replies?: Prisma.DiscussionOrderByRelationAggregateInput
+  discussion?: Prisma.discussionOrderByWithRelationInput
+  other_discussion?: Prisma.discussionOrderByRelationAggregateInput
+  user?: Prisma.userOrderByWithRelationInput
 }
 
-export type DiscussionWhereUniqueInput = Prisma.AtLeast<{
+export type discussionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  AND?: Prisma.DiscussionWhereInput | Prisma.DiscussionWhereInput[]
-  OR?: Prisma.DiscussionWhereInput[]
-  NOT?: Prisma.DiscussionWhereInput | Prisma.DiscussionWhereInput[]
-  content?: Prisma.StringFilter<"Discussion"> | string
-  status?: Prisma.StringFilter<"Discussion"> | string
-  sourceType?: Prisma.StringFilter<"Discussion"> | string
-  sourceId?: Prisma.StringFilter<"Discussion"> | string
-  userId?: Prisma.StringFilter<"Discussion"> | string
-  parentId?: Prisma.StringNullableFilter<"Discussion"> | string | null
-  editedAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  editCount?: Prisma.IntFilter<"Discussion"> | number
-  deletedAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  permanentDeleteAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Discussion"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Discussion"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  parent?: Prisma.XOR<Prisma.DiscussionNullableScalarRelationFilter, Prisma.DiscussionWhereInput> | null
-  replies?: Prisma.DiscussionListRelationFilter
+  AND?: Prisma.discussionWhereInput | Prisma.discussionWhereInput[]
+  OR?: Prisma.discussionWhereInput[]
+  NOT?: Prisma.discussionWhereInput | Prisma.discussionWhereInput[]
+  content?: Prisma.StringFilter<"discussion"> | string
+  status?: Prisma.StringFilter<"discussion"> | string
+  sourceType?: Prisma.StringFilter<"discussion"> | string
+  sourceId?: Prisma.StringFilter<"discussion"> | string
+  userId?: Prisma.StringFilter<"discussion"> | string
+  parentId?: Prisma.StringNullableFilter<"discussion"> | string | null
+  editedAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  editCount?: Prisma.IntFilter<"discussion"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  permanentDeleteAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"discussion"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"discussion"> | Date | string
+  discussion?: Prisma.XOR<Prisma.DiscussionNullableScalarRelationFilter, Prisma.discussionWhereInput> | null
+  other_discussion?: Prisma.DiscussionListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
 }, "id">
 
-export type DiscussionOrderByWithAggregationInput = {
+export type discussionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -340,34 +340,34 @@ export type DiscussionOrderByWithAggregationInput = {
   permanentDeleteAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  _count?: Prisma.DiscussionCountOrderByAggregateInput
-  _avg?: Prisma.DiscussionAvgOrderByAggregateInput
-  _max?: Prisma.DiscussionMaxOrderByAggregateInput
-  _min?: Prisma.DiscussionMinOrderByAggregateInput
-  _sum?: Prisma.DiscussionSumOrderByAggregateInput
+  _count?: Prisma.discussionCountOrderByAggregateInput
+  _avg?: Prisma.discussionAvgOrderByAggregateInput
+  _max?: Prisma.discussionMaxOrderByAggregateInput
+  _min?: Prisma.discussionMinOrderByAggregateInput
+  _sum?: Prisma.discussionSumOrderByAggregateInput
 }
 
-export type DiscussionScalarWhereWithAggregatesInput = {
-  AND?: Prisma.DiscussionScalarWhereWithAggregatesInput | Prisma.DiscussionScalarWhereWithAggregatesInput[]
-  OR?: Prisma.DiscussionScalarWhereWithAggregatesInput[]
-  NOT?: Prisma.DiscussionScalarWhereWithAggregatesInput | Prisma.DiscussionScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Discussion"> | string
-  content?: Prisma.StringWithAggregatesFilter<"Discussion"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Discussion"> | string
-  sourceType?: Prisma.StringWithAggregatesFilter<"Discussion"> | string
-  sourceId?: Prisma.StringWithAggregatesFilter<"Discussion"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Discussion"> | string
-  parentId?: Prisma.StringNullableWithAggregatesFilter<"Discussion"> | string | null
-  editedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Discussion"> | Date | string | null
-  editCount?: Prisma.IntWithAggregatesFilter<"Discussion"> | number
-  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Discussion"> | Date | string | null
-  permanentDeleteAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Discussion"> | Date | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Discussion"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Discussion"> | Date | string
+export type discussionScalarWhereWithAggregatesInput = {
+  AND?: Prisma.discussionScalarWhereWithAggregatesInput | Prisma.discussionScalarWhereWithAggregatesInput[]
+  OR?: Prisma.discussionScalarWhereWithAggregatesInput[]
+  NOT?: Prisma.discussionScalarWhereWithAggregatesInput | Prisma.discussionScalarWhereWithAggregatesInput[]
+  id?: Prisma.StringWithAggregatesFilter<"discussion"> | string
+  content?: Prisma.StringWithAggregatesFilter<"discussion"> | string
+  status?: Prisma.StringWithAggregatesFilter<"discussion"> | string
+  sourceType?: Prisma.StringWithAggregatesFilter<"discussion"> | string
+  sourceId?: Prisma.StringWithAggregatesFilter<"discussion"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"discussion"> | string
+  parentId?: Prisma.StringNullableWithAggregatesFilter<"discussion"> | string | null
+  editedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"discussion"> | Date | string | null
+  editCount?: Prisma.IntWithAggregatesFilter<"discussion"> | number
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"discussion"> | Date | string | null
+  permanentDeleteAt?: Prisma.DateTimeNullableWithAggregatesFilter<"discussion"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"discussion"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"discussion"> | Date | string
 }
 
-export type DiscussionCreateInput = {
-  id?: string
+export type discussionCreateInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
@@ -377,14 +377,14 @@ export type DiscussionCreateInput = {
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutDiscussionsInput
-  parent?: Prisma.DiscussionCreateNestedOneWithoutRepliesInput
-  replies?: Prisma.DiscussionCreateNestedManyWithoutParentInput
+  updatedAt: Date | string
+  discussion?: Prisma.discussionCreateNestedOneWithoutOther_discussionInput
+  other_discussion?: Prisma.discussionCreateNestedManyWithoutDiscussionInput
+  user: Prisma.userCreateNestedOneWithoutDiscussionInput
 }
 
-export type DiscussionUncheckedCreateInput = {
-  id?: string
+export type discussionUncheckedCreateInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
@@ -396,11 +396,11 @@ export type DiscussionUncheckedCreateInput = {
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  replies?: Prisma.DiscussionUncheckedCreateNestedManyWithoutParentInput
+  updatedAt: Date | string
+  other_discussion?: Prisma.discussionUncheckedCreateNestedManyWithoutDiscussionInput
 }
 
-export type DiscussionUpdateInput = {
+export type discussionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -412,12 +412,12 @@ export type DiscussionUpdateInput = {
   permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutDiscussionsNestedInput
-  parent?: Prisma.DiscussionUpdateOneWithoutRepliesNestedInput
-  replies?: Prisma.DiscussionUpdateManyWithoutParentNestedInput
+  discussion?: Prisma.discussionUpdateOneWithoutOther_discussionNestedInput
+  other_discussion?: Prisma.discussionUpdateManyWithoutDiscussionNestedInput
+  user?: Prisma.userUpdateOneRequiredWithoutDiscussionNestedInput
 }
 
-export type DiscussionUncheckedUpdateInput = {
+export type discussionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -431,11 +431,11 @@ export type DiscussionUncheckedUpdateInput = {
   permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  replies?: Prisma.DiscussionUncheckedUpdateManyWithoutParentNestedInput
+  other_discussion?: Prisma.discussionUncheckedUpdateManyWithoutDiscussionNestedInput
 }
 
-export type DiscussionCreateManyInput = {
-  id?: string
+export type discussionCreateManyInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
@@ -447,10 +447,10 @@ export type DiscussionCreateManyInput = {
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt: Date | string
 }
 
-export type DiscussionUpdateManyMutationInput = {
+export type discussionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -464,7 +464,7 @@ export type DiscussionUpdateManyMutationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type DiscussionUncheckedUpdateManyInput = {
+export type discussionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -478,24 +478,24 @@ export type DiscussionUncheckedUpdateManyInput = {
   permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DiscussionListRelationFilter = {
-  every?: Prisma.DiscussionWhereInput
-  some?: Prisma.DiscussionWhereInput
-  none?: Prisma.DiscussionWhereInput
-}
-
-export type DiscussionOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type DiscussionNullableScalarRelationFilter = {
-  is?: Prisma.DiscussionWhereInput | null
-  isNot?: Prisma.DiscussionWhereInput | null
+  is?: Prisma.discussionWhereInput | null
+  isNot?: Prisma.discussionWhereInput | null
 }
 
-export type DiscussionCountOrderByAggregateInput = {
+export type DiscussionListRelationFilter = {
+  every?: Prisma.discussionWhereInput
+  some?: Prisma.discussionWhereInput
+  none?: Prisma.discussionWhereInput
+}
+
+export type discussionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type discussionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -511,11 +511,11 @@ export type DiscussionCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type DiscussionAvgOrderByAggregateInput = {
+export type discussionAvgOrderByAggregateInput = {
   editCount?: Prisma.SortOrder
 }
 
-export type DiscussionMaxOrderByAggregateInput = {
+export type discussionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -531,7 +531,7 @@ export type DiscussionMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type DiscussionMinOrderByAggregateInput = {
+export type discussionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -547,112 +547,120 @@ export type DiscussionMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type DiscussionSumOrderByAggregateInput = {
+export type discussionSumOrderByAggregateInput = {
   editCount?: Prisma.SortOrder
 }
 
-export type DiscussionCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutUserInput, Prisma.DiscussionUncheckedCreateWithoutUserInput> | Prisma.DiscussionCreateWithoutUserInput[] | Prisma.DiscussionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutUserInput | Prisma.DiscussionCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.DiscussionCreateManyUserInputEnvelope
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
+export type discussionCreateNestedOneWithoutOther_discussionInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutOther_discussionInput, Prisma.discussionUncheckedCreateWithoutOther_discussionInput>
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutOther_discussionInput
+  connect?: Prisma.discussionWhereUniqueInput
 }
 
-export type DiscussionUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutUserInput, Prisma.DiscussionUncheckedCreateWithoutUserInput> | Prisma.DiscussionCreateWithoutUserInput[] | Prisma.DiscussionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutUserInput | Prisma.DiscussionCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.DiscussionCreateManyUserInputEnvelope
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
+export type discussionCreateNestedManyWithoutDiscussionInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutDiscussionInput, Prisma.discussionUncheckedCreateWithoutDiscussionInput> | Prisma.discussionCreateWithoutDiscussionInput[] | Prisma.discussionUncheckedCreateWithoutDiscussionInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutDiscussionInput | Prisma.discussionCreateOrConnectWithoutDiscussionInput[]
+  createMany?: Prisma.discussionCreateManyDiscussionInputEnvelope
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
 }
 
-export type DiscussionUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutUserInput, Prisma.DiscussionUncheckedCreateWithoutUserInput> | Prisma.DiscussionCreateWithoutUserInput[] | Prisma.DiscussionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutUserInput | Prisma.DiscussionCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.DiscussionUpsertWithWhereUniqueWithoutUserInput | Prisma.DiscussionUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.DiscussionCreateManyUserInputEnvelope
-  set?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  disconnect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  delete?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  update?: Prisma.DiscussionUpdateWithWhereUniqueWithoutUserInput | Prisma.DiscussionUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.DiscussionUpdateManyWithWhereWithoutUserInput | Prisma.DiscussionUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.DiscussionScalarWhereInput | Prisma.DiscussionScalarWhereInput[]
+export type discussionUncheckedCreateNestedManyWithoutDiscussionInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutDiscussionInput, Prisma.discussionUncheckedCreateWithoutDiscussionInput> | Prisma.discussionCreateWithoutDiscussionInput[] | Prisma.discussionUncheckedCreateWithoutDiscussionInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutDiscussionInput | Prisma.discussionCreateOrConnectWithoutDiscussionInput[]
+  createMany?: Prisma.discussionCreateManyDiscussionInputEnvelope
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
 }
 
-export type DiscussionUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutUserInput, Prisma.DiscussionUncheckedCreateWithoutUserInput> | Prisma.DiscussionCreateWithoutUserInput[] | Prisma.DiscussionUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutUserInput | Prisma.DiscussionCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.DiscussionUpsertWithWhereUniqueWithoutUserInput | Prisma.DiscussionUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.DiscussionCreateManyUserInputEnvelope
-  set?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  disconnect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  delete?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  update?: Prisma.DiscussionUpdateWithWhereUniqueWithoutUserInput | Prisma.DiscussionUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.DiscussionUpdateManyWithWhereWithoutUserInput | Prisma.DiscussionUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.DiscussionScalarWhereInput | Prisma.DiscussionScalarWhereInput[]
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
-export type DiscussionCreateNestedOneWithoutRepliesInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutRepliesInput, Prisma.DiscussionUncheckedCreateWithoutRepliesInput>
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutRepliesInput
-  connect?: Prisma.DiscussionWhereUniqueInput
+export type discussionUpdateOneWithoutOther_discussionNestedInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutOther_discussionInput, Prisma.discussionUncheckedCreateWithoutOther_discussionInput>
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutOther_discussionInput
+  upsert?: Prisma.discussionUpsertWithoutOther_discussionInput
+  disconnect?: Prisma.discussionWhereInput | boolean
+  delete?: Prisma.discussionWhereInput | boolean
+  connect?: Prisma.discussionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.discussionUpdateToOneWithWhereWithoutOther_discussionInput, Prisma.discussionUpdateWithoutOther_discussionInput>, Prisma.discussionUncheckedUpdateWithoutOther_discussionInput>
 }
 
-export type DiscussionCreateNestedManyWithoutParentInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutParentInput, Prisma.DiscussionUncheckedCreateWithoutParentInput> | Prisma.DiscussionCreateWithoutParentInput[] | Prisma.DiscussionUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutParentInput | Prisma.DiscussionCreateOrConnectWithoutParentInput[]
-  createMany?: Prisma.DiscussionCreateManyParentInputEnvelope
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
+export type discussionUpdateManyWithoutDiscussionNestedInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutDiscussionInput, Prisma.discussionUncheckedCreateWithoutDiscussionInput> | Prisma.discussionCreateWithoutDiscussionInput[] | Prisma.discussionUncheckedCreateWithoutDiscussionInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutDiscussionInput | Prisma.discussionCreateOrConnectWithoutDiscussionInput[]
+  upsert?: Prisma.discussionUpsertWithWhereUniqueWithoutDiscussionInput | Prisma.discussionUpsertWithWhereUniqueWithoutDiscussionInput[]
+  createMany?: Prisma.discussionCreateManyDiscussionInputEnvelope
+  set?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  disconnect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  delete?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  update?: Prisma.discussionUpdateWithWhereUniqueWithoutDiscussionInput | Prisma.discussionUpdateWithWhereUniqueWithoutDiscussionInput[]
+  updateMany?: Prisma.discussionUpdateManyWithWhereWithoutDiscussionInput | Prisma.discussionUpdateManyWithWhereWithoutDiscussionInput[]
+  deleteMany?: Prisma.discussionScalarWhereInput | Prisma.discussionScalarWhereInput[]
 }
 
-export type DiscussionUncheckedCreateNestedManyWithoutParentInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutParentInput, Prisma.DiscussionUncheckedCreateWithoutParentInput> | Prisma.DiscussionCreateWithoutParentInput[] | Prisma.DiscussionUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutParentInput | Prisma.DiscussionCreateOrConnectWithoutParentInput[]
-  createMany?: Prisma.DiscussionCreateManyParentInputEnvelope
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
+export type discussionUncheckedUpdateManyWithoutDiscussionNestedInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutDiscussionInput, Prisma.discussionUncheckedCreateWithoutDiscussionInput> | Prisma.discussionCreateWithoutDiscussionInput[] | Prisma.discussionUncheckedCreateWithoutDiscussionInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutDiscussionInput | Prisma.discussionCreateOrConnectWithoutDiscussionInput[]
+  upsert?: Prisma.discussionUpsertWithWhereUniqueWithoutDiscussionInput | Prisma.discussionUpsertWithWhereUniqueWithoutDiscussionInput[]
+  createMany?: Prisma.discussionCreateManyDiscussionInputEnvelope
+  set?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  disconnect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  delete?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  update?: Prisma.discussionUpdateWithWhereUniqueWithoutDiscussionInput | Prisma.discussionUpdateWithWhereUniqueWithoutDiscussionInput[]
+  updateMany?: Prisma.discussionUpdateManyWithWhereWithoutDiscussionInput | Prisma.discussionUpdateManyWithWhereWithoutDiscussionInput[]
+  deleteMany?: Prisma.discussionScalarWhereInput | Prisma.discussionScalarWhereInput[]
 }
 
-export type DiscussionUpdateOneWithoutRepliesNestedInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutRepliesInput, Prisma.DiscussionUncheckedCreateWithoutRepliesInput>
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutRepliesInput
-  upsert?: Prisma.DiscussionUpsertWithoutRepliesInput
-  disconnect?: Prisma.DiscussionWhereInput | boolean
-  delete?: Prisma.DiscussionWhereInput | boolean
-  connect?: Prisma.DiscussionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.DiscussionUpdateToOneWithWhereWithoutRepliesInput, Prisma.DiscussionUpdateWithoutRepliesInput>, Prisma.DiscussionUncheckedUpdateWithoutRepliesInput>
+export type discussionCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutUserInput, Prisma.discussionUncheckedCreateWithoutUserInput> | Prisma.discussionCreateWithoutUserInput[] | Prisma.discussionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutUserInput | Prisma.discussionCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.discussionCreateManyUserInputEnvelope
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
 }
 
-export type DiscussionUpdateManyWithoutParentNestedInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutParentInput, Prisma.DiscussionUncheckedCreateWithoutParentInput> | Prisma.DiscussionCreateWithoutParentInput[] | Prisma.DiscussionUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutParentInput | Prisma.DiscussionCreateOrConnectWithoutParentInput[]
-  upsert?: Prisma.DiscussionUpsertWithWhereUniqueWithoutParentInput | Prisma.DiscussionUpsertWithWhereUniqueWithoutParentInput[]
-  createMany?: Prisma.DiscussionCreateManyParentInputEnvelope
-  set?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  disconnect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  delete?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  update?: Prisma.DiscussionUpdateWithWhereUniqueWithoutParentInput | Prisma.DiscussionUpdateWithWhereUniqueWithoutParentInput[]
-  updateMany?: Prisma.DiscussionUpdateManyWithWhereWithoutParentInput | Prisma.DiscussionUpdateManyWithWhereWithoutParentInput[]
-  deleteMany?: Prisma.DiscussionScalarWhereInput | Prisma.DiscussionScalarWhereInput[]
+export type discussionUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutUserInput, Prisma.discussionUncheckedCreateWithoutUserInput> | Prisma.discussionCreateWithoutUserInput[] | Prisma.discussionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutUserInput | Prisma.discussionCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.discussionCreateManyUserInputEnvelope
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
 }
 
-export type DiscussionUncheckedUpdateManyWithoutParentNestedInput = {
-  create?: Prisma.XOR<Prisma.DiscussionCreateWithoutParentInput, Prisma.DiscussionUncheckedCreateWithoutParentInput> | Prisma.DiscussionCreateWithoutParentInput[] | Prisma.DiscussionUncheckedCreateWithoutParentInput[]
-  connectOrCreate?: Prisma.DiscussionCreateOrConnectWithoutParentInput | Prisma.DiscussionCreateOrConnectWithoutParentInput[]
-  upsert?: Prisma.DiscussionUpsertWithWhereUniqueWithoutParentInput | Prisma.DiscussionUpsertWithWhereUniqueWithoutParentInput[]
-  createMany?: Prisma.DiscussionCreateManyParentInputEnvelope
-  set?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  disconnect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  delete?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  connect?: Prisma.DiscussionWhereUniqueInput | Prisma.DiscussionWhereUniqueInput[]
-  update?: Prisma.DiscussionUpdateWithWhereUniqueWithoutParentInput | Prisma.DiscussionUpdateWithWhereUniqueWithoutParentInput[]
-  updateMany?: Prisma.DiscussionUpdateManyWithWhereWithoutParentInput | Prisma.DiscussionUpdateManyWithWhereWithoutParentInput[]
-  deleteMany?: Prisma.DiscussionScalarWhereInput | Prisma.DiscussionScalarWhereInput[]
+export type discussionUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutUserInput, Prisma.discussionUncheckedCreateWithoutUserInput> | Prisma.discussionCreateWithoutUserInput[] | Prisma.discussionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutUserInput | Prisma.discussionCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.discussionUpsertWithWhereUniqueWithoutUserInput | Prisma.discussionUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.discussionCreateManyUserInputEnvelope
+  set?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  disconnect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  delete?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  update?: Prisma.discussionUpdateWithWhereUniqueWithoutUserInput | Prisma.discussionUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.discussionUpdateManyWithWhereWithoutUserInput | Prisma.discussionUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.discussionScalarWhereInput | Prisma.discussionScalarWhereInput[]
 }
 
-export type DiscussionCreateWithoutUserInput = {
-  id?: string
+export type discussionUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.discussionCreateWithoutUserInput, Prisma.discussionUncheckedCreateWithoutUserInput> | Prisma.discussionCreateWithoutUserInput[] | Prisma.discussionUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.discussionCreateOrConnectWithoutUserInput | Prisma.discussionCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.discussionUpsertWithWhereUniqueWithoutUserInput | Prisma.discussionUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.discussionCreateManyUserInputEnvelope
+  set?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  disconnect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  delete?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  connect?: Prisma.discussionWhereUniqueInput | Prisma.discussionWhereUniqueInput[]
+  update?: Prisma.discussionUpdateWithWhereUniqueWithoutUserInput | Prisma.discussionUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.discussionUpdateManyWithWhereWithoutUserInput | Prisma.discussionUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.discussionScalarWhereInput | Prisma.discussionScalarWhereInput[]
+}
+
+export type discussionCreateWithoutOther_discussionInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
@@ -662,74 +670,154 @@ export type DiscussionCreateWithoutUserInput = {
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  parent?: Prisma.DiscussionCreateNestedOneWithoutRepliesInput
-  replies?: Prisma.DiscussionCreateNestedManyWithoutParentInput
+  updatedAt: Date | string
+  discussion?: Prisma.discussionCreateNestedOneWithoutOther_discussionInput
+  user: Prisma.userCreateNestedOneWithoutDiscussionInput
 }
 
-export type DiscussionUncheckedCreateWithoutUserInput = {
-  id?: string
+export type discussionUncheckedCreateWithoutOther_discussionInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
   sourceId: string
+  userId: string
   parentId?: string | null
   editedAt?: Date | string | null
   editCount?: number
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  replies?: Prisma.DiscussionUncheckedCreateNestedManyWithoutParentInput
+  updatedAt: Date | string
 }
 
-export type DiscussionCreateOrConnectWithoutUserInput = {
-  where: Prisma.DiscussionWhereUniqueInput
-  create: Prisma.XOR<Prisma.DiscussionCreateWithoutUserInput, Prisma.DiscussionUncheckedCreateWithoutUserInput>
+export type discussionCreateOrConnectWithoutOther_discussionInput = {
+  where: Prisma.discussionWhereUniqueInput
+  create: Prisma.XOR<Prisma.discussionCreateWithoutOther_discussionInput, Prisma.discussionUncheckedCreateWithoutOther_discussionInput>
 }
 
-export type DiscussionCreateManyUserInputEnvelope = {
-  data: Prisma.DiscussionCreateManyUserInput | Prisma.DiscussionCreateManyUserInput[]
+export type discussionCreateWithoutDiscussionInput = {
+  id: string
+  content: string
+  status?: string
+  sourceType: string
+  sourceId: string
+  editedAt?: Date | string | null
+  editCount?: number
+  deletedAt?: Date | string | null
+  permanentDeleteAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt: Date | string
+  other_discussion?: Prisma.discussionCreateNestedManyWithoutDiscussionInput
+  user: Prisma.userCreateNestedOneWithoutDiscussionInput
+}
+
+export type discussionUncheckedCreateWithoutDiscussionInput = {
+  id: string
+  content: string
+  status?: string
+  sourceType: string
+  sourceId: string
+  userId: string
+  editedAt?: Date | string | null
+  editCount?: number
+  deletedAt?: Date | string | null
+  permanentDeleteAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt: Date | string
+  other_discussion?: Prisma.discussionUncheckedCreateNestedManyWithoutDiscussionInput
+}
+
+export type discussionCreateOrConnectWithoutDiscussionInput = {
+  where: Prisma.discussionWhereUniqueInput
+  create: Prisma.XOR<Prisma.discussionCreateWithoutDiscussionInput, Prisma.discussionUncheckedCreateWithoutDiscussionInput>
+}
+
+export type discussionCreateManyDiscussionInputEnvelope = {
+  data: Prisma.discussionCreateManyDiscussionInput | Prisma.discussionCreateManyDiscussionInput[]
   skipDuplicates?: boolean
 }
 
-export type DiscussionUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.DiscussionWhereUniqueInput
-  update: Prisma.XOR<Prisma.DiscussionUpdateWithoutUserInput, Prisma.DiscussionUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.DiscussionCreateWithoutUserInput, Prisma.DiscussionUncheckedCreateWithoutUserInput>
+export type discussionUpsertWithoutOther_discussionInput = {
+  update: Prisma.XOR<Prisma.discussionUpdateWithoutOther_discussionInput, Prisma.discussionUncheckedUpdateWithoutOther_discussionInput>
+  create: Prisma.XOR<Prisma.discussionCreateWithoutOther_discussionInput, Prisma.discussionUncheckedCreateWithoutOther_discussionInput>
+  where?: Prisma.discussionWhereInput
 }
 
-export type DiscussionUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.DiscussionWhereUniqueInput
-  data: Prisma.XOR<Prisma.DiscussionUpdateWithoutUserInput, Prisma.DiscussionUncheckedUpdateWithoutUserInput>
+export type discussionUpdateToOneWithWhereWithoutOther_discussionInput = {
+  where?: Prisma.discussionWhereInput
+  data: Prisma.XOR<Prisma.discussionUpdateWithoutOther_discussionInput, Prisma.discussionUncheckedUpdateWithoutOther_discussionInput>
 }
 
-export type DiscussionUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.DiscussionScalarWhereInput
-  data: Prisma.XOR<Prisma.DiscussionUpdateManyMutationInput, Prisma.DiscussionUncheckedUpdateManyWithoutUserInput>
+export type discussionUpdateWithoutOther_discussionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  editCount?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  discussion?: Prisma.discussionUpdateOneWithoutOther_discussionNestedInput
+  user?: Prisma.userUpdateOneRequiredWithoutDiscussionNestedInput
 }
 
-export type DiscussionScalarWhereInput = {
-  AND?: Prisma.DiscussionScalarWhereInput | Prisma.DiscussionScalarWhereInput[]
-  OR?: Prisma.DiscussionScalarWhereInput[]
-  NOT?: Prisma.DiscussionScalarWhereInput | Prisma.DiscussionScalarWhereInput[]
-  id?: Prisma.StringFilter<"Discussion"> | string
-  content?: Prisma.StringFilter<"Discussion"> | string
-  status?: Prisma.StringFilter<"Discussion"> | string
-  sourceType?: Prisma.StringFilter<"Discussion"> | string
-  sourceId?: Prisma.StringFilter<"Discussion"> | string
-  userId?: Prisma.StringFilter<"Discussion"> | string
-  parentId?: Prisma.StringNullableFilter<"Discussion"> | string | null
-  editedAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  editCount?: Prisma.IntFilter<"Discussion"> | number
-  deletedAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  permanentDeleteAt?: Prisma.DateTimeNullableFilter<"Discussion"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Discussion"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Discussion"> | Date | string
+export type discussionUncheckedUpdateWithoutOther_discussionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  editCount?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type DiscussionCreateWithoutRepliesInput = {
-  id?: string
+export type discussionUpsertWithWhereUniqueWithoutDiscussionInput = {
+  where: Prisma.discussionWhereUniqueInput
+  update: Prisma.XOR<Prisma.discussionUpdateWithoutDiscussionInput, Prisma.discussionUncheckedUpdateWithoutDiscussionInput>
+  create: Prisma.XOR<Prisma.discussionCreateWithoutDiscussionInput, Prisma.discussionUncheckedCreateWithoutDiscussionInput>
+}
+
+export type discussionUpdateWithWhereUniqueWithoutDiscussionInput = {
+  where: Prisma.discussionWhereUniqueInput
+  data: Prisma.XOR<Prisma.discussionUpdateWithoutDiscussionInput, Prisma.discussionUncheckedUpdateWithoutDiscussionInput>
+}
+
+export type discussionUpdateManyWithWhereWithoutDiscussionInput = {
+  where: Prisma.discussionScalarWhereInput
+  data: Prisma.XOR<Prisma.discussionUpdateManyMutationInput, Prisma.discussionUncheckedUpdateManyWithoutDiscussionInput>
+}
+
+export type discussionScalarWhereInput = {
+  AND?: Prisma.discussionScalarWhereInput | Prisma.discussionScalarWhereInput[]
+  OR?: Prisma.discussionScalarWhereInput[]
+  NOT?: Prisma.discussionScalarWhereInput | Prisma.discussionScalarWhereInput[]
+  id?: Prisma.StringFilter<"discussion"> | string
+  content?: Prisma.StringFilter<"discussion"> | string
+  status?: Prisma.StringFilter<"discussion"> | string
+  sourceType?: Prisma.StringFilter<"discussion"> | string
+  sourceId?: Prisma.StringFilter<"discussion"> | string
+  userId?: Prisma.StringFilter<"discussion"> | string
+  parentId?: Prisma.StringNullableFilter<"discussion"> | string | null
+  editedAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  editCount?: Prisma.IntFilter<"discussion"> | number
+  deletedAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  permanentDeleteAt?: Prisma.DateTimeNullableFilter<"discussion"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"discussion"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"discussion"> | Date | string
+}
+
+export type discussionCreateWithoutUserInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
@@ -739,197 +827,55 @@ export type DiscussionCreateWithoutRepliesInput = {
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutDiscussionsInput
-  parent?: Prisma.DiscussionCreateNestedOneWithoutRepliesInput
+  updatedAt: Date | string
+  discussion?: Prisma.discussionCreateNestedOneWithoutOther_discussionInput
+  other_discussion?: Prisma.discussionCreateNestedManyWithoutDiscussionInput
 }
 
-export type DiscussionUncheckedCreateWithoutRepliesInput = {
-  id?: string
+export type discussionUncheckedCreateWithoutUserInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
   sourceId: string
-  userId: string
   parentId?: string | null
   editedAt?: Date | string | null
   editCount?: number
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt: Date | string
+  other_discussion?: Prisma.discussionUncheckedCreateNestedManyWithoutDiscussionInput
 }
 
-export type DiscussionCreateOrConnectWithoutRepliesInput = {
-  where: Prisma.DiscussionWhereUniqueInput
-  create: Prisma.XOR<Prisma.DiscussionCreateWithoutRepliesInput, Prisma.DiscussionUncheckedCreateWithoutRepliesInput>
+export type discussionCreateOrConnectWithoutUserInput = {
+  where: Prisma.discussionWhereUniqueInput
+  create: Prisma.XOR<Prisma.discussionCreateWithoutUserInput, Prisma.discussionUncheckedCreateWithoutUserInput>
 }
 
-export type DiscussionCreateWithoutParentInput = {
-  id?: string
-  content: string
-  status?: string
-  sourceType: string
-  sourceId: string
-  editedAt?: Date | string | null
-  editCount?: number
-  deletedAt?: Date | string | null
-  permanentDeleteAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutDiscussionsInput
-  replies?: Prisma.DiscussionCreateNestedManyWithoutParentInput
-}
-
-export type DiscussionUncheckedCreateWithoutParentInput = {
-  id?: string
-  content: string
-  status?: string
-  sourceType: string
-  sourceId: string
-  userId: string
-  editedAt?: Date | string | null
-  editCount?: number
-  deletedAt?: Date | string | null
-  permanentDeleteAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  replies?: Prisma.DiscussionUncheckedCreateNestedManyWithoutParentInput
-}
-
-export type DiscussionCreateOrConnectWithoutParentInput = {
-  where: Prisma.DiscussionWhereUniqueInput
-  create: Prisma.XOR<Prisma.DiscussionCreateWithoutParentInput, Prisma.DiscussionUncheckedCreateWithoutParentInput>
-}
-
-export type DiscussionCreateManyParentInputEnvelope = {
-  data: Prisma.DiscussionCreateManyParentInput | Prisma.DiscussionCreateManyParentInput[]
+export type discussionCreateManyUserInputEnvelope = {
+  data: Prisma.discussionCreateManyUserInput | Prisma.discussionCreateManyUserInput[]
   skipDuplicates?: boolean
 }
 
-export type DiscussionUpsertWithoutRepliesInput = {
-  update: Prisma.XOR<Prisma.DiscussionUpdateWithoutRepliesInput, Prisma.DiscussionUncheckedUpdateWithoutRepliesInput>
-  create: Prisma.XOR<Prisma.DiscussionCreateWithoutRepliesInput, Prisma.DiscussionUncheckedCreateWithoutRepliesInput>
-  where?: Prisma.DiscussionWhereInput
+export type discussionUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.discussionWhereUniqueInput
+  update: Prisma.XOR<Prisma.discussionUpdateWithoutUserInput, Prisma.discussionUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.discussionCreateWithoutUserInput, Prisma.discussionUncheckedCreateWithoutUserInput>
 }
 
-export type DiscussionUpdateToOneWithWhereWithoutRepliesInput = {
-  where?: Prisma.DiscussionWhereInput
-  data: Prisma.XOR<Prisma.DiscussionUpdateWithoutRepliesInput, Prisma.DiscussionUncheckedUpdateWithoutRepliesInput>
+export type discussionUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.discussionWhereUniqueInput
+  data: Prisma.XOR<Prisma.discussionUpdateWithoutUserInput, Prisma.discussionUncheckedUpdateWithoutUserInput>
 }
 
-export type DiscussionUpdateWithoutRepliesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  editCount?: Prisma.IntFieldUpdateOperationsInput | number
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutDiscussionsNestedInput
-  parent?: Prisma.DiscussionUpdateOneWithoutRepliesNestedInput
+export type discussionUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.discussionScalarWhereInput
+  data: Prisma.XOR<Prisma.discussionUpdateManyMutationInput, Prisma.discussionUncheckedUpdateManyWithoutUserInput>
 }
 
-export type DiscussionUncheckedUpdateWithoutRepliesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  editCount?: Prisma.IntFieldUpdateOperationsInput | number
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DiscussionUpsertWithWhereUniqueWithoutParentInput = {
-  where: Prisma.DiscussionWhereUniqueInput
-  update: Prisma.XOR<Prisma.DiscussionUpdateWithoutParentInput, Prisma.DiscussionUncheckedUpdateWithoutParentInput>
-  create: Prisma.XOR<Prisma.DiscussionCreateWithoutParentInput, Prisma.DiscussionUncheckedCreateWithoutParentInput>
-}
-
-export type DiscussionUpdateWithWhereUniqueWithoutParentInput = {
-  where: Prisma.DiscussionWhereUniqueInput
-  data: Prisma.XOR<Prisma.DiscussionUpdateWithoutParentInput, Prisma.DiscussionUncheckedUpdateWithoutParentInput>
-}
-
-export type DiscussionUpdateManyWithWhereWithoutParentInput = {
-  where: Prisma.DiscussionScalarWhereInput
-  data: Prisma.XOR<Prisma.DiscussionUpdateManyMutationInput, Prisma.DiscussionUncheckedUpdateManyWithoutParentInput>
-}
-
-export type DiscussionCreateManyUserInput = {
-  id?: string
-  content: string
-  status?: string
-  sourceType: string
-  sourceId: string
-  parentId?: string | null
-  editedAt?: Date | string | null
-  editCount?: number
-  deletedAt?: Date | string | null
-  permanentDeleteAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type DiscussionUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  editCount?: Prisma.IntFieldUpdateOperationsInput | number
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  parent?: Prisma.DiscussionUpdateOneWithoutRepliesNestedInput
-  replies?: Prisma.DiscussionUpdateManyWithoutParentNestedInput
-}
-
-export type DiscussionUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  editCount?: Prisma.IntFieldUpdateOperationsInput | number
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  replies?: Prisma.DiscussionUncheckedUpdateManyWithoutParentNestedInput
-}
-
-export type DiscussionUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
-  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  editCount?: Prisma.IntFieldUpdateOperationsInput | number
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type DiscussionCreateManyParentInput = {
-  id?: string
+export type discussionCreateManyDiscussionInput = {
+  id: string
   content: string
   status?: string
   sourceType: string
@@ -940,10 +886,10 @@ export type DiscussionCreateManyParentInput = {
   deletedAt?: Date | string | null
   permanentDeleteAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt: Date | string
 }
 
-export type DiscussionUpdateWithoutParentInput = {
+export type discussionUpdateWithoutDiscussionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -955,11 +901,11 @@ export type DiscussionUpdateWithoutParentInput = {
   permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutDiscussionsNestedInput
-  replies?: Prisma.DiscussionUpdateManyWithoutParentNestedInput
+  other_discussion?: Prisma.discussionUpdateManyWithoutDiscussionNestedInput
+  user?: Prisma.userUpdateOneRequiredWithoutDiscussionNestedInput
 }
 
-export type DiscussionUncheckedUpdateWithoutParentInput = {
+export type discussionUncheckedUpdateWithoutDiscussionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -972,16 +918,78 @@ export type DiscussionUncheckedUpdateWithoutParentInput = {
   permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  replies?: Prisma.DiscussionUncheckedUpdateManyWithoutParentNestedInput
+  other_discussion?: Prisma.discussionUncheckedUpdateManyWithoutDiscussionNestedInput
 }
 
-export type DiscussionUncheckedUpdateManyWithoutParentInput = {
+export type discussionUncheckedUpdateManyWithoutDiscussionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   sourceType?: Prisma.StringFieldUpdateOperationsInput | string
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  editCount?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type discussionCreateManyUserInput = {
+  id: string
+  content: string
+  status?: string
+  sourceType: string
+  sourceId: string
+  parentId?: string | null
+  editedAt?: Date | string | null
+  editCount?: number
+  deletedAt?: Date | string | null
+  permanentDeleteAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt: Date | string
+}
+
+export type discussionUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  editCount?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  discussion?: Prisma.discussionUpdateOneWithoutOther_discussionNestedInput
+  other_discussion?: Prisma.discussionUpdateManyWithoutDiscussionNestedInput
+}
+
+export type discussionUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  editCount?: Prisma.IntFieldUpdateOperationsInput | number
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permanentDeleteAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  other_discussion?: Prisma.discussionUncheckedUpdateManyWithoutDiscussionNestedInput
+}
+
+export type discussionUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   editedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   editCount?: Prisma.IntFieldUpdateOperationsInput | number
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -996,11 +1004,11 @@ export type DiscussionUncheckedUpdateManyWithoutParentInput = {
  */
 
 export type DiscussionCountOutputType = {
-  replies: number
+  other_discussion: number
 }
 
 export type DiscussionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  replies?: boolean | DiscussionCountOutputTypeCountRepliesArgs
+  other_discussion?: boolean | DiscussionCountOutputTypeCountOther_discussionArgs
 }
 
 /**
@@ -1016,12 +1024,12 @@ export type DiscussionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * DiscussionCountOutputType without action
  */
-export type DiscussionCountOutputTypeCountRepliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DiscussionWhereInput
+export type DiscussionCountOutputTypeCountOther_discussionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.discussionWhereInput
 }
 
 
-export type DiscussionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type discussionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
   status?: boolean
@@ -1035,13 +1043,13 @@ export type DiscussionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   permanentDeleteAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  parent?: boolean | Prisma.Discussion$parentArgs<ExtArgs>
-  replies?: boolean | Prisma.Discussion$repliesArgs<ExtArgs>
+  discussion?: boolean | Prisma.discussion$discussionArgs<ExtArgs>
+  other_discussion?: boolean | Prisma.discussion$other_discussionArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DiscussionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["discussion"]>
 
-export type DiscussionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type discussionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
   status?: boolean
@@ -1055,11 +1063,11 @@ export type DiscussionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   permanentDeleteAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  parent?: boolean | Prisma.Discussion$parentArgs<ExtArgs>
+  discussion?: boolean | Prisma.discussion$discussionArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["discussion"]>
 
-export type DiscussionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+export type discussionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
   status?: boolean
@@ -1073,11 +1081,11 @@ export type DiscussionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   permanentDeleteAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  parent?: boolean | Prisma.Discussion$parentArgs<ExtArgs>
+  discussion?: boolean | Prisma.discussion$discussionArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["discussion"]>
 
-export type DiscussionSelectScalar = {
+export type discussionSelectScalar = {
   id?: boolean
   content?: boolean
   status?: boolean
@@ -1093,28 +1101,28 @@ export type DiscussionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DiscussionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "status" | "sourceType" | "sourceId" | "userId" | "parentId" | "editedAt" | "editCount" | "deletedAt" | "permanentDeleteAt" | "createdAt" | "updatedAt", ExtArgs["result"]["discussion"]>
-export type DiscussionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  parent?: boolean | Prisma.Discussion$parentArgs<ExtArgs>
-  replies?: boolean | Prisma.Discussion$repliesArgs<ExtArgs>
+export type discussionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "status" | "sourceType" | "sourceId" | "userId" | "parentId" | "editedAt" | "editCount" | "deletedAt" | "permanentDeleteAt" | "createdAt" | "updatedAt", ExtArgs["result"]["discussion"]>
+export type discussionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  discussion?: boolean | Prisma.discussion$discussionArgs<ExtArgs>
+  other_discussion?: boolean | Prisma.discussion$other_discussionArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DiscussionCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type DiscussionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  parent?: boolean | Prisma.Discussion$parentArgs<ExtArgs>
+export type discussionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  discussion?: boolean | Prisma.discussion$discussionArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }
-export type DiscussionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  parent?: boolean | Prisma.Discussion$parentArgs<ExtArgs>
+export type discussionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  discussion?: boolean | Prisma.discussion$discussionArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }
 
-export type $DiscussionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  name: "Discussion"
+export type $discussionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  name: "discussion"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
-    parent: Prisma.$DiscussionPayload<ExtArgs> | null
-    replies: Prisma.$DiscussionPayload<ExtArgs>[]
+    discussion: Prisma.$discussionPayload<ExtArgs> | null
+    other_discussion: Prisma.$discussionPayload<ExtArgs>[]
+    user: Prisma.$userPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1134,18 +1142,18 @@ export type $DiscussionPayload<ExtArgs extends runtime.Types.Extensions.Internal
   composites: {}
 }
 
-export type DiscussionGetPayload<S extends boolean | null | undefined | DiscussionDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$DiscussionPayload, S>
+export type discussionGetPayload<S extends boolean | null | undefined | discussionDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$discussionPayload, S>
 
-export type DiscussionCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
-  Omit<DiscussionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type discussionCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> =
+  Omit<discussionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: DiscussionCountAggregateInputType | true
   }
 
-export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Discussion'], meta: { name: 'Discussion' } }
+export interface discussionDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['discussion'], meta: { name: 'discussion' } }
   /**
    * Find zero or one Discussion that matches the filter.
-   * @param {DiscussionFindUniqueArgs} args - Arguments to find a Discussion
+   * @param {discussionFindUniqueArgs} args - Arguments to find a Discussion
    * @example
    * // Get one Discussion
    * const discussion = await prisma.discussion.findUnique({
@@ -1154,12 +1162,12 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    *   }
    * })
    */
-  findUnique<T extends DiscussionFindUniqueArgs>(args: Prisma.SelectSubset<T, DiscussionFindUniqueArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findUnique<T extends discussionFindUniqueArgs>(args: Prisma.SelectSubset<T, discussionFindUniqueArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find one Discussion that matches the filter or throw an error with `error.code='P2025'`
    * if no matches were found.
-   * @param {DiscussionFindUniqueOrThrowArgs} args - Arguments to find a Discussion
+   * @param {discussionFindUniqueOrThrowArgs} args - Arguments to find a Discussion
    * @example
    * // Get one Discussion
    * const discussion = await prisma.discussion.findUniqueOrThrow({
@@ -1168,13 +1176,13 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    *   }
    * })
    */
-  findUniqueOrThrow<T extends DiscussionFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, DiscussionFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findUniqueOrThrow<T extends discussionFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, discussionFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find the first Discussion that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {DiscussionFindFirstArgs} args - Arguments to find a Discussion
+   * @param {discussionFindFirstArgs} args - Arguments to find a Discussion
    * @example
    * // Get one Discussion
    * const discussion = await prisma.discussion.findFirst({
@@ -1183,14 +1191,14 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    *   }
    * })
    */
-  findFirst<T extends DiscussionFindFirstArgs>(args?: Prisma.SelectSubset<T, DiscussionFindFirstArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  findFirst<T extends discussionFindFirstArgs>(args?: Prisma.SelectSubset<T, discussionFindFirstArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find the first Discussion that matches the filter or
    * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {DiscussionFindFirstOrThrowArgs} args - Arguments to find a Discussion
+   * @param {discussionFindFirstOrThrowArgs} args - Arguments to find a Discussion
    * @example
    * // Get one Discussion
    * const discussion = await prisma.discussion.findFirstOrThrow({
@@ -1199,13 +1207,13 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    *   }
    * })
    */
-  findFirstOrThrow<T extends DiscussionFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, DiscussionFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  findFirstOrThrow<T extends discussionFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, discussionFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Find zero or more Discussions that matches the filter.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {DiscussionFindManyArgs} args - Arguments to filter and select certain fields only.
+   * @param {discussionFindManyArgs} args - Arguments to filter and select certain fields only.
    * @example
    * // Get all Discussions
    * const discussions = await prisma.discussion.findMany()
@@ -1217,11 +1225,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * const discussionWithIdOnly = await prisma.discussion.findMany({ select: { id: true } })
    * 
    */
-  findMany<T extends DiscussionFindManyArgs>(args?: Prisma.SelectSubset<T, DiscussionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+  findMany<T extends discussionFindManyArgs>(args?: Prisma.SelectSubset<T, discussionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
   /**
    * Create a Discussion.
-   * @param {DiscussionCreateArgs} args - Arguments to create a Discussion.
+   * @param {discussionCreateArgs} args - Arguments to create a Discussion.
    * @example
    * // Create one Discussion
    * const Discussion = await prisma.discussion.create({
@@ -1231,11 +1239,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * })
    * 
    */
-  create<T extends DiscussionCreateArgs>(args: Prisma.SelectSubset<T, DiscussionCreateArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  create<T extends discussionCreateArgs>(args: Prisma.SelectSubset<T, discussionCreateArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Create many Discussions.
-   * @param {DiscussionCreateManyArgs} args - Arguments to create many Discussions.
+   * @param {discussionCreateManyArgs} args - Arguments to create many Discussions.
    * @example
    * // Create many Discussions
    * const discussion = await prisma.discussion.createMany({
@@ -1245,11 +1253,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * })
    *     
    */
-  createMany<T extends DiscussionCreateManyArgs>(args?: Prisma.SelectSubset<T, DiscussionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  createMany<T extends discussionCreateManyArgs>(args?: Prisma.SelectSubset<T, discussionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Create many Discussions and returns the data saved in the database.
-   * @param {DiscussionCreateManyAndReturnArgs} args - Arguments to create many Discussions.
+   * @param {discussionCreateManyAndReturnArgs} args - Arguments to create many Discussions.
    * @example
    * // Create many Discussions
    * const discussion = await prisma.discussion.createManyAndReturn({
@@ -1269,11 +1277,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * Read more here: https://pris.ly/d/null-undefined
    * 
    */
-  createManyAndReturn<T extends DiscussionCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, DiscussionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+  createManyAndReturn<T extends discussionCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, discussionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Delete a Discussion.
-   * @param {DiscussionDeleteArgs} args - Arguments to delete one Discussion.
+   * @param {discussionDeleteArgs} args - Arguments to delete one Discussion.
    * @example
    * // Delete one Discussion
    * const Discussion = await prisma.discussion.delete({
@@ -1283,11 +1291,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * })
    * 
    */
-  delete<T extends DiscussionDeleteArgs>(args: Prisma.SelectSubset<T, DiscussionDeleteArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  delete<T extends discussionDeleteArgs>(args: Prisma.SelectSubset<T, discussionDeleteArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Update one Discussion.
-   * @param {DiscussionUpdateArgs} args - Arguments to update one Discussion.
+   * @param {discussionUpdateArgs} args - Arguments to update one Discussion.
    * @example
    * // Update one Discussion
    * const discussion = await prisma.discussion.update({
@@ -1300,11 +1308,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * })
    * 
    */
-  update<T extends DiscussionUpdateArgs>(args: Prisma.SelectSubset<T, DiscussionUpdateArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  update<T extends discussionUpdateArgs>(args: Prisma.SelectSubset<T, discussionUpdateArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
   /**
    * Delete zero or more Discussions.
-   * @param {DiscussionDeleteManyArgs} args - Arguments to filter Discussions to delete.
+   * @param {discussionDeleteManyArgs} args - Arguments to filter Discussions to delete.
    * @example
    * // Delete a few Discussions
    * const { count } = await prisma.discussion.deleteMany({
@@ -1314,13 +1322,13 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * })
    * 
    */
-  deleteMany<T extends DiscussionDeleteManyArgs>(args?: Prisma.SelectSubset<T, DiscussionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  deleteMany<T extends discussionDeleteManyArgs>(args?: Prisma.SelectSubset<T, discussionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Update zero or more Discussions.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {DiscussionUpdateManyArgs} args - Arguments to update one or more rows.
+   * @param {discussionUpdateManyArgs} args - Arguments to update one or more rows.
    * @example
    * // Update many Discussions
    * const discussion = await prisma.discussion.updateMany({
@@ -1333,11 +1341,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * })
    * 
    */
-  updateMany<T extends DiscussionUpdateManyArgs>(args: Prisma.SelectSubset<T, DiscussionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+  updateMany<T extends discussionUpdateManyArgs>(args: Prisma.SelectSubset<T, discussionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
    * Update zero or more Discussions and returns the data updated in the database.
-   * @param {DiscussionUpdateManyAndReturnArgs} args - Arguments to update many Discussions.
+   * @param {discussionUpdateManyAndReturnArgs} args - Arguments to update many Discussions.
    * @example
    * // Update many Discussions
    * const discussion = await prisma.discussion.updateManyAndReturn({
@@ -1363,11 +1371,11 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * Read more here: https://pris.ly/d/null-undefined
    * 
    */
-  updateManyAndReturn<T extends DiscussionUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, DiscussionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+  updateManyAndReturn<T extends discussionUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, discussionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Discussion.
-   * @param {DiscussionUpsertArgs} args - Arguments to update or create a Discussion.
+   * @param {discussionUpsertArgs} args - Arguments to update or create a Discussion.
    * @example
    * // Update or create a Discussion
    * const discussion = await prisma.discussion.upsert({
@@ -1382,14 +1390,14 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    *   }
    * })
    */
-  upsert<T extends DiscussionUpsertArgs>(args: Prisma.SelectSubset<T, DiscussionUpsertArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+  upsert<T extends discussionUpsertArgs>(args: Prisma.SelectSubset<T, discussionUpsertArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
   /**
    * Count the number of Discussions.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {DiscussionCountArgs} args - Arguments to filter Discussions to count.
+   * @param {discussionCountArgs} args - Arguments to filter Discussions to count.
    * @example
    * // Count the number of Discussions
    * const count = await prisma.discussion.count({
@@ -1398,8 +1406,8 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    *   }
    * })
   **/
-  count<T extends DiscussionCountArgs>(
-    args?: Prisma.Subset<T, DiscussionCountArgs>,
+  count<T extends discussionCountArgs>(
+    args?: Prisma.Subset<T, discussionCountArgs>,
   ): Prisma.PrismaPromise<
     T extends runtime.Types.Utils.Record<'select', any>
       ? T['select'] extends true
@@ -1438,7 +1446,7 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * Group by Discussion.
    * Note, that providing `undefined` is treated as the value not being there.
    * Read more here: https://pris.ly/d/null-undefined
-   * @param {DiscussionGroupByArgs} args - Group by arguments.
+   * @param {discussionGroupByArgs} args - Group by arguments.
    * @example
    * // Group by city, order by createdAt, get count
    * const result = await prisma.user.groupBy({
@@ -1453,14 +1461,14 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
    * 
   **/
   groupBy<
-    T extends DiscussionGroupByArgs,
+    T extends discussionGroupByArgs,
     HasSelectOrTake extends Prisma.Or<
       Prisma.Extends<'skip', Prisma.Keys<T>>,
       Prisma.Extends<'take', Prisma.Keys<T>>
     >,
     OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: DiscussionGroupByArgs['orderBy'] }
-      : { orderBy?: DiscussionGroupByArgs['orderBy'] },
+      ? { orderBy: discussionGroupByArgs['orderBy'] }
+      : { orderBy?: discussionGroupByArgs['orderBy'] },
     OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
@@ -1509,24 +1517,24 @@ export interface DiscussionDelegate<ExtArgs extends runtime.Types.Extensions.Int
           ? never
           : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
       }[OrderFields]
-  >(args: Prisma.SubsetIntersection<T, DiscussionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDiscussionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  >(args: Prisma.SubsetIntersection<T, discussionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDiscussionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 /**
- * Fields of the Discussion model
+ * Fields of the discussion model
  */
-readonly fields: DiscussionFieldRefs;
+readonly fields: discussionFieldRefs;
 }
 
 /**
- * The delegate class that acts as a "Promise-like" for Discussion.
+ * The delegate class that acts as a "Promise-like" for discussion.
  * Why is this prefixed with `Prisma__`?
  * Because we want to prevent naming conflicts as mentioned in
  * https://github.com/prisma/prisma-client-js/issues/707
  */
-export interface Prisma__DiscussionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+export interface Prisma__discussionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  parent<T extends Prisma.Discussion$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discussion$parentArgs<ExtArgs>>): Prisma.Prisma__DiscussionClient<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  replies<T extends Prisma.Discussion$repliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Discussion$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  discussion<T extends Prisma.discussion$discussionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.discussion$discussionArgs<ExtArgs>>): Prisma.Prisma__discussionClient<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  other_discussion<T extends Prisma.discussion$other_discussionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.discussion$other_discussionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$discussionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1553,479 +1561,479 @@ export interface Prisma__DiscussionClient<T, Null = never, ExtArgs extends runti
 
 
 /**
- * Fields of the Discussion model
+ * Fields of the discussion model
  */
-export interface DiscussionFieldRefs {
-  readonly id: Prisma.FieldRef<"Discussion", 'String'>
-  readonly content: Prisma.FieldRef<"Discussion", 'String'>
-  readonly status: Prisma.FieldRef<"Discussion", 'String'>
-  readonly sourceType: Prisma.FieldRef<"Discussion", 'String'>
-  readonly sourceId: Prisma.FieldRef<"Discussion", 'String'>
-  readonly userId: Prisma.FieldRef<"Discussion", 'String'>
-  readonly parentId: Prisma.FieldRef<"Discussion", 'String'>
-  readonly editedAt: Prisma.FieldRef<"Discussion", 'DateTime'>
-  readonly editCount: Prisma.FieldRef<"Discussion", 'Int'>
-  readonly deletedAt: Prisma.FieldRef<"Discussion", 'DateTime'>
-  readonly permanentDeleteAt: Prisma.FieldRef<"Discussion", 'DateTime'>
-  readonly createdAt: Prisma.FieldRef<"Discussion", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Discussion", 'DateTime'>
+export interface discussionFieldRefs {
+  readonly id: Prisma.FieldRef<"discussion", 'String'>
+  readonly content: Prisma.FieldRef<"discussion", 'String'>
+  readonly status: Prisma.FieldRef<"discussion", 'String'>
+  readonly sourceType: Prisma.FieldRef<"discussion", 'String'>
+  readonly sourceId: Prisma.FieldRef<"discussion", 'String'>
+  readonly userId: Prisma.FieldRef<"discussion", 'String'>
+  readonly parentId: Prisma.FieldRef<"discussion", 'String'>
+  readonly editedAt: Prisma.FieldRef<"discussion", 'DateTime'>
+  readonly editCount: Prisma.FieldRef<"discussion", 'Int'>
+  readonly deletedAt: Prisma.FieldRef<"discussion", 'DateTime'>
+  readonly permanentDeleteAt: Prisma.FieldRef<"discussion", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"discussion", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"discussion", 'DateTime'>
 }
     
 
 // Custom InputTypes
 /**
- * Discussion findUnique
+ * discussion findUnique
  */
-export type DiscussionFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * Filter, which Discussion to fetch.
+   * Filter, which discussion to fetch.
    */
-  where: Prisma.DiscussionWhereUniqueInput
+  where: Prisma.discussionWhereUniqueInput
 }
 
 /**
- * Discussion findUniqueOrThrow
+ * discussion findUniqueOrThrow
  */
-export type DiscussionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * Filter, which Discussion to fetch.
+   * Filter, which discussion to fetch.
    */
-  where: Prisma.DiscussionWhereUniqueInput
+  where: Prisma.discussionWhereUniqueInput
 }
 
 /**
- * Discussion findFirst
+ * discussion findFirst
  */
-export type DiscussionFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * Filter, which Discussion to fetch.
+   * Filter, which discussion to fetch.
    */
-  where?: Prisma.DiscussionWhereInput
+  where?: Prisma.discussionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of Discussions to fetch.
+   * Determine the order of discussions to fetch.
    */
-  orderBy?: Prisma.DiscussionOrderByWithRelationInput | Prisma.DiscussionOrderByWithRelationInput[]
+  orderBy?: Prisma.discussionOrderByWithRelationInput | Prisma.discussionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for Discussions.
+   * Sets the position for searching for discussions.
    */
-  cursor?: Prisma.DiscussionWhereUniqueInput
+  cursor?: Prisma.discussionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` Discussions from the position of the cursor.
+   * Take `±n` discussions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` Discussions.
+   * Skip the first `n` discussions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of Discussions.
+   * Filter by unique combinations of discussions.
    */
   distinct?: Prisma.DiscussionScalarFieldEnum | Prisma.DiscussionScalarFieldEnum[]
 }
 
 /**
- * Discussion findFirstOrThrow
+ * discussion findFirstOrThrow
  */
-export type DiscussionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * Filter, which Discussion to fetch.
+   * Filter, which discussion to fetch.
    */
-  where?: Prisma.DiscussionWhereInput
+  where?: Prisma.discussionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of Discussions to fetch.
+   * Determine the order of discussions to fetch.
    */
-  orderBy?: Prisma.DiscussionOrderByWithRelationInput | Prisma.DiscussionOrderByWithRelationInput[]
+  orderBy?: Prisma.discussionOrderByWithRelationInput | Prisma.discussionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for searching for Discussions.
+   * Sets the position for searching for discussions.
    */
-  cursor?: Prisma.DiscussionWhereUniqueInput
+  cursor?: Prisma.discussionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` Discussions from the position of the cursor.
+   * Take `±n` discussions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` Discussions.
+   * Skip the first `n` discussions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of Discussions.
+   * Filter by unique combinations of discussions.
    */
   distinct?: Prisma.DiscussionScalarFieldEnum | Prisma.DiscussionScalarFieldEnum[]
 }
 
 /**
- * Discussion findMany
+ * discussion findMany
  */
-export type DiscussionFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * Filter, which Discussions to fetch.
+   * Filter, which discussions to fetch.
    */
-  where?: Prisma.DiscussionWhereInput
+  where?: Prisma.discussionWhereInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
    * 
-   * Determine the order of Discussions to fetch.
+   * Determine the order of discussions to fetch.
    */
-  orderBy?: Prisma.DiscussionOrderByWithRelationInput | Prisma.DiscussionOrderByWithRelationInput[]
+  orderBy?: Prisma.discussionOrderByWithRelationInput | Prisma.discussionOrderByWithRelationInput[]
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    * 
-   * Sets the position for listing Discussions.
+   * Sets the position for listing discussions.
    */
-  cursor?: Prisma.DiscussionWhereUniqueInput
+  cursor?: Prisma.discussionWhereUniqueInput
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Take `±n` Discussions from the position of the cursor.
+   * Take `±n` discussions from the position of the cursor.
    */
   take?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
    * 
-   * Skip the first `n` Discussions.
+   * Skip the first `n` discussions.
    */
   skip?: number
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
    * 
-   * Filter by unique combinations of Discussions.
+   * Filter by unique combinations of discussions.
    */
   distinct?: Prisma.DiscussionScalarFieldEnum | Prisma.DiscussionScalarFieldEnum[]
 }
 
 /**
- * Discussion create
+ * discussion create
  */
-export type DiscussionCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * The data needed to create a Discussion.
+   * The data needed to create a discussion.
    */
-  data: Prisma.XOR<Prisma.DiscussionCreateInput, Prisma.DiscussionUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.discussionCreateInput, Prisma.discussionUncheckedCreateInput>
 }
 
 /**
- * Discussion createMany
+ * discussion createMany
  */
-export type DiscussionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * The data used to create many Discussions.
+   * The data used to create many discussions.
    */
-  data: Prisma.DiscussionCreateManyInput | Prisma.DiscussionCreateManyInput[]
+  data: Prisma.discussionCreateManyInput | Prisma.discussionCreateManyInput[]
   skipDuplicates?: boolean
 }
 
 /**
- * Discussion createManyAndReturn
+ * discussion createManyAndReturn
  */
-export type DiscussionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelectCreateManyAndReturn<ExtArgs> | null
+  select?: Prisma.discussionSelectCreateManyAndReturn<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
-   * The data used to create many Discussions.
+   * The data used to create many discussions.
    */
-  data: Prisma.DiscussionCreateManyInput | Prisma.DiscussionCreateManyInput[]
+  data: Prisma.discussionCreateManyInput | Prisma.discussionCreateManyInput[]
   skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionIncludeCreateManyAndReturn<ExtArgs> | null
+  include?: Prisma.discussionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
- * Discussion update
+ * discussion update
  */
-export type DiscussionUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * The data needed to update a Discussion.
+   * The data needed to update a discussion.
    */
-  data: Prisma.XOR<Prisma.DiscussionUpdateInput, Prisma.DiscussionUncheckedUpdateInput>
+  data: Prisma.XOR<Prisma.discussionUpdateInput, Prisma.discussionUncheckedUpdateInput>
   /**
-   * Choose, which Discussion to update.
+   * Choose, which discussion to update.
    */
-  where: Prisma.DiscussionWhereUniqueInput
+  where: Prisma.discussionWhereUniqueInput
 }
 
 /**
- * Discussion updateMany
+ * discussion updateMany
  */
-export type DiscussionUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * The data used to update Discussions.
+   * The data used to update discussions.
    */
-  data: Prisma.XOR<Prisma.DiscussionUpdateManyMutationInput, Prisma.DiscussionUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.discussionUpdateManyMutationInput, Prisma.discussionUncheckedUpdateManyInput>
   /**
-   * Filter which Discussions to update
+   * Filter which discussions to update
    */
-  where?: Prisma.DiscussionWhereInput
+  where?: Prisma.discussionWhereInput
   /**
-   * Limit how many Discussions to update.
+   * Limit how many discussions to update.
    */
   limit?: number
 }
 
 /**
- * Discussion updateManyAndReturn
+ * discussion updateManyAndReturn
  */
-export type DiscussionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelectUpdateManyAndReturn<ExtArgs> | null
+  select?: Prisma.discussionSelectUpdateManyAndReturn<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
-   * The data used to update Discussions.
+   * The data used to update discussions.
    */
-  data: Prisma.XOR<Prisma.DiscussionUpdateManyMutationInput, Prisma.DiscussionUncheckedUpdateManyInput>
+  data: Prisma.XOR<Prisma.discussionUpdateManyMutationInput, Prisma.discussionUncheckedUpdateManyInput>
   /**
-   * Filter which Discussions to update
+   * Filter which discussions to update
    */
-  where?: Prisma.DiscussionWhereInput
+  where?: Prisma.discussionWhereInput
   /**
-   * Limit how many Discussions to update.
+   * Limit how many discussions to update.
    */
   limit?: number
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionIncludeUpdateManyAndReturn<ExtArgs> | null
+  include?: Prisma.discussionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
- * Discussion upsert
+ * discussion upsert
  */
-export type DiscussionUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * The filter to search for the Discussion to update in case it exists.
+   * The filter to search for the discussion to update in case it exists.
    */
-  where: Prisma.DiscussionWhereUniqueInput
+  where: Prisma.discussionWhereUniqueInput
   /**
-   * In case the Discussion found by the `where` argument doesn't exist, create a new Discussion with this data.
+   * In case the discussion found by the `where` argument doesn't exist, create a new discussion with this data.
    */
-  create: Prisma.XOR<Prisma.DiscussionCreateInput, Prisma.DiscussionUncheckedCreateInput>
+  create: Prisma.XOR<Prisma.discussionCreateInput, Prisma.discussionUncheckedCreateInput>
   /**
-   * In case the Discussion was found with the provided `where` argument, update it with this data.
+   * In case the discussion was found with the provided `where` argument, update it with this data.
    */
-  update: Prisma.XOR<Prisma.DiscussionUpdateInput, Prisma.DiscussionUncheckedUpdateInput>
+  update: Prisma.XOR<Prisma.discussionUpdateInput, Prisma.discussionUncheckedUpdateInput>
 }
 
 /**
- * Discussion delete
+ * discussion delete
  */
-export type DiscussionDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
   /**
-   * Filter which Discussion to delete.
+   * Filter which discussion to delete.
    */
-  where: Prisma.DiscussionWhereUniqueInput
+  where: Prisma.discussionWhereUniqueInput
 }
 
 /**
- * Discussion deleteMany
+ * discussion deleteMany
  */
-export type DiscussionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Filter which Discussions to delete
+   * Filter which discussions to delete
    */
-  where?: Prisma.DiscussionWhereInput
+  where?: Prisma.discussionWhereInput
   /**
-   * Limit how many Discussions to delete.
+   * Limit how many discussions to delete.
    */
   limit?: number
 }
 
 /**
- * Discussion.parent
+ * discussion.discussion
  */
-export type Discussion$parentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussion$discussionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
-  where?: Prisma.DiscussionWhereInput
+  include?: Prisma.discussionInclude<ExtArgs> | null
+  where?: Prisma.discussionWhereInput
 }
 
 /**
- * Discussion.replies
+ * discussion.other_discussion
  */
-export type Discussion$repliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussion$other_discussionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
-  where?: Prisma.DiscussionWhereInput
-  orderBy?: Prisma.DiscussionOrderByWithRelationInput | Prisma.DiscussionOrderByWithRelationInput[]
-  cursor?: Prisma.DiscussionWhereUniqueInput
+  include?: Prisma.discussionInclude<ExtArgs> | null
+  where?: Prisma.discussionWhereInput
+  orderBy?: Prisma.discussionOrderByWithRelationInput | Prisma.discussionOrderByWithRelationInput[]
+  cursor?: Prisma.discussionWhereUniqueInput
   take?: number
   skip?: number
   distinct?: Prisma.DiscussionScalarFieldEnum | Prisma.DiscussionScalarFieldEnum[]
 }
 
 /**
- * Discussion without action
+ * discussion without action
  */
-export type DiscussionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type discussionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Discussion
+   * Select specific fields to fetch from the discussion
    */
-  select?: Prisma.DiscussionSelect<ExtArgs> | null
+  select?: Prisma.discussionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Discussion
+   * Omit specific fields from the discussion
    */
-  omit?: Prisma.DiscussionOmit<ExtArgs> | null
+  omit?: Prisma.discussionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DiscussionInclude<ExtArgs> | null
+  include?: Prisma.discussionInclude<ExtArgs> | null
 }

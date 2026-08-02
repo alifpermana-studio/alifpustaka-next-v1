@@ -321,13 +321,6 @@ export default function Showcase() {
           </main>
         </div>
       </div>
-
-      <footer className="mt-12 border-t border-neutral-200 bg-neutral-50">
-        <div className="mx-auto flex max-w-360 flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-neutral-500 md:flex-row">
-          <p>Envato-style filter showcase — built with React + Tailwind v4.</p>
-          <p>Mock data for demonstration purposes only.</p>
-        </div>
-      </footer>
     </div>
   );
 }

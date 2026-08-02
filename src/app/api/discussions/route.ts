@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { requireActiveStatus } from "@/lib/auth-middleware";
 import { successResponse, errorResponse } from "@/lib/api-response";
 import { DiscussionStatus } from "@/types/discussion";
+import { createAuditLogAsync } from "@/lib/audit-log";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -86,7 +87,7 @@ export async function GET(req: NextRequest) {
           },
           _count: {
             select: {
-              replies: true,
+              other_discussion: true,
             },
           },
         },
@@ -130,7 +131,7 @@ export async function GET(req: NextRequest) {
           createdAt: discussion.createdAt,
           updatedAt: discussion.updatedAt,
           user: discussion.user,
-          replyCount: discussion._count.replies,
+          replyCount: discussion._count.other_discussion,
           canEdit,
           canDelete: discussion.status !== "deleted",
         };
@@ -256,12 +257,14 @@ export async function POST(req: NextRequest) {
 
     const discussion = await prisma.discussion.create({
       data: {
+        id: require('uuid').v4(),
         content: content.trim(),
         sourceType,
         sourceId,
         userId: currentUser.userId,
         parentId: parentId || null,
         status: "pending",
+        updatedAt: new Date(),
       },
       include: {
         user: {
@@ -294,6 +297,177 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       errorResponse("internal_error", "Failed to create comment"),
       { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  const authResult = await requireActiveStatus(req);
+
+  if (!authResult.authorized || !authResult.user) {
+    return authResult.response;
+  }
+
+  const currentUser = authResult.user;
+
+  try {
+    const body = await req.json();
+    const { action, discussionIds, data } = body;
+
+    if (!action || !discussionIds || !Array.isArray(discussionIds) || discussionIds.length === 0) {
+      return NextResponse.json(
+        errorResponse("validation_error", "Action and discussionIds array are required"),
+        { status: 400 }
+      );
+    }
+
+    const discussions = await prisma.discussion.findMany({
+      where: {
+        id: { in: discussionIds },
+      },
+      select: {
+        id: true,
+        userId: true,
+        content: true,
+        status: true,
+      },
+    });
+
+    const unauthorizedDiscussions = discussions.filter((d) => d.userId !== currentUser.userId);
+    
+    if (unauthorizedDiscussions.length > 0) {
+      return NextResponse.json(
+        errorResponse(
+          "insufficient_permissions",
+          "You can only modify your own comments"
+        ),
+        { status: 403 }
+      );
+    }
+
+    const validDiscussionIds = discussions.map((d) => d.id);
+
+    if (action === "change_status") {
+      if (!data || !data.status) {
+        return NextResponse.json(
+          errorResponse("validation_error", "Status is required"),
+          { status: 400 }
+        );
+      }
+
+      const validStatuses: DiscussionStatus[] = ["pending", "published", "deleted"];
+      if (!validStatuses.includes(data.status)) {
+        return NextResponse.json(
+          errorResponse("validation_error", "Invalid status. Users can only set: pending, published, deleted"),
+          { status: 400 }
+        );
+      }
+
+      const results = await Promise.allSettled(
+        validDiscussionIds.map(async (discussionId) => {
+          const discussion = discussions.find((d) => d.id === discussionId);
+          
+          const updateData: any = { status: data.status };
+          
+          if (data.status === "deleted") {
+            const deletedAt = new Date();
+            const permanentDeleteAt = new Date(deletedAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+            updateData.deletedAt = deletedAt;
+            updateData.permanentDeleteAt = permanentDeleteAt;
+          }
+
+          await prisma.discussion.update({
+            where: { id: discussionId },
+            data: updateData,
+          });
+
+          createAuditLogAsync({
+            action: "discussion_status_changed",
+            entityType: "discussion",
+            entityId: discussionId,
+            performedBy: currentUser.userId,
+            performedByRole: currentUser.role,
+            oldValue: { status: discussion?.status },
+            newValue: { status: data.status },
+            metadata: { 
+              bulkAction: true,
+              contentPreview: discussion?.content.substring(0, 100),
+            },
+            req,
+          });
+
+          return discussionId;
+        })
+      );
+
+      const succeeded = results.filter((r) => r.status === "fulfilled").length;
+      const failed = results.filter((r) => r.status === "rejected").length;
+
+      return NextResponse.json(
+        successResponse(
+          `${succeeded} comment(s) updated${failed > 0 ? `, ${failed} failed` : ""}`,
+          { succeeded, failed }
+        )
+      );
+    }
+
+    if (action === "delete") {
+      const results = await Promise.allSettled(
+        validDiscussionIds.map(async (discussionId) => {
+          const discussion = discussions.find((d) => d.id === discussionId);
+          
+          const deletedAt = new Date();
+          const permanentDeleteAt = new Date(deletedAt.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+          await prisma.discussion.update({
+            where: { id: discussionId },
+            data: {
+              status: "deleted",
+              deletedAt,
+              permanentDeleteAt,
+            },
+          });
+
+          createAuditLogAsync({
+            action: "discussion_deleted",
+            entityType: "discussion",
+            entityId: discussionId,
+            performedBy: currentUser.userId,
+            performedByRole: currentUser.role,
+            oldValue: { status: discussion?.status },
+            newValue: { status: "deleted", deletedAt, permanentDeleteAt },
+            metadata: { 
+              bulkAction: true,
+              userInitiated: true,
+              contentPreview: discussion?.content.substring(0, 100),
+            },
+            req,
+          });
+
+          return discussionId;
+        })
+      );
+
+      const succeeded = results.filter((r) => r.status === "fulfilled").length;
+      const failed = results.filter((r) => r.status === "rejected").length;
+
+      return NextResponse.json(
+        successResponse(
+          `${succeeded} comment(s) deleted${failed > 0 ? `, ${failed} failed` : ""}`,
+          { succeeded, failed }
+        )
+      );
+    }
+
+    return NextResponse.json(
+      errorResponse("invalid_parameter", "Invalid action"),
+      { status: 400 }
+    );
+  } catch (error) {
+    console.error("Error processing bulk action:", error);
+    return NextResponse.json(
+      errorResponse("internal_error", "Failed to process bulk action"),
+      { status: 500 }
     );
   }
 }

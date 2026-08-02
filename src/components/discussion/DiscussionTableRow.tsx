@@ -1,13 +1,18 @@
 import { DiscussionListItem } from "@/types/discussion";
+import { Checkbox } from "@/components/ui/Checkbox";
 
 interface DiscussionTableRowProps {
   discussion: DiscussionListItem;
+  isSelected: boolean;
+  onSelect: (id: string) => void;
   onEdit: (discussion: DiscussionListItem) => void;
   onDelete: (discussion: DiscussionListItem) => void;
 }
 
 export function DiscussionTableRow({
   discussion,
+  isSelected,
+  onSelect,
   onEdit,
   onDelete,
 }: DiscussionTableRowProps) {
@@ -39,8 +44,17 @@ export function DiscussionTableRow({
     return content.substring(0, maxLength) + "...";
   };
 
+  const isDeleted = discussion.status === "deleted";
+
   return (
     <tr className="hover">
+      <td>
+        <Checkbox
+          checked={isSelected}
+          onChange={() => onSelect(discussion.id)}
+          disabled={isDeleted}
+        />
+      </td>
       <td>
         <div className="flex flex-col gap-2">
           <p className="text-sm">{truncateContent(discussion.content, 150)}</p>

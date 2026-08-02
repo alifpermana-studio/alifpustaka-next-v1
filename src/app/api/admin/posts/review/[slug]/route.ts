@@ -43,7 +43,7 @@ export async function GET(
             role: true,
           },
         },
-        tags: {
+        post_tag: {
           include: {
             tag: true,
           },
@@ -93,7 +93,7 @@ export async function GET(
       footnote: post.footnote,
       status: post.status,
       content: post.content,
-      tags: post.tags.map((pt) => pt.tag.name),
+      tags: post.post_tag.map((pt) => pt.tag.name),
       uploadTime: post.uploadTime,
       updatedAt: post.updatedAt,
       author: {

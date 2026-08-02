@@ -23,7 +23,7 @@ prisma/schema/schema.prisma          → Discussion model definition
 ### API Routes
 ```
 src/app/api/blog/[slug]/comments/route.ts           → Public: GET (published comments)
-src/app/api/discussions/route.ts                    → User: GET (own), POST (create)
+src/app/api/discussions/route.ts                    → User: GET (own), POST (create), PATCH (bulk)
 src/app/api/discussions/[id]/route.ts               → User: PUT (edit), DELETE (soft delete)
 src/app/api/admin/discussions/route.ts              → Admin: GET (all), PATCH (bulk)
 src/app/api/admin/discussions/[id]/route.ts         → Admin: PATCH (status change)
@@ -43,9 +43,11 @@ src/components/blog/comment/
 ```
 src/components/discussion/
   ├─ DiscussionFilters.tsx        → Search/filter bar
-  ├─ DiscussionTable.tsx          → Comments table
-  ├─ DiscussionTableRow.tsx       → Table row
+  ├─ DiscussionTable.tsx          → Comments table with checkboxes
+  ├─ DiscussionTableRow.tsx       → Table row with selection
   ├─ DiscussionPagination.tsx     → Pagination controls
+  ├─ DiscussionBulkActionBar.tsx  → Bulk actions bar (fixed bottom)
+  ├─ BulkStatusChangeModal.tsx    → Bulk status change modal
   ├─ EditDiscussionModal.tsx      → Edit modal
   └─ DeleteDiscussionModal.tsx    → Delete confirmation
 ```
@@ -136,6 +138,7 @@ For complete API documentation with detailed request/response examples, see: **[
 |--------|----------|-------------|------|
 | GET | `/api/discussions` | Get own comments | Required |
 | POST | `/api/discussions` | Create comment | Required |
+| PATCH | `/api/discussions` | Bulk actions (status change, delete) | Required |
 | PUT | `/api/discussions/[id]` | Edit comment | Required |
 | DELETE | `/api/discussions/[id]` | Delete comment | Required |
 
@@ -290,12 +293,19 @@ notifyCommentStatusChanged(userId, content, oldStatus, newStatus, commentId)
 
 ### Status Flow
 ```
-pending → published  (admin approval)
-pending → banned     (policy violation)
-pending → deleted    (admin/user removal)
-published → banned   (retroactive moderation)
-published → deleted  (admin/user removal)
+pending → published  (admin approval or user bulk change)
+pending → banned     (policy violation - admin only)
+pending → deleted    (admin/user removal or bulk delete)
+published → banned   (retroactive moderation - admin only)
+published → deleted  (admin/user removal or bulk delete)
 ```
+
+### Bulk Actions (User)
+- **Selection**: Checkbox on each row, select all/deselect all
+- **Actions**: Change status (pending/published/deleted), bulk delete
+- **Restrictions**: Cannot select deleted comments, only own comments
+- **UI**: Fixed bottom action bar appears when comments selected
+- **API**: `PATCH /api/discussions` with action and discussionIds array
 
 ---
 
@@ -411,6 +421,57 @@ const editComment = async (id: string, content: string) => {
 };
 ```
 
+### Bulk Status Change (User)
+
+```typescript
+const handleBulkStatusChange = async (status: DiscussionStatus) => {
+  const discussionIds = Array.from(selectedDiscussions);
+
+  const response = await fetch("/api/discussions", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "change_status",
+      discussionIds,
+      data: { status },
+    }),
+  });
+
+  const result = await response.json();
+  
+  if (result.success) {
+    showToast(`${result.data.succeeded} comment(s) updated`, "success");
+    setSelectedDiscussions(new Set());
+    fetchDiscussions();
+  }
+};
+```
+
+### Bulk Delete (User)
+
+```typescript
+const handleBulkDelete = async () => {
+  const discussionIds = Array.from(selectedDiscussions);
+
+  const response = await fetch("/api/discussions", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "delete",
+      discussionIds,
+    }),
+  });
+
+  const result = await response.json();
+  
+  if (result.success) {
+    showToast(`${result.data.succeeded} comment(s) deleted`, "success");
+    setSelectedDiscussions(new Set());
+    fetchDiscussions();
+  }
+};
+```
+
 ### Changing Status (Admin)
 
 ```typescript
@@ -518,6 +579,10 @@ useEffect(() => {
 - [ ] User edits after 30 min → Error message
 - [ ] User deletes comment → Hidden from public
 - [ ] User views `/discussions` → Sees own comments only
+- [ ] User selects comments → Bulk action bar appears
+- [ ] User bulk changes status → Success with count
+- [ ] User bulk deletes → Confirmation then success
+- [ ] Selection clears on page/filter change
 
 ### Admin Flows
 - [ ] Admin views `/admin/discussions` → Sees all comments
@@ -525,6 +590,7 @@ useEffect(() => {
 - [ ] Admin changes status → Audit log created
 - [ ] Non-admin accesses admin page → Redirected to `/admin`
 - [ ] Auto-refresh works → Updates every 60 seconds
+- [ ] Admin bulk actions → Multiple comments updated
 
 ### Edge Cases
 - [ ] Empty content → Validation error
@@ -533,6 +599,9 @@ useEffect(() => {
 - [ ] Unpublished source → Error
 - [ ] Edit deleted comment → Error
 - [ ] Delete already deleted → Error
+- [ ] Bulk action on deleted comments → Filtered out
+- [ ] Bulk action with no selection → Warning toast
+- [ ] Bulk action ownership validation → Only own comments
 
 ---
 

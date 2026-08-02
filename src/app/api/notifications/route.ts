@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
 
     const notification = await prisma.notification.create({
       data: {
+        id: require('uuid').v4(),
         userId,
         type,
         title,

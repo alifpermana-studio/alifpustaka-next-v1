@@ -26,6 +26,7 @@ export async function PUT(req: NextRequest) {
 
     const gallery = await prisma.gallery.create({
       data: {
+        id: require('uuid').v4(),
         title,
         slug: `${slug}${format}`,
         format,
@@ -36,6 +37,7 @@ export async function PUT(req: NextRequest) {
         userId: currentUser.userId,
         isPrivate: path.includes("private"),
         isFeatured: false,
+        updatedAt: new Date(),
       },
     });
 

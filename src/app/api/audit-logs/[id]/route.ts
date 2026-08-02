@@ -25,7 +25,7 @@ export async function GET(
   const currentUser = authResult.user;
 
   try {
-    const auditLog = await prisma.auditLog.findUnique({
+    const auditLog = await prisma.audit_log.findUnique({
       where: { id: auditLogId },
     });
 

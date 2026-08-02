@@ -64,7 +64,7 @@ const getNavItems = (
 
   items.push(
     {
-      label: "Blog",
+      label: "Post",
       icon: NotebookTextIcon,
       subMenu: [
         { to: "/posts/editor", label: "Editor", icon: PenSquare },
@@ -85,7 +85,7 @@ const getNavItems = (
 
   items.push({
     to: "/discussions",
-    label: "My Comments",
+    label: "Discussions",
     icon: MessageSquare,
   });
 
@@ -208,7 +208,14 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         canManageSupport,
         canModerateDiscussions,
       ),
-    [isAdmin, canViewUsers, canManageContent, canManageSales, canManageSupport, canModerateDiscussions],
+    [
+      isAdmin,
+      canViewUsers,
+      canManageContent,
+      canManageSales,
+      canManageSupport,
+      canModerateDiscussions,
+    ],
   );
 
   const toggleDropdown = (label: string) => {

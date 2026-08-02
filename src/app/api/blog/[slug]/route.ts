@@ -31,7 +31,7 @@ export async function GET(
             image: true,
           },
         },
-        tags: {
+        post_tag: {
           select: {
             tag: {
               select: {
@@ -52,7 +52,7 @@ export async function GET(
 
     const formattedPost = {
       ...post,
-      tags: post.tags.map((t) => t.tag.name),
+      tags: post.post_tag.map((t) => t.tag.name),
       author: post.user,
     };
 

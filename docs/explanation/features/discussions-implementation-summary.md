@@ -26,7 +26,7 @@ A comprehensive discussion and comment system for the Alif Pustaka application, 
 
 ### API Routes (5 files)
 - `src/app/api/blog/[slug]/comments/route.ts` - Public: GET (published comments)
-- `src/app/api/discussions/route.ts` - User: GET (own), POST (create)
+- `src/app/api/discussions/route.ts` - User: GET (own), POST (create), PATCH (bulk actions)
 - `src/app/api/discussions/[id]/route.ts` - User: PUT (edit), DELETE (soft delete)
 - `src/app/api/admin/discussions/route.ts` - Admin: GET (all comments), PATCH (bulk actions)
 - `src/app/api/admin/discussions/[id]/route.ts` - Admin: PATCH (status change)
@@ -38,11 +38,13 @@ A comprehensive discussion and comment system for the Alif Pustaka application, 
 - `src/components/blog/comment/CommentItem.tsx` - Individual comment display
 - `src/components/blog/comment/AuthPromptModal.tsx` - Sign-in prompt modal
 
-### User Management Components (6 files)
+### User Management Components (8 files)
 - `src/components/discussion/DiscussionFilters.tsx` - Filter bar
-- `src/components/discussion/DiscussionTable.tsx` - Comments table
-- `src/components/discussion/DiscussionTableRow.tsx` - Table row
+- `src/components/discussion/DiscussionTable.tsx` - Comments table with checkboxes
+- `src/components/discussion/DiscussionTableRow.tsx` - Table row with selection
 - `src/components/discussion/DiscussionPagination.tsx` - Pagination controls
+- `src/components/discussion/DiscussionBulkActionBar.tsx` - Bulk action bar (NEW)
+- `src/components/discussion/BulkStatusChangeModal.tsx` - Bulk status modal (NEW)
 - `src/components/discussion/EditDiscussionModal.tsx` - Edit modal
 - `src/components/discussion/DeleteDiscussionModal.tsx` - Delete confirmation
 
@@ -72,7 +74,7 @@ A comprehensive discussion and comment system for the Alif Pustaka application, 
 - `docs/features/discussions-quick-reference.md` - Quick reference guide (615 lines)
 - `docs/features/README.md` - Updated with discussion system links
 
-**Total: 40 files created/updated**
+**Total: 42 files created/updated**
 
 ---
 
@@ -92,6 +94,9 @@ A comprehensive discussion and comment system for the Alif Pustaka application, 
 - Filter by status, source type, search
 - Edit comments (30-minute window)
 - Delete comments (30-day soft delete)
+- **Bulk selection with checkboxes**
+- **Bulk status change (pending/published/deleted)**
+- **Bulk delete with confirmation**
 - See edit indicators and reply counts
 - Navigate to source content
 
@@ -159,9 +164,9 @@ A comprehensive discussion and comment system for the Alif Pustaka application, 
 - **Error handling**: Comprehensive error messages
 
 ### Components
-- **Total**: 17 React components
+- **Total**: 19 React components (+2 new bulk components)
 - **Blog**: 5 components (public commenting)
-- **User**: 6 components (management interface)
+- **User**: 8 components (management interface with bulk actions)
 - **Admin**: 6 components (moderation interface)
 
 ### Markdown Support
@@ -266,7 +271,7 @@ A comprehensive discussion and comment system for the Alif Pustaka application, 
 ## Known Limitations
 
 1. **No nested replies** - Schema supports it, UI doesn't implement it
-2. **No bulk operations** - Each comment moderated individually
+2. ~~**No bulk operations**~~ - ✅ **IMPLEMENTED** (User bulk actions for own comments)
 3. **No rich text editor** - Plain textarea with markdown
 4. **No reactions/voting** - Simple comment system only
 5. **Manual cron job** - Permanent deletion requires manual setup
@@ -286,11 +291,11 @@ A comprehensive discussion and comment system for the Alif Pustaka application, 
 - Comment reporting
 - Spam detection
 - Real-time updates (WebSockets)
+- Admin bulk moderation (similar to user bulk actions)
 
 ### Possible
 - Comment analytics
 - Export functionality
-- Bulk moderation
 - Advanced search
 - Comment templates
 - Auto-moderation rules

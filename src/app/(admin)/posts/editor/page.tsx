@@ -31,7 +31,7 @@ export default async function Page({
     findPost = await prisma.post.findUnique({
       where: { id: key },
       include: {
-        tags: {
+        post_tag: {
           include: {
             tag: true,
           },
@@ -51,7 +51,7 @@ export default async function Page({
         slug: findPost?.slug || "",
         image: findPost?.image || "",
         desc: findPost?.desc || "",
-        tags: findPost?.tags.map((postTag: PostTag) => postTag.tag.name) || [],
+        tags: findPost?.post_tag.map((postTag: PostTag) => postTag.tag.name) || [],
       };
       return (
         <div>

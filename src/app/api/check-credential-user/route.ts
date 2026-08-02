@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const user = await prisma.user.findUnique({
       where: { email },
       include: {
-        accounts: {
+        account: {
           where: { providerId: "credential" },
         },
       },
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const hasCredentialAccount = user.accounts.length > 0;
+    const hasCredentialAccount = user.account.length > 0;
 
     return NextResponse.json({
       hasCredentialAccount,

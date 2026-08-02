@@ -29,6 +29,7 @@ import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
 import { formatRole } from "@/lib/utils/format-role";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import type { Notification } from "@/types/notification";
+import { truncateContent } from "@/lib/truncate-content";
 
 interface HeaderProps {
   /* title: string;
@@ -49,12 +50,12 @@ const pageMetaConfigs: PageMetaConfig[] = [
     subtitle: "Overview of revenue, users, and operational health",
   },
   {
-    pattern: "/post",
+    pattern: "/posts",
     title: "Blog Post Overview",
     subtitle: "List of your blog post content",
   },
   {
-    pattern: "/post/editor",
+    pattern: "/posts/editor",
     title: "Text Editor",
     subtitle: "Create or edit your blog post",
   },
@@ -70,9 +71,19 @@ const pageMetaConfigs: PageMetaConfig[] = [
     subtitle: "Administrator Panel.",
   },
   {
-    pattern: "/admin/user-management",
+    pattern: "/admin/users",
     title: "User Management",
     subtitle: "Manage user roles and status.",
+  },
+  {
+    pattern: "/admin/galleries",
+    title: "Gallery Management",
+    subtitle: "Manage gallery privacy and policy.",
+  },
+  {
+    pattern: "/admin/discussions",
+    title: "Discussion Management",
+    subtitle: "Manage comment sensory.",
   },
   {
     pattern: "/settings",
@@ -166,7 +177,9 @@ export function Header({ onMenuClick }: HeaderProps) {
               <CircleUser className="text-surface-400 h-9 w-9 rounded-xl" />
             )}
             <div className="hidden sm:block">
-              <p className="text-accent text-sm font-medium">{user?.name}</p>
+              <p className="text-accent text-sm font-medium">
+                {truncateContent(user?.name || "No Name", 15)}
+              </p>
               <p className="text-surface-400 text-xs">
                 {formatRole(user?.role || "")}
               </p>
@@ -254,7 +267,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                 {unreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-accent hover:text-accent/80 text-xs font-medium"
+                    className="text-accent hover:text-accent/80 cursor-pointer text-xs font-medium"
                   >
                     Mark all as read
                   </button>

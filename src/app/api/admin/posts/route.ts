@@ -128,7 +128,7 @@ export async function GET(req: NextRequest) {
               role: true,
             },
           },
-          tags: {
+          post_tag: {
             include: {
               tag: true,
             },
@@ -145,7 +145,7 @@ export async function GET(req: NextRequest) {
       desc: post.desc,
       image: post.image,
       status: post.status,
-      tags: post.tags.map((pt) => pt.tag.name),
+      tags: post.post_tag.map((pt) => pt.tag.name),
       uploadTime: post.uploadTime,
       updatedAt: post.updatedAt,
       author: {

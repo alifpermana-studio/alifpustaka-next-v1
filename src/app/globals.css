@@ -29,6 +29,9 @@
 
   --color-error: #c71e2a;
   --color-error-content: #ffeaec;
+
+  --color-danger: #c71e2a;
+  --color-danger-content: #ffeaec;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -64,6 +67,9 @@
 
       --color-error: #ff5c7c;
       --color-error-content: #2e0818;
+
+      --color-danger: #ff5c7c;
+      --color-danger-content: #2e0818;
     }
   }
 }

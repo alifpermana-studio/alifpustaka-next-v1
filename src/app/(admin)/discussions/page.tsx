@@ -3,12 +3,18 @@
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
 import { useState, useEffect, useCallback } from "react";
-import { DiscussionListItem, DiscussionStatus, DiscussionSourceType } from "@/types/discussion";
+import {
+  DiscussionListItem,
+  DiscussionStatus,
+  DiscussionSourceType,
+} from "@/types/discussion";
 import { DiscussionFilters } from "@/components/discussion/DiscussionFilters";
 import { DiscussionTable } from "@/components/discussion/DiscussionTable";
 import { DiscussionPagination } from "@/components/discussion/DiscussionPagination";
 import { EditDiscussionModal } from "@/components/discussion/EditDiscussionModal";
 import { DeleteDiscussionModal } from "@/components/discussion/DeleteDiscussionModal";
+import { DiscussionBulkActionBar } from "@/components/discussion/DiscussionBulkActionBar";
+import { BulkStatusChangeModal } from "@/components/discussion/BulkStatusChangeModal";
 
 interface FilterState {
   search: string;
@@ -34,10 +40,14 @@ export default function DiscussionsPage() {
     hasMore: false,
   });
 
+  const [selectedDiscussions, setSelectedDiscussions] = useState<Set<string>>(new Set());
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<DiscussionListItem | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState<DiscussionListItem | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<DiscussionListItem | null>(
+    null,
+  );
+  const [bulkStatusModalOpen, setBulkStatusModalOpen] = useState(false);
 
   const fetchDiscussions = useCallback(
     async (silent = false) => {
@@ -63,7 +73,10 @@ export default function DiscussionsPage() {
             hasMore: result.meta.pagination?.hasMore || false,
           }));
         } else {
-          showToast(result.error?.message || "Failed to fetch comments", "error");
+          showToast(
+            result.error?.message || "Failed to fetch comments",
+            "error",
+          );
         }
       } catch (error) {
         showToast("Failed to fetch comments", "error");
@@ -71,7 +84,7 @@ export default function DiscussionsPage() {
         if (!silent) setLoading(false);
       }
     },
-    [pagination.skip, pagination.limit, filter, showToast]
+    [pagination.skip, pagination.limit, filter, showToast],
   );
 
   useEffect(() => {
@@ -81,6 +94,31 @@ export default function DiscussionsPage() {
   useEffect(() => {
     setPagination((prev) => ({ ...prev, skip: 0 }));
   }, [filter]);
+
+  useEffect(() => {
+    setSelectedDiscussions(new Set());
+  }, [pagination.skip, filter]);
+
+  const handleSelectDiscussion = (id: string) => {
+    const newSelected = new Set(selectedDiscussions);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedDiscussions(newSelected);
+  };
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      const selectableIds = discussions
+        .filter((d) => d.status !== "deleted")
+        .map((d) => d.id);
+      setSelectedDiscussions(new Set(selectableIds));
+    } else {
+      setSelectedDiscussions(new Set());
+    }
+  };
 
   const handleEdit = (discussion: DiscussionListItem) => {
     setEditTarget(discussion);
@@ -140,6 +178,80 @@ export default function DiscussionsPage() {
     }
   };
 
+  const handleBulkAction = (action: "status" | "delete") => {
+    if (selectedDiscussions.size === 0) {
+      showToast("No comments selected", "warning");
+      return;
+    }
+
+    if (action === "status") {
+      setBulkStatusModalOpen(true);
+    } else if (action === "delete") {
+      handleBulkDelete();
+    }
+  };
+
+  const handleBulkStatusChange = async (status: DiscussionStatus) => {
+    const discussionIds = Array.from(selectedDiscussions);
+
+    try {
+      const response = await fetch("/api/discussions", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "change_status",
+          discussionIds,
+          data: { status },
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        showToast(result.message, "success");
+        setSelectedDiscussions(new Set());
+        setBulkStatusModalOpen(false);
+        fetchDiscussions(false);
+      } else {
+        showToast(result.error?.message || "Failed to change status", "error");
+      }
+    } catch (error) {
+      showToast("Failed to change status", "error");
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    const discussionIds = Array.from(selectedDiscussions);
+
+    const confirmed = confirm(
+      `Are you sure you want to delete ${discussionIds.length} comment(s)? They will be permanently removed after 30 days.`,
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch("/api/discussions", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "delete",
+          discussionIds,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        showToast(result.message, "success");
+        setSelectedDiscussions(new Set());
+        fetchDiscussions(false);
+      } else {
+        showToast(result.error?.message || "Failed to delete comments", "error");
+      }
+    } catch (error) {
+      showToast("Failed to delete comments", "error");
+    }
+  };
+
   const handlePageChange = (skip: number) => {
     setPagination((prev) => ({ ...prev, skip }));
   };
@@ -157,13 +269,6 @@ export default function DiscussionsPage() {
 
   return (
     <div className="">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-base-content">My Comments</h1>
-        <p className="text-base-content/70 mt-1">
-          Manage your comments across all posts
-        </p>
-      </div>
-
       <DiscussionFilters
         filter={filter}
         onFilterChange={setFilter}
@@ -180,6 +285,9 @@ export default function DiscussionsPage() {
         <>
           <DiscussionTable
             discussions={discussions}
+            selectedDiscussions={selectedDiscussions}
+            onSelectDiscussion={handleSelectDiscussion}
+            onSelectAll={handleSelectAll}
             onEdit={handleEdit}
             onDelete={handleDelete}
           />
@@ -191,6 +299,14 @@ export default function DiscussionsPage() {
             onPageChange={handlePageChange}
           />
         </>
+      )}
+
+      {selectedDiscussions.size > 0 && (
+        <DiscussionBulkActionBar
+          selectedCount={selectedDiscussions.size}
+          onClearSelection={() => setSelectedDiscussions(new Set())}
+          onBulkAction={handleBulkAction}
+        />
       )}
 
       <EditDiscussionModal
@@ -211,6 +327,13 @@ export default function DiscussionsPage() {
         }}
         discussion={deleteTarget}
         onConfirm={handleDeleteConfirm}
+      />
+
+      <BulkStatusChangeModal
+        isOpen={bulkStatusModalOpen}
+        onClose={() => setBulkStatusModalOpen(false)}
+        selectedCount={selectedDiscussions.size}
+        onConfirm={handleBulkStatusChange}
       />
     </div>
   );

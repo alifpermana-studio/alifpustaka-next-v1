@@ -185,10 +185,12 @@ User Action → Component → API Route → Prisma → Database
 **Sections**:
 - Header with total count
 - Filter bar (search, status, source type)
-- Comments table with actions
+- Comments table with checkboxes and actions
+- Bulk action bar (fixed bottom, appears when comments selected)
 - Pagination
 
 **Columns**:
+- Checkbox (for bulk selection)
 - Content (truncated with edit indicator)
 - Status (badge with color coding)
 - Source (type + title)
@@ -199,6 +201,15 @@ User Action → Component → API Route → Prisma → Database
 **Actions**:
 - Edit: Opens modal (only if within 30 minutes)
 - Delete: Opens confirmation modal
+- Bulk: Select multiple → Change status or delete
+
+**Bulk Features**:
+- Checkbox selection (select all/individual)
+- Fixed bottom action bar with selected count
+- Bulk status change modal (pending/published/deleted)
+- Bulk delete with confirmation
+- Cannot select deleted comments
+- Selection clears on page/filter change
 
 ### 3. Admin Moderation (`/admin/discussions`)
 
@@ -237,6 +248,7 @@ For complete API endpoint documentation including request/response formats, para
 
 - `GET /api/discussions` - Get own comments with pagination and filters
 - `POST /api/discussions` - Create new comment (status: pending)
+- `PATCH /api/discussions` - Bulk actions (change status, delete multiple comments)
 - `PUT /api/discussions/[id]` - Edit comment (30-minute window)
 - `DELETE /api/discussions/[id]` - Soft delete comment (30-day grace period)
 
@@ -248,12 +260,14 @@ For complete API endpoint documentation including request/response formats, para
 **Key Features:**
 - Public endpoint for blog post comments (no authentication)
 - User endpoints require authentication
+- User bulk operations for managing own comments
 - Admin endpoints require `moderate_discussions` permission
 - Automatic audit logging for all admin actions
 - Automatic notifications for status changes
 - 30-minute edit window enforcement
 - Content validation (1-5000 characters)
 - Source existence validation
+- Ownership validation for bulk operations
 
 For detailed specifications, request/response examples, and error codes, refer to the **[Discussion API Reference](../api/discussion-api-reference.md)**.
 
@@ -651,6 +665,21 @@ notifyCommentStatusChanged(
 3. Click "Refresh" to update list
 4. Navigate pages if you have many comments
 
+**Bulk Actions**:
+1. Select comments using checkboxes
+2. Click "Select All" to select all visible comments
+3. Bulk action bar appears at bottom with selected count
+4. Choose action:
+   - **Change Status**: Select new status (pending/published/deleted)
+   - **Delete**: Soft delete with 30-day grace period
+5. Confirm action in modal
+6. Comments are updated, selection clears
+
+**Notes**:
+- Cannot select deleted comments for bulk actions
+- Selection clears when changing pages or filters
+- Bulk actions only work on your own comments
+
 ### For Admins
 
 #### Moderating Comments
@@ -682,9 +711,17 @@ Use filters:
 
 #### Bulk Moderation
 
-Currently not supported. Each comment must be moderated individually.
+**User Bulk Actions** (✅ Available at `/discussions`):
+- Users can bulk manage their own comments
+- Select multiple comments with checkboxes
+- Bulk change status (pending/published/deleted)
+- Bulk delete with confirmation
+- Only works on user's own comments
 
-**Future**: Bulk status changes may be added.
+**Admin Bulk Moderation** (⏳ Future):
+- Admin bulk moderation for all comments
+- Similar to user bulk actions but with more permissions
+- May include bulk ban functionality
 
 #### Monitoring Activity
 
@@ -1042,6 +1079,38 @@ If implementing nested replies:
 ---
 
 ## Changelog
+
+### Version 1.0.2 (2026-07-29)
+
+**User Bulk Actions**:
+- Added bulk selection with checkboxes on `/discussions` page
+- Added bulk action bar (fixed bottom) for selected comments
+- Added bulk status change modal (pending/published/deleted)
+- Added bulk delete with confirmation
+- Users can now manage multiple own comments at once
+- Selection clears on page/filter change
+- Cannot select deleted comments for bulk actions
+
+**API Updates**:
+- Added `PATCH /api/discussions` endpoint for bulk operations
+- Supports `change_status` and `delete` actions
+- Ownership validation (users can only bulk modify own comments)
+- Status validation (no "banned" for regular users)
+- Audit logging for bulk actions with metadata
+
+**Components Added**:
+- `DiscussionBulkActionBar.tsx` - Fixed bottom bulk action bar
+- `BulkStatusChangeModal.tsx` - Bulk status change modal
+
+**Components Updated**:
+- `DiscussionTable.tsx` - Added checkbox column and select all
+- `DiscussionTableRow.tsx` - Added checkbox cell and selection state
+- `discussions/page.tsx` - Added bulk logic and handlers
+
+**Documentation**:
+- Updated all discussion documentation with bulk features
+- Added bulk action examples and testing checklist
+- Updated limitations (bulk operations now available for users)
 
 ### Version 1.0.1 (2026-07-29)
 

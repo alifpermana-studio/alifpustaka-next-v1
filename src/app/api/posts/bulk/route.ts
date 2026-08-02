@@ -162,11 +162,15 @@ export async function PATCH(req: NextRequest) {
 
             if (!tag) {
               tag = await prisma.tag.create({
-                data: { name: tagName.trim() },
+                data: { 
+                  id: require('uuid').v4(),
+                  name: tagName.trim(),
+                  updatedAt: new Date()
+                },
               });
             }
 
-            const existingPostTag = await prisma.postTag.findUnique({
+            const existingPostTag = await prisma.post_tag.findUnique({
               where: {
                 postId_tagId: {
                   postId,
@@ -176,7 +180,7 @@ export async function PATCH(req: NextRequest) {
             });
 
             if (!existingPostTag) {
-              await prisma.postTag.create({
+              await prisma.post_tag.create({
                 data: {
                   postId,
                   tagId: tag.id,
@@ -221,7 +225,7 @@ export async function PATCH(req: NextRequest) {
           });
 
           if (tags.length > 0) {
-            await prisma.postTag.deleteMany({
+            await prisma.post_tag.deleteMany({
               where: {
                 postId,
                 tagId: { in: tags.map((t) => t.id) },

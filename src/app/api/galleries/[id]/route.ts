@@ -141,8 +141,9 @@ export async function PATCH(
       },
     });
 
-    await prisma.auditLog.create({
+    await prisma.audit_log.create({
       data: {
+        id: require('uuid').v4(),
         action: "image_blocked",
         entityType: "gallery",
         entityId: gallery.id,
@@ -170,6 +171,7 @@ export async function PATCH(
     if (gallery.userId !== currentUser.userId) {
       await prisma.notification.create({
         data: {
+          id: require('uuid').v4(),
           userId: gallery.userId,
           type: "image_blocked",
           title: "Your image has been blocked",
