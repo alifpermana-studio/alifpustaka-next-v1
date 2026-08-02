@@ -43,6 +43,18 @@ export const auth = betterAuth({
   session: {
     expiresIn: 60 * 60 * 24 * 30, // 30 days
     updateAge: 60 * 60 * 24, // Update session every 24 hours
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 5,
+    },
+  },
+
+  advanced: {
+    cookiePrefix: "shared_auth",
+    crossSubdomainCookies: {
+      enabled: true,
+      domain: process.env.COOKIE_DOMAIN || ".alifpustaka.web.id",
+    },
   },
 
   socialProviders: {
