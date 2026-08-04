@@ -9,7 +9,7 @@ import {
   CustomUL,
   CustomOL,
   CustomBlockquote,
-} from "@/components/post/editor/MdComponents";
+} from "@/components/blog/MdComponents";
 
 interface CommentItemProps {
   comment: Discussion & {

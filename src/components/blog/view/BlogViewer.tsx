@@ -24,7 +24,7 @@ import {
   CustomTr,
   CustomTh,
   CustomTd,
-} from "@/components/post/editor/MdComponents";
+} from "@/components/blog/MdComponents";
 import { useRef, useState } from "react";
 import { useScroll } from "framer-motion";
 import { CommentSection } from "@/components/blog/comment/CommentSection";
@@ -264,7 +264,11 @@ export function BlogViewer({ post, postUrl }: BlogViewerProps) {
             ))}
           </div>
 
-          <CommentSection postId={post.id} postSlug={post.slug} postTitle={post.title} />
+          <CommentSection
+            postId={post.id}
+            postSlug={post.slug}
+            postTitle={post.title}
+          />
         </div>
       </article>
     </>
