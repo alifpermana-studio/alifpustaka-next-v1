@@ -1,5 +1,5 @@
 {
-  "name": "next-better-auth-boilerplate",
+  "name": "alifpustaka-public-site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,25 +12,13 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.1089.0",
-    "@aws-sdk/middleware-flexible-checksums": "^3.974.43",
-    "@aws-sdk/s3-request-presigner": "^3.1089.0",
-    "@getbrevo/brevo": "^5.0.4",
-    "@prisma/adapter-pg": "^7.8.0",
-    "@prisma/client": "^7.8.0",
-    "@supabase/ssr": "^0.12.0",
-    "@supabase/supabase-js": "^2.108.2",
     "axios": "^1.18.1",
-    "bcrypt": "^6.0.0",
     "better-auth": "^1.6.22",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
-    "dotenv": "^17.4.2",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.21.0",
     "next": "16.2.9",
-    "nodemailer": "^9.0.1",
-    "pg": "^8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-markdown": "^10.1.0",
@@ -40,7 +28,6 @@
     "remark-gfm": "^4.0.1",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.6.0",
-    "uuid": "^14.0.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -48,11 +35,8 @@
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/date-fns": "^2.5.3",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",
-    "@types/nodemailer": "^8.0.1",
-    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
@@ -62,7 +46,6 @@
     "jest-environment-jsdom": "^30.4.1",
     "prettier": "^3.9.4",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "prisma": "^7.8.0",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
     "typescript": "^5"

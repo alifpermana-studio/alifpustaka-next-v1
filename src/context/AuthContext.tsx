@@ -12,15 +12,8 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
-const PROTECTED_ROUTES = [
-  "/p",
-  "/dashboard",
-  "/settings",
-  "/galleries",
-  "/posts",
-  "/admin",
-];
-const AUTH_ROUTES = ["/signin", "/signup"];
+const PROTECTED_ROUTES: string[] = [];
+const AUTH_ROUTES: string[] = [];
 
 function isProtectedRoute(pathname: string): boolean {
   return PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
@@ -54,7 +47,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signOut = async () => {
     try {
       await authClient.signOut();
-      router.push("/signin");
+      const adminUrl = process.env.NEXT_PUBLIC_ADMIN_API_URL || "http://localhost:3001";
+      window.location.href = `${adminUrl}/signin`;
     } catch (err) {
       console.error("Sign out error:", err);
     }
@@ -92,22 +86,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (isPending) return;
 
-    // Check if user is not active (banned, inactive, deleted)
     if (user && !isActive()) {
       signOut();
-      router.push("/signin?error=account_inactive");
       return;
     }
 
     if (!user && isProtectedRoute(pathname)) {
-      router.push(`/signin?redirect=${encodeURIComponent(pathname)}`);
+      const adminUrl = process.env.NEXT_PUBLIC_ADMIN_API_URL || "http://localhost:3001";
+      window.location.href = `${adminUrl}/signin?returnUrl=${encodeURIComponent(window.location.href)}`;
       return;
-    }
-
-    if (user && isAuthRoute(pathname)) {
-      const searchParams = new URLSearchParams(window.location.search);
-      const redirect = searchParams.get("redirect") || "/p";
-      router.push(redirect);
     }
   }, [isPending, user, pathname, router]);
 
@@ -121,6 +108,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const value: AuthContextType = {
     user,
+    session: session || null,
     isLoading: isPending,
     isAuthenticated,
     error: error || null,

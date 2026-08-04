@@ -29,6 +29,7 @@ export interface UserSession {
 
 export interface AuthContextType {
   user: User | null;
+  session: Session | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   error: Error | null;

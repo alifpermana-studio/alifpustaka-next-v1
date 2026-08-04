@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Code2 } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import {
   APusColorSquare,
   APusDarkBanner,
@@ -10,14 +10,12 @@ import {
 import { useRouter } from "next/navigation";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 import { useTheme } from "@/context/ThemeContext";
+import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
   { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -25,6 +23,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
   const { theme } = useTheme();
+  const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -34,8 +33,22 @@ export default function Navbar() {
 
   const handleLinkClick = (href: string) => {
     setIsOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      router.push(href);
+    }
+  };
+
+  const handleLoginClick = () => {
+    const adminUrl = process.env.NEXT_PUBLIC_ADMIN_API_URL || "http://localhost:3001";
+    window.location.href = `${adminUrl}/signin?returnUrl=${encodeURIComponent(window.location.href)}`;
+  };
+
+  const handleDashboardClick = () => {
+    const adminUrl = process.env.NEXT_PUBLIC_ADMIN_API_URL || "http://localhost:3001";
+    window.location.href = `${adminUrl}/p`;
   };
 
   return (
@@ -78,12 +91,22 @@ export default function Navbar() {
                 {link.label}
               </button>
             ))}
-            <button
-              onClick={() => handleLinkClick("#contact")}
-              className="bg-neutral text-neutral-content hover:bg-neutral/70 mx-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors"
-            >
-              Hire Me
-            </button>
+            {isAuthenticated && user ? (
+              <button
+                onClick={handleDashboardClick}
+                className="bg-neutral text-neutral-content hover:bg-neutral/70 mx-2 flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors"
+              >
+                <User className="h-4 w-4" />
+                Dashboard
+              </button>
+            ) : (
+              <button
+                onClick={handleLoginClick}
+                className="bg-neutral text-neutral-content hover:bg-neutral/70 mx-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors"
+              >
+                Login
+              </button>
+            )}
             <ThemeSwitcher />
           </div>
 
@@ -109,12 +132,22 @@ export default function Navbar() {
                 {link.label}
               </button>
             ))}
-            <button
-              onClick={() => handleLinkClick("#contact")}
-              className="bg-neutral text-neutral-content hover:bg-neutral/70 mt-3 w-full cursor-pointer rounded-full px-5 py-3 text-sm font-semibold transition-colors"
-            >
-              Hire Me
-            </button>
+            {isAuthenticated && user ? (
+              <button
+                onClick={handleDashboardClick}
+                className="bg-neutral text-neutral-content hover:bg-neutral/70 mt-3 flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors"
+              >
+                <User className="h-4 w-4" />
+                Dashboard
+              </button>
+            ) : (
+              <button
+                onClick={handleLoginClick}
+                className="bg-neutral text-neutral-content hover:bg-neutral/70 mt-3 w-full cursor-pointer rounded-full px-5 py-3 text-sm font-semibold transition-colors"
+              >
+                Login
+              </button>
+            )}
           </div>
         </div>
       )}

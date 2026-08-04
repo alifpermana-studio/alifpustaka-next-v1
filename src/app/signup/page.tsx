@@ -1,20 +1,21 @@
-import { SignUpForm } from "@/components/pages/signup-form";
+"use client";
 
-export async function generateMetadata() {
-  return {
-    title: "Sign up to Alif Pustaka",
-    description: "Join our comunity.",
-  };
-}
+import { useEffect } from "react";
+import { LoaderCircle } from "lucide-react";
 
-function Page() {
+export default function SignUpRedirect() {
+  useEffect(() => {
+    const adminUrl = process.env.NEXT_PUBLIC_ADMIN_API_URL || "http://localhost:3001";
+    const returnUrl = encodeURIComponent(window.location.origin);
+    window.location.href = `${adminUrl}/signup?returnUrl=${returnUrl}`;
+  }, []);
+
   return (
     <div className="flex min-h-svh w-full items-center justify-center">
-      <div className="w-full max-w-full">
-        <SignUpForm />
+      <div className="flex flex-col items-center gap-4">
+        <LoaderCircle className="h-8 w-8 animate-spin text-blue-500" />
+        <p className="text-sm text-gray-600">Redirecting to sign up...</p>
       </div>
     </div>
   );
 }
-
-export default Page;

@@ -5,7 +5,6 @@ import { UserRole, ADMIN_ROLES } from "@/types/roles";
 
 const PROTECTED_ROUTES = ["/dashboard", "/p", "/settings", "/post", "/gallery", "/admin"];
 const AUTH_ROUTES = ["/signin", "/signup", "/forgot-password", "/verify-email"];
-const PUBLIC_ROUTES = ["/about", "/contact", "/terms", "/privacy"];
 
 const hasUserPermission = (role: UserRole, permission: string): boolean => {
   if (permission === "view_all_users") {
@@ -19,14 +18,17 @@ const isAdminRole = (role: UserRole): boolean => {
 };
 
 export async function proxy(request: NextRequest) {
+  const url = request.nextUrl;
+  const pathname = url.pathname;
+
+  console.log("Proxy middleware pathname:", pathname);
+
+  // Auth and permission checks
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  const pathname = request.nextUrl.pathname;
-
   console.log("Proxy middleware session:", session);
-  console.log("Proxy middleware pathname:", pathname);
 
   const isProtectedRoute = PROTECTED_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`),
@@ -39,7 +41,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (isAuthRoute && session) {
-    // Redirect them to their main landing page (e.g., /dashboard)
+    // Redirect to dashboard after login
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 

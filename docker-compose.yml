@@ -1,25 +1,44 @@
 version: '3.8'
 
 services:
-  app:
+  public-site:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: alifpustaka-app
+      args:
+        # Build-time arguments (required for Next.js build)
+        - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+        - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+        - COOKIE_DOMAIN=${COOKIE_DOMAIN}
+        - NEXT_PUBLIC_ADMIN_API_URL=${NEXT_PUBLIC_ADMIN_API_URL}
+        - BASE_URL=${BASE_URL}
+        - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+        - R2_PUBLIC_BASE_URL=${R2_PUBLIC_BASE_URL}
+    container_name: alifpustaka-public-site
     restart: unless-stopped
-    environment:
-      NODE_ENV: production
     env_file:
       - .env.production
+    environment:
+      - NODE_ENV=production
+    networks:
+      - alifpustaka-network
+      - traefik-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`your-domain.com`)"
-      - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
-      - "traefik.http.services.app.loadbalancer.server.port=3000"
-    networks:
-      - traefik-network
+      - "traefik.http.routers.public-site.rule=Host(`alifpustaka.web.id`)"
+      - "traefik.http.routers.public-site.entrypoints=websecure"
+      - "traefik.http.routers.public-site.tls.certresolver=letsencrypt"
+      - "traefik.http.services.public-site.loadbalancer.server.port=3000"
+      - "traefik.docker.network=traefik-network"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 networks:
+  alifpustaka-network:
+    external: true
   traefik-network:
     external: true
