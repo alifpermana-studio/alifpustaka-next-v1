@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   alifpustaka-main:
     image: alifpustaka-main:latest
@@ -20,7 +18,7 @@ services:
       - postgres-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.apus-app.rule=Host(`${ADMIN_DOMAIN}`)"
+      - "traefik.http.routers.apus-main.rule=Host(`${ADMIN_DOMAIN}`)"
       - "traefik.http.routers.apus-main.entrypoints=websecure"
       - "traefik.http.routers.apus-main.tls.certresolver=letsencrypt"
       - "traefik.http.services.apus-main.loadbalancer.server.port=3000"

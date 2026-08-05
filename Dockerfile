@@ -25,7 +25,7 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-RUN apk add --no-cache openssl libc6-compat curl
+RUN apk add --no-cache openssl libc6-compat curl wget
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1

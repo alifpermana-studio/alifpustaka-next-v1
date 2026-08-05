@@ -52,7 +52,7 @@ export async function requireAuth(req: NextRequest): Promise<AuthResult> {
   const user: User = {
     userId: session.user.id,
     name: session.user.name,
-    username: session.user.username || "",
+    username: (session.user as any).username || "",
     email: session.user.email,
     emailVerified: session.user.emailVerified,
     image: session.user.image ?? null,

@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
   reactCompiler: true,
-  
+  allowedDevOrigins: ["alifpustaka.local"],
   images: {
     localPatterns: [
       {

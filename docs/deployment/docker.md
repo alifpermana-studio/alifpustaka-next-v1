@@ -7,17 +7,18 @@ Deploy the Alif Pustaka public site using Docker with Traefik and shared network
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────┐
 │                    traefik-network                           │
 │                                                              │
-│  ┌──────────┐         ┌──────────────┐      ┌────────────┐ │
-│  │ Traefik  │────────►│ Public Site  │      │ Admin App  │ │
-│  │  (SSL)   │         │   (this)     │      │            │ │
-│  └──────────┘         └──────┬───────┘      └─────┬──────┘ │
-│                              │                     │        │
-└──────────────────────────────┼─────────────────────┼────────┘
-                               │                     │
-              ┌────────────────┴─────────────────────┴────────┐
+│  ┌──────────┐         ┌──────────────┐      ┌──────────────┐ │
+│  │ Traefik  │────────►│ Alif Pustaka |      | Alif Pustaka | |
+|  │          │         |    Main      |      |     App      │ │
+│  │  (SSL)   │         │   (this)     │      │              │ │
+│  └──────────┘         └──────┬───────┘      └───────┬──────┘ │
+│                              │                      │        │
+└──────────────────────────────┼──────────────────────┼────────┘
+                               │                      │
+              ┌────────────────┴──────────────────────┴────────┐
               │            alifpustaka-network                 │
               │   (Internal communication between apps)        │
               └────────────────────────────────────────────────┘
@@ -58,12 +59,14 @@ Both networks are marked as `external: true` because:
 ### Network Roles
 
 **alifpustaka-network:**
+
 - Internal communication between Alif Pustaka projects
 - Bridge driver, manually created, external
 - Containers: public-site, admin-app, postgres, other subdomains
 - Example: `http://alifpustaka-admin-app:3000/api/health`
 
 **traefik-network:**
+
 - External routing and SSL termination
 - Bridge driver, manually created, external
 - Containers: traefik, public-site, admin-app, other web services
@@ -126,6 +129,7 @@ R2_PUBLIC_BASE_URL="img.alifpustaka.web.id"
 ### 2. Docker Compose
 
 The `docker-compose.yml` is configured for:
+
 - **Networks:** Both `alifpustaka-network` and `traefik-network`
 - **Container Name:** `alifpustaka-public-site`
 - **Internal Port:** 3000 (no external binding)
@@ -157,6 +161,7 @@ docker-compose build
 ```
 
 **Build arguments are automatically passed:**
+
 - All environment variables from `.env.production`
 - Build optimized for production
 
@@ -180,6 +185,7 @@ docker exec alifpustaka-public-site wget -qO- http://localhost:3000/api/health
 ```
 
 Expected health response:
+
 ```json
 {
   "status": "ok",
@@ -217,6 +223,7 @@ wget -qO- http://alifpustaka-admin-app:3000/api/health
 ### External Communication (traefik-network)
 
 Traefik routes external requests:
+
 - `alifpustaka.web.id` → Public Site
 - `app.alifpustaka.web.id` → Admin App
 
@@ -225,6 +232,7 @@ Traefik routes external requests:
 ## Management Commands
 
 ### View Logs
+
 ```bash
 docker-compose logs -f public-site
 
@@ -233,16 +241,19 @@ docker-compose logs --tail=100 public-site
 ```
 
 ### Restart Container
+
 ```bash
 docker-compose restart public-site
 ```
 
 ### Stop Container
+
 ```bash
 docker-compose down
 ```
 
 ### Rebuild
+
 ```bash
 docker-compose down
 docker-compose build --no-cache
@@ -250,6 +261,7 @@ docker-compose up -d
 ```
 
 ### Update
+
 ```bash
 # Pull latest code
 git pull
@@ -261,11 +273,13 @@ docker-compose up -d
 ```
 
 ### Shell Access
+
 ```bash
 docker exec -it alifpustaka-public-site sh
 ```
 
 ### Check Health
+
 ```bash
 docker exec alifpustaka-public-site wget -qO- http://localhost:3000/api/health
 ```
@@ -280,15 +294,15 @@ docker exec alifpustaka-public-site wget -qO- http://localhost:3000/api/health
 labels:
   # Enable Traefik for this container
   - "traefik.enable=true"
-  
+
   # Router configuration
   - "traefik.http.routers.public-site.rule=Host(`alifpustaka.web.id`)"
   - "traefik.http.routers.public-site.entrypoints=websecure"
   - "traefik.http.routers.public-site.tls.certresolver=letsencrypt"
-  
+
   # Service configuration
   - "traefik.http.services.public-site.loadbalancer.server.port=3000"
-  
+
   # Network (tells Traefik which network to use)
   - "traefik.docker.network=traefik-network"
 ```
@@ -296,6 +310,7 @@ labels:
 ### SSL Certificates
 
 Traefik automatically:
+
 1. Requests SSL certificate from Let's Encrypt
 2. Stores in Traefik's acme.json
 3. Auto-renews before expiry
@@ -348,11 +363,13 @@ curl https://app.alifpustaka.web.id/api/health
 ### Container won't start
 
 **Check logs:**
+
 ```bash
 docker-compose logs public-site
 ```
 
 **Common issues:**
+
 - Missing environment variables
 - Build failed
 - Port conflicts (shouldn't happen with Traefik)
@@ -360,6 +377,7 @@ docker-compose logs public-site
 ### Can't reach admin app
 
 **Test from container:**
+
 ```bash
 docker exec -it alifpustaka-public-site sh
 wget -qO- http://alifpustaka-admin-app:3000/api/health
@@ -368,6 +386,7 @@ wget -qO- https://app.alifpustaka.web.id/api/health
 ```
 
 **Check:**
+
 1. Admin app is running: `docker ps | grep admin`
 2. Both on `alifpustaka-network`: `docker network inspect alifpustaka-network`
 3. Container name matches in `NEXT_PUBLIC_ADMIN_API_URL`
@@ -375,22 +394,26 @@ wget -qO- https://app.alifpustaka.web.id/api/health
 ### Traefik not routing
 
 **Check Traefik sees the service:**
+
 ```bash
 docker logs traefik | grep public-site
 ```
 
 **Verify container is on traefik-network:**
+
 ```bash
 docker network inspect traefik-network
 ```
 
 **Check DNS:**
+
 ```bash
 nslookup alifpustaka.web.id
 # Should point to your server IP
 ```
 
 **Verify Traefik labels:**
+
 ```bash
 docker inspect alifpustaka-public-site | grep traefik
 ```
@@ -398,11 +421,13 @@ docker inspect alifpustaka-public-site | grep traefik
 ### SSL certificate issues
 
 **Check Traefik logs:**
+
 ```bash
 docker logs traefik | grep letsencrypt
 ```
 
 **Common issues:**
+
 - DNS not pointing to server
 - Port 80/443 not open
 - Rate limit reached (Let's Encrypt)
@@ -412,6 +437,7 @@ docker logs traefik | grep letsencrypt
 ### Session not shared
 
 **Verify:**
+
 1. Both apps use same `BETTER_AUTH_SECRET`
 2. Both use same `COOKIE_DOMAIN=".alifpustaka.web.id"`
 3. Both apps accessible via HTTPS
@@ -420,6 +446,7 @@ docker logs traefik | grep letsencrypt
 ### Network issues
 
 **Inspect networks:**
+
 ```bash
 # Check alifpustaka-network
 docker network inspect alifpustaka-network
@@ -429,6 +456,7 @@ docker network inspect traefik-network
 ```
 
 **Reconnect container to network:**
+
 ```bash
 docker network connect alifpustaka-network alifpustaka-public-site
 docker network connect traefik-network alifpustaka-public-site
@@ -459,16 +487,19 @@ docker network connect traefik-network alifpustaka-public-site
 ## Monitoring
 
 ### Container Stats
+
 ```bash
 docker stats alifpustaka-public-site
 ```
 
 ### Logs in Real-time
+
 ```bash
 docker-compose logs -f --tail=50 public-site
 ```
 
 ### Health Monitoring
+
 ```bash
 # Add to cron
 */5 * * * * curl -sf https://alifpustaka.web.id/api/health || alert
@@ -483,6 +514,7 @@ docker-compose logs -f --tail=50 public-site
 No backup needed - container is stateless.
 
 **What to backup:**
+
 - `.env.production` (encrypted)
 - `docker-compose.yml`
 - Source code (git repository)
@@ -543,10 +575,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: "1.0"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 256M
 ```
 
@@ -573,6 +605,7 @@ Current image: ~100-150MB (optimized multi-stage build)
 The Dockerfile uses multi-stage builds for optimization:
 
 ### Stage 1: Dependencies
+
 ```dockerfile
 FROM node:20-alpine AS deps
 COPY package*.json ./
@@ -580,6 +613,7 @@ RUN npm ci
 ```
 
 ### Stage 2: Builder
+
 ```dockerfile
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
@@ -588,6 +622,7 @@ RUN npm run build
 ```
 
 ### Stage 3: Runner
+
 ```dockerfile
 FROM base AS runner
 COPY --from=builder /app/.next/standalone ./
@@ -604,7 +639,7 @@ CMD ["node", "server.js"]
 If admin app is deployed separately:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   public-site:
@@ -670,21 +705,25 @@ docker build \
 ## Management Commands
 
 ### View Logs
+
 ```bash
 docker-compose logs -f public-site
 ```
 
 ### Restart Container
+
 ```bash
 docker-compose restart public-site
 ```
 
 ### Stop Container
+
 ```bash
 docker-compose down
 ```
 
 ### Rebuild and Restart
+
 ```bash
 docker-compose down
 docker-compose build --no-cache
@@ -692,6 +731,7 @@ docker-compose up -d
 ```
 
 ### Enter Container Shell
+
 ```bash
 docker exec -it alifpustaka-public-site sh
 ```
@@ -716,6 +756,7 @@ docker exec -it alifpustaka-public-site sh
 ### Container fails to start
 
 Check logs:
+
 ```bash
 docker-compose logs public-site
 ```
@@ -723,6 +764,7 @@ docker-compose logs public-site
 ### API connection fails
 
 1. Verify admin app is accessible from container:
+
 ```bash
 docker exec -it alifpustaka-public-site sh
 wget https://app.domain.com/api/public/posts
@@ -731,6 +773,7 @@ wget https://app.domain.com/api/public/posts
 2. Check network configuration
 
 3. Verify environment variables:
+
 ```bash
 docker exec -it alifpustaka-public-site env | grep NEXT_PUBLIC
 ```
@@ -738,6 +781,7 @@ docker exec -it alifpustaka-public-site env | grep NEXT_PUBLIC
 ### Build fails
 
 Clear Docker cache and rebuild:
+
 ```bash
 docker-compose down
 docker system prune -a
@@ -756,7 +800,15 @@ services:
   public-site:
     # ... other config ...
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/api/health",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -767,7 +819,7 @@ Create health endpoint in `src/app/api/health/route.ts`:
 
 ```typescript
 export async function GET() {
-  return Response.json({ status: 'ok' });
+  return Response.json({ status: "ok" });
 }
 ```
 
@@ -776,6 +828,7 @@ export async function GET() {
 ## Performance Optimization
 
 ### Multi-stage Build Benefits
+
 - Smaller final image (~100MB vs 1GB+)
 - No build tools in production
 - Faster deployments
@@ -788,10 +841,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 256M
 ```
 
@@ -800,9 +853,11 @@ services:
 ## Security
 
 ### Non-root User
+
 Container runs as `nextjs` user (UID 1001), not root.
 
 ### Read-only Filesystem
+
 ```yaml
 services:
   public-site:
@@ -813,6 +868,7 @@ services:
 ```
 
 ### Network Isolation
+
 Use Docker networks to isolate services.
 
 ---

@@ -46,9 +46,9 @@ export async function proxy(request: NextRequest) {
   }
 
   if (pathname === "/p" || (pathname === "/profile" && session)) {
-    if (session?.user.username) {
+    if (session && (session.user as any).username) {
       return NextResponse.redirect(
-        new URL(`/p/${session.user.username || session.user.id}`, request.url),
+        new URL(`/p/${(session.user as any).username || session.user.id}`, request.url),
       );
     }
   }
@@ -60,7 +60,7 @@ export async function proxy(request: NextRequest) {
     
     if (!isAdminRole(userRole)) {
       return NextResponse.redirect(
-        new URL(`/p/${session.user.username || session.user.id}`, request.url)
+        new URL(`/p/${(session.user as any).username || session.user.id}`, request.url)
       );
     }
     
